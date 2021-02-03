@@ -1,7 +1,7 @@
 {
-  "name": "scrum-poker",
+  "name": "scrum-poker-fire",
   "version": "1.0.0",
-  "description": "Front-End for the Scrum Poker website.",
+  "description": "Front-End for the ScrumPokerFire website.",
   "author": "Thfona",
   "license": "MIT",
   "private": true,
@@ -21,10 +21,12 @@
   ],
   "dependencies": {
     "@angular/animations": "10.2.4",
+    "@angular/cdk": "10.2.7",
     "@angular/common": "10.2.4",
     "@angular/compiler": "10.2.4",
     "@angular/core": "10.2.4",
     "@angular/forms": "10.2.4",
+    "@angular/material": "10.2.7",
     "@angular/platform-browser": "10.2.4",
     "@angular/platform-browser-dynamic": "10.2.4",
     "@angular/router": "10.2.4",

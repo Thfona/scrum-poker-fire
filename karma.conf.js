@@ -13,7 +13,7 @@ module.exports = function (config) {
       clearContext: false
     },
     coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, './coverage/scrum-poker'),
+      dir: require('path').join(__dirname, './coverage/scrum-poker-fire'),
       reports: ['html', 'lcovonly', 'text-summary'],
       fixWebpackSourcePaths: true
     },
