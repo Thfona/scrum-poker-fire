@@ -1,0 +1,78 @@
+/* MEDIA QUERIES */
+@mixin belowVerySmall {
+  @media only screen and (max-width: $bp-very-small - 1) {
+    @content;
+  }
+}
+
+@mixin belowSmall {
+  @media only screen and (max-width: $bp-small - 1) {
+    @content;
+  }
+}
+
+@mixin belowSmallMedium {
+  @media only screen and (max-width: $bp-small-medium - 1) {
+    @content;
+  }
+}
+
+@mixin belowMedium {
+  @media only screen and (max-width: $bp-medium - 1) {
+    @content;
+  }
+}
+
+@mixin belowMediumLarge {
+  @media only screen and (max-width: $bp-medium-large - 1) {
+    @content;
+  }
+}
+
+@mixin belowLarge {
+  @media only screen and (max-width: $bp-large - 1) {
+    @content;
+  }
+}
+
+@mixin fromVerySmall {
+  @media only screen and (min-width: $bp-very-small) {
+    @content;
+  }
+}
+
+@mixin fromSmall {
+  @media only screen and (min-width: $bp-small) {
+    @content;
+  }
+}
+
+@mixin fromSmallMedium {
+  @media only screen and (min-width: $bp-small-medium) {
+    @content;
+  }
+}
+
+@mixin fromMedium {
+  @media only screen and (min-width: $bp-medium) {
+    @content;
+  }
+}
+
+@mixin fromMediumLarge {
+  @media only screen and (min-width: $bp-medium-large) {
+    @content;
+  }
+}
+
+@mixin fromLarge {
+  @media only screen and (min-width: $bp-large) {
+    @content;
+  }
+}
+
+@mixin fromMediumLargeHeight {
+  @media only screen and (min-height: $height-medium-large) and (min-width: $bp-medium-large) {
+    @content;
+  }
+}
