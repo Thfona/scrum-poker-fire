@@ -16,7 +16,11 @@ export class TranslocoHttpLoader implements TranslocoLoader {
   constructor(private http: HttpClient) {}
 
   public getTranslation(lang: string) {
-    return this.http.get<Translation>(`${environment.baseUrl}/assets/i18n/${lang}.json?t=${new Date().getTime()}`);
+    const browserLang = getBrowserLang();
+
+    const translationLang = browserLang || lang;
+
+    return this.http.get<Translation>(`/assets/i18n/${translationLang}.json?t=${new Date().getTime()}`);
   }
 }
 
@@ -27,7 +31,8 @@ export class TranslocoHttpLoader implements TranslocoLoader {
       provide: TRANSLOCO_CONFIG,
       useValue: translocoConfig({
         availableLangs: ['en', 'pt'],
-        defaultLang: getBrowserLang() || 'en',
+        defaultLang: 'en',
+        fallbackLang: 'en',
         reRenderOnLangChange: true,
         prodMode: environment.production
       })

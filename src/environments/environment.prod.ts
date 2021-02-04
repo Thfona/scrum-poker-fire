@@ -1,7 +1,5 @@
 export const environment = {
   production: true,
-  baseUrl: '__baseUrl__',
-  apiBaseUrl: '__apiBaseUrl__',
   firebaseConfig: {
     apiKey: 'AIzaSyD9qC8DFnG06mqht5h7xBeq0JoXvyycuLY',
     authDomain: 'scrum-poker-fire.firebaseapp.com',

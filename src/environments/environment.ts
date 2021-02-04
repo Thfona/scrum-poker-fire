@@ -1,7 +1,5 @@
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:4000',
-  apiBaseUrl: 'http://localhost:3000',
   firebaseConfig: {
     apiKey: 'AIzaSyD9qC8DFnG06mqht5h7xBeq0JoXvyycuLY',
     authDomain: 'scrum-poker-fire.firebaseapp.com',
