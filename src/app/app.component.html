@@ -1,2 +1,14 @@
 <ng-progress [spinner]="false"></ng-progress>
-<router-outlet></router-outlet>
+
+<ng-container *ngIf="isLoading">
+  <app-loading-component></app-loading-component>
+</ng-container>
+
+<ng-container *ngIf="!isLoading && hasError">
+  <app-error-component></app-error-component>
+</ng-container>
+
+<ng-container *ngIf="!isLoading && !hasError">
+  <app-toolbar-component [user]="user"></app-toolbar-component>
+  <router-outlet></router-outlet>
+</ng-container>

@@ -12,16 +12,12 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { TranslocoRootModule } from '../transloco-root.module';
-
-import { MainLayout } from './layouts/main/main.layout';
-import { EmptyLayout } from './layouts/empty/empty.layout';
-
+import { ErrorComponent } from './components/error/error.component';
+import { LoadingComponent } from './components/loading/loading.component';
 import { SignInCardComponent } from './components/sign-in-card/sign-in-card.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
-const COMPONENTS = [SignInCardComponent, ToolbarComponent];
-
-const LAYOUTS = [MainLayout, EmptyLayout];
+const COMPONENTS = [ErrorComponent, LoadingComponent, SignInCardComponent, ToolbarComponent];
 
 const MODULES = [
   AngularFirestoreModule,
@@ -42,7 +38,7 @@ const MODULES = [
 const SERVICES = [];
 
 @NgModule({
-  declarations: [...COMPONENTS, ...LAYOUTS],
+  declarations: [...COMPONENTS],
   imports: [...MODULES],
   exports: [...COMPONENTS, ...MODULES],
   providers: [...SERVICES]

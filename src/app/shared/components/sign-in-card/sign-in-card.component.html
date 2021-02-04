@@ -14,7 +14,7 @@
           <h3>{{ t('AUTH_POP_UP_TEXT') }}</h3>
           <h3>{{ t('AUTH_ALLOW_POP_UP_TEXT') }}</h3>
         </ng-container>
-        <mat-spinner style="margin: 0 auto;" [diameter]="40"></mat-spinner>
+        <mat-spinner class="spinner" [diameter]="40"></mat-spinner>
       </ng-container>
     </mat-card-content>
     <mat-card-actions *ngIf="!authService.isSigningIn">

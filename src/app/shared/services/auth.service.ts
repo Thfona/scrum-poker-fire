@@ -12,8 +12,8 @@ import { UserInterface } from '../interfaces/user.interface';
 })
 export class AuthService {
   public userDocument: Observable<UserInterface>;
-  public isSigningIn = false;
-  public isWaitingPopUp = false;
+  public isSigningIn: boolean;
+  public isWaitingPopUp: boolean;
 
   constructor(
     private angularFireAuth: AngularFireAuth,
