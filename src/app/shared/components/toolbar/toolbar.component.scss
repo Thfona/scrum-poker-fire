@@ -1,0 +1,38 @@
+.home-button {
+  font-size: 20px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+
+  &--info {
+    margin-right: 10px;
+  }
+}
+
+.user-info {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.display-name {
+  font-size: 16px;
+}
+
+::ng-deep .mat-menu-content {
+  padding-top: 1rem !important;
+}
+
+.menu-divider {
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+}

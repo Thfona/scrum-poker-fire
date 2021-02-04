@@ -12,6 +12,8 @@ import { UserInterface } from '../interfaces/user.interface';
 })
 export class AuthService {
   public userDocument: Observable<UserInterface>;
+  public isSigningIn = false;
+  public isWaitingPopUp = false;
 
   constructor(
     private angularFireAuth: AngularFireAuth,
@@ -30,10 +32,25 @@ export class AuthService {
   }
 
   public async signIn() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    const credential = await this.angularFireAuth.signInWithPopup(provider);
+    this.isSigningIn = true;
+    this.isWaitingPopUp = true;
 
-    this.router.navigate(['/home']);
+    const provider = new firebase.auth.GoogleAuthProvider();
+    let credential: firebase.auth.UserCredential;
+
+    try {
+      credential = await this.angularFireAuth.signInWithPopup(provider);
+    } catch {
+      this.isSigningIn = false;
+      this.isWaitingPopUp = false;
+      return;
+    }
+
+    this.isWaitingPopUp = false;
+
+    await this.router.navigate(['/home']);
+
+    this.isSigningIn = false;
 
     return this.updateUserData(credential.user);
   }

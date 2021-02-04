@@ -1,0 +1,30 @@
+.card {
+  max-width: 310px;
+  padding: 0;
+  text-align: center;
+
+  &--signing-in {
+    padding-bottom: 1.3rem;
+  }
+}
+
+.card-content {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.logo-button {
+  min-height: 50px;
+  font-size: 32px;
+  margin-top: 0.5rem !important;
+  margin-bottom: 1rem;
+  cursor: text;
+}
+
+.sign-in-button {
+  width: 89%;
+  min-height: 50px;
+  margin-left: 16px !important;
+  margin-right: 16px !important;
+  margin-bottom: 16px !important;
+}

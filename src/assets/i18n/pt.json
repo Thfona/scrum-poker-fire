@@ -3,5 +3,7 @@
   "SIGN_OUT": "Sair",
   "SIGN_IN_BUTTON_TEXT": "Entrar com uma conta Google",
   "AUTH_WELCOME_TEXT": "Bem vindo ao ScrumPokerFire!",
-  "AUTH_SIGN_IN_TEXT": "Por favor efetue o login para continuar."
+  "AUTH_SIGN_IN_TEXT": "Por favor efetue o login para continuar.",
+  "AUTH_POP_UP_TEXT": "Foi aberto um pop-up para que você efetue o login.",
+  "AUTH_ALLOW_POP_UP_TEXT": "Se o pop-up não apareceu certifique-se de que os pop-ups estão habilitados para esse site."
 }

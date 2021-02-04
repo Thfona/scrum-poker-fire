@@ -1,23 +1,2 @@
-<ng-container *transloco="let t">
-  <mat-toolbar color="primary">
-    <button mat-button aria-label="Home button" (click)="navigateTo('home')">
-      <mat-icon>local_fire_department</mat-icon>
-      <span>ScrumPokerFire</span>
-    </button>
-    <span class="spacer"></span>
-    <button mat-icon-button aria-label="User picture" [matMenuTriggerFor]="menu">
-      <mat-icon>account_circle</mat-icon>
-    </button>
-  </mat-toolbar>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="navigateTo('games')">
-      <mat-icon>sports_esports</mat-icon>
-      <span>{{ t('MY_GAMES') }}</span>
-    </button>
-    <button mat-menu-item (click)="authService.signOut()">
-      <mat-icon>logout</mat-icon>
-      <span>{{ t('SIGN_OUT') }}</span>
-    </button>
-  </mat-menu>
-</ng-container>
+<app-toolbar-component></app-toolbar-component>
 <router-outlet></router-outlet>

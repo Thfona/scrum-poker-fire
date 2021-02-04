@@ -8,6 +8,7 @@ import {
   TranslocoModule
 } from '@ngneat/transloco';
 import { Injectable, NgModule } from '@angular/core';
+import { getBrowserLang } from '@ngneat/transloco';
 import { environment } from '../environments/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -26,7 +27,7 @@ export class TranslocoHttpLoader implements TranslocoLoader {
       provide: TRANSLOCO_CONFIG,
       useValue: translocoConfig({
         availableLangs: ['en', 'pt'],
-        defaultLang: 'en',
+        defaultLang: getBrowserLang() || 'en',
         reRenderOnLangChange: true,
         prodMode: environment.production
       })

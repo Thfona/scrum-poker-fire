@@ -24,10 +24,7 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": ["src/assets"],
-            "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/app/shared/styles/styles.scss"
-            ],
+            "styles": ["src/app/shared/styles/styles.scss"],
             "scripts": [],
             "stylePreprocessorOptions": {
               "includePaths": ["src/app/shared/styles"]
@@ -89,10 +86,7 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": ["src/assets"],
-            "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/app/shared/styles/styles.scss"
-            ],
+            "styles": ["src/app/shared/styles/styles.scss"],
             "scripts": [],
             "stylePreprocessorOptions": {
               "includePaths": ["src/app/shared/styles"]

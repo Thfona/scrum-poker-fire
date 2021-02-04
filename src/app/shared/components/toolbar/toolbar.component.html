@@ -1,0 +1,34 @@
+<ng-container *ngIf="authService.userDocument | async as user">
+  <ng-container *transloco="let t">
+    <mat-toolbar color="primary">
+      <button mat-button class="home-button" aria-label="Home button" (click)="navigateTo('home')">
+        <mat-icon>local_fire_department</mat-icon>
+        <span>ScrumPokerFire</span>
+      </button>
+      <span class="spacer"></span>
+      <div *ngIf="user.photoURL" matRipple class="avatar" [matMenuTriggerFor]="menu">
+        <img class="avatar" aria-label="User menu" [src]="user.photoURL">
+      </div>
+      <button *ngIf="!user.photoURL" mat-icon-button aria-label="User menu" [matMenuTriggerFor]="menu">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    </mat-toolbar>
+    <mat-menu #menu="matMenu">
+      <ng-container *ngIf="user.displayName">
+        <div class="user-info">
+          <img *ngIf="user.photoURL" class="avatar avatar--info" [src]="user.photoURL">
+          <span class="display-name">{{ user.displayName }}</span>
+        </div>
+        <mat-divider class="menu-divider"></mat-divider>
+      </ng-container>
+      <button mat-menu-item (click)="navigateTo('games')">
+        <mat-icon>sports_esports</mat-icon>
+        <span>{{ t('MY_GAMES') }}</span>
+      </button>
+      <button mat-menu-item (click)="authService.signOut()">
+        <mat-icon>logout</mat-icon>
+        <span>{{ t('SIGN_OUT') }}</span>
+      </button>
+    </mat-menu>
+  </ng-container>
+</ng-container>
