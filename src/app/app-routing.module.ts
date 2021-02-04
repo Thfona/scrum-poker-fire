@@ -13,33 +13,35 @@ import { HomePage } from './pages/home/home.page';
 
 const ROUTES: Routes = [
   {
-    path: '',
+    path: 'home',
     component: MainLayout,
     canActivate: [LoginGuard],
     children: [
       {
-        path: 'home',
-        component: HomePage
-      },
-      {
-        path: 'games',
-        component: GamesPage
-      },
-      {
         path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
+        component: HomePage
       }
     ]
   },
   {
-    path: '',
-    component: EmptyLayout,
+    path: 'games',
+    component: MainLayout,
+    canActivate: [LoginGuard],
     children: [
       {
-        path: 'auth',
-        component: AuthPage,
-        canActivate: [AuthGuard]
+        path: '',
+        component: GamesPage
+      }
+    ]
+  },
+  {
+    path: 'auth',
+    component: EmptyLayout,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        component: AuthPage
       }
     ]
   },
