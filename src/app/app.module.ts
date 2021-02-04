@@ -7,6 +7,7 @@ import { NgProgressRouterModule } from 'ngx-progressbar/router';
 import { AppRoutingModule } from './app-routing.module';
 import { PagesModule } from './pages/pages.module';
 import { SharedModule } from './shared/shared.module';
+import { TranslocoRootModule } from './transloco-root.module';
 
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
@@ -20,7 +21,8 @@ const MODULES = [
   NgProgressModule,
   NgProgressRouterModule,
   PagesModule,
-  SharedModule
+  SharedModule,
+  TranslocoRootModule
 ];
 
 @NgModule({
