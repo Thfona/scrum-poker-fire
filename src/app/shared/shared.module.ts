@@ -2,10 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { TranslocoRootModule } from '../transloco-root.module';
 import { environment } from 'src/environments/environment';
 
 import { MainLayout } from './layouts/main/main.layout';
@@ -20,9 +24,13 @@ const MODULES = [
   AngularFirestoreModule,
   BrowserAnimationsModule,
   CommonModule,
-  MatToolbarModule,
+  MatButtonModule,
+  MatCardModule,
   MatIconModule,
-  RouterModule
+  MatMenuModule,
+  MatToolbarModule,
+  RouterModule,
+  TranslocoRootModule
 ];
 
 const SERVICES = [];

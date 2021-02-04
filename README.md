@@ -22,4 +22,7 @@ $ npm run lint:fix
 # Build
 npm run build
 npm run build:prod
+
+# Deploy to Firebase
+npm run deploy
 ```

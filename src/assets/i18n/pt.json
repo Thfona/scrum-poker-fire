@@ -1,1 +1,7 @@
-{}
+{
+  "MY_GAMES": "Meus jogos",
+  "SIGN_OUT": "Sair",
+  "SIGN_IN_BUTTON_TEXT": "Entrar com uma conta Google",
+  "AUTH_WELCOME_TEXT": "Bem vindo ao ScrumPokerFire!",
+  "AUTH_SIGN_IN_TEXT": "Por favor efetue o login para continuar."
+}
