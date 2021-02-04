@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "scrum-poker-fire": {
+      "hosting": {
+        "scrum-poker-fire": [
+          "scrum-poker-fire"
+        ]
+      }
+    }
+  }
+}

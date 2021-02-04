@@ -117,6 +117,10 @@
               "devServerTarget": "scrum-poker-fire:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
     }
