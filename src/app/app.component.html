@@ -10,5 +10,12 @@
 
 <ng-container *ngIf="!isLoading && !hasError">
   <app-toolbar-component [user]="user"></app-toolbar-component>
-  <router-outlet></router-outlet>
+  <ng-container *ngIf="isLoadingContent">
+    <div class="loading-container">
+      <app-loading-component [center]="false" [size]="'medium'"></app-loading-component>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!isLoadingContent">
+    <router-outlet></router-outlet>
+  </ng-container>
 </ng-container>
