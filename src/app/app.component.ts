@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { empty, Subscription } from 'rxjs';
+import { EMPTY, Subscription } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { UserInterface } from './shared/interfaces/user.interface';
 import { AuthService } from './shared/services/auth.service';
@@ -13,19 +13,25 @@ import { AuthService } from './shared/services/auth.service';
 export class AppComponent implements OnInit, OnDestroy {
   private routerSubscription: Subscription;
   private userSubscription: Subscription;
+  private contentLoadingWhitelist = ['/auth'];
   public user: UserInterface;
   public isLoading: boolean;
   public isLoadingContent: boolean;
   public hasError: boolean;
 
   constructor(private authService: AuthService, private router: Router) {
-    this.routerSubscription = this.router.events.subscribe((val) => {
-      if (val instanceof NavigationStart) {
-        this.isLoadingContent = true;
-      }
+    this.routerSubscription = this.router.events.subscribe((event) => {
+      if (
+        (event instanceof NavigationStart || event instanceof NavigationEnd) &&
+        !this.contentLoadingWhitelist.includes(event.url)
+      ) {
+        if (event instanceof NavigationStart) {
+          this.isLoadingContent = true;
+        }
 
-      if (val instanceof NavigationEnd && !this.isLoading) {
-        this.endContentLoading();
+        if (event instanceof NavigationEnd && !this.isLoading) {
+          this.endContentLoading();
+        }
       }
     });
   }
@@ -42,7 +48,7 @@ export class AppComponent implements OnInit, OnDestroy {
         catchError(() => {
           this.hasError = true;
           this.endLoading();
-          return empty();
+          return EMPTY;
         })
       )
       .subscribe();
