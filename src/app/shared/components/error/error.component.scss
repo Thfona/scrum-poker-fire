@@ -11,6 +11,10 @@
 
 .error-title {
   font-size: 80px;
+
+  &--medium {
+    font-size: 45px;
+  }
 }
 
 .error-message {

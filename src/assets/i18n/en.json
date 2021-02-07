@@ -6,5 +6,13 @@
   "AUTH_POP_UP_TEXT": "A pop-up has been opened so that you can sign in.",
   "AUTH_ALLOW_POP_UP_TEXT": "If the pop-up didn't show up make sure to allow pop-ups for this website.",
   "ERROR_TITLE": "Oops! =(",
-  "ERROR_MESSAGE": "There was an error while trying to load the application, please try again later."
+  "ERROR_MESSAGE": "There was an error while trying to load the application, please try again later.",
+  "SAVED_GAMES": "Saved Games",
+  "NAME": "Name",
+  "DESCRIPTION": "Description",
+  "CREATION_DATE": "Creation Date",
+  "SEARCH_GAMES": "Search games",
+  "NO_GAMES_DATA": "You don't have any saved games yet. Create a new game and it will show up here!",
+  "NO_GAMES_ON_FILTER": "No games to display.",
+  "GAMES_ERROR_MESSAGE": "There was an error while trying to load your saved games, please try again later."
 }

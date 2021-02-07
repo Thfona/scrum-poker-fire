@@ -1,8 +1,8 @@
 <ng-container *transloco="let t">
-  <div class="root">
+  <div [class.root]="center">
     <div class="error-text">
-      <h1 class="error-title">{{ t('ERROR_TITLE') }}</h1>
-      <h1 class="error-message">{{ t('ERROR_MESSAGE') }}</h1>
+      <h1 class="error-title" [class.error-title--medium]="!center">{{ t('ERROR_TITLE') }}</h1>
+      <h1 [class.error-message]="center">{{ t(message) }}</h1>
     </div>
   </div>
 </ng-container>

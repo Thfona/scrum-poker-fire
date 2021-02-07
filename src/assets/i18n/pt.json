@@ -6,5 +6,13 @@
   "AUTH_POP_UP_TEXT": "Foi aberto um pop-up para que você efetue o login.",
   "AUTH_ALLOW_POP_UP_TEXT": "Se o pop-up não apareceu certifique-se de que os pop-ups estão habilitados para esse site.",
   "ERROR_TITLE": "Ops! =(",
-  "ERROR_MESSAGE": "Ocorreu um erro ao tentar carregar a aplicação, por favor tente novamente mais tarde."
+  "ERROR_MESSAGE": "Ocorreu um erro ao tentar carregar a aplicação, por favor tente novamente mais tarde.",
+  "SAVED_GAMES": "Jogos Salvos",
+  "NAME": "Nome",
+  "DESCRIPTION": "Descrição",
+  "CREATION_DATE": "Data de Criação",
+  "SEARCH_GAMES": "Buscar jogos",
+  "NO_GAMES_DATA": "Você não possui nenhum jogo salvo ainda. Crie um novo jogo e ele aparecerá aqui!",
+  "NO_GAMES_ON_FILTER": "Nenhum jogo para exibir.",
+  "GAMES_ERROR_MESSAGE": ""
 }

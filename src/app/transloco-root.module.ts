@@ -7,6 +7,7 @@ import {
   translocoConfig,
   TranslocoModule
 } from '@ngneat/transloco';
+import { TranslocoLocaleModule } from '@ngneat/transloco-locale';
 import { Injectable, NgModule } from '@angular/core';
 import { getBrowserLang } from '@ngneat/transloco';
 import { environment } from '../environments/environment';
@@ -16,22 +17,26 @@ export class TranslocoHttpLoader implements TranslocoLoader {
   constructor(private http: HttpClient) {}
 
   public getTranslation(lang: string) {
-    const browserLang = getBrowserLang();
-
-    const translationLang = browserLang || lang;
-
-    return this.http.get<Translation>(`/assets/i18n/${translationLang}.json?t=${new Date().getTime()}`);
+    return this.http.get<Translation>(`/assets/i18n/${lang}.json?t=${new Date().getTime()}`);
   }
 }
 
 @NgModule({
-  exports: [TranslocoModule],
+  imports: [
+    TranslocoLocaleModule.init({
+      langToLocaleMapping: {
+        en: 'en-US',
+        pt: 'pt-BR'
+      }
+    })
+  ],
+  exports: [TranslocoModule, TranslocoLocaleModule],
   providers: [
     {
       provide: TRANSLOCO_CONFIG,
       useValue: translocoConfig({
         availableLangs: ['en', 'pt'],
-        defaultLang: 'en',
+        defaultLang: getBrowserLang() || 'en',
         fallbackLang: 'en',
         reRenderOnLangChange: true,
         prodMode: environment.production

@@ -4,6 +4,7 @@ import { EMPTY, Subscription } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { UserInterface } from './shared/interfaces/user.interface';
 import { AuthService } from './shared/services/auth.service';
+import { LocalStorageService } from './shared/services/local-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,11 @@ export class AppComponent implements OnInit, OnDestroy {
   public isLoadingContent: boolean;
   public hasError: boolean;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(
+    private authService: AuthService,
+    private localStorageService: LocalStorageService,
+    private router: Router
+  ) {
     this.routerSubscription = this.router.events.subscribe((event) => {
       if (
         (event instanceof NavigationStart || event instanceof NavigationEnd) &&
@@ -43,10 +48,18 @@ export class AppComponent implements OnInit, OnDestroy {
       .pipe(
         tap((user) => {
           this.user = user;
+
+          if (user) {
+            this.localStorageService.set('userId', user.uid);
+          } else {
+            this.localStorageService.remove('userId');
+          }
+
           this.endLoading();
         }),
         catchError(() => {
           this.hasError = true;
+          this.localStorageService.remove('userId');
           this.endLoading();
           return EMPTY;
         })
