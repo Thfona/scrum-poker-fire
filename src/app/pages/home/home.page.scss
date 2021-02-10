@@ -1,3 +1,80 @@
+@import 'includes';
+
 .root {
   margin: 2rem;
+}
+
+.table-container {
+  @include belowHome {
+    display: inline-block;
+    margin-right: 1rem;
+  }
+}
+
+.table {
+  width: 100%;
+}
+
+.table,
+.table-paginator {
+  min-width: 600px;
+}
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+  padding: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.filter-container {
+  display: flex;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.table-row {
+  cursor: pointer;
+
+  &:hover {
+    background: whitesmoke;
+  }
+}
+
+.options-column {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.options-button {
+  box-shadow: none !important;
+  background-color: transparent !important;
+
+  &:hover {
+    .mat-icon {
+      color: white;
+    }
+  }
+
+  &.edit-button {
+    &:hover {
+      background-color: $accent !important;
+    }
+  }
+
+  &.delete-button {
+    margin-left: 0.5rem;
+
+    &:hover {
+      background-color: $warn !important;
+    }
+  }
 }

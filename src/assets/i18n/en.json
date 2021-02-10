@@ -14,5 +14,9 @@
   "SEARCH_GAMES": "Search games",
   "NO_GAMES_DATA": "You don't have any saved games yet. Create a new game and it will show up here!",
   "NO_GAMES_ON_FILTER": "No games to display.",
-  "GAMES_ERROR_MESSAGE": "There was an error while trying to load your saved games, please try again later."
+  "GAMES_ERROR_MESSAGE": "There was an error while trying to load your saved games, please try again later.",
+  "DELETE_GAME_TITLE": "Delete \"{{ gameName }}\"?",
+  "DELETE_GAME_CONTENT": "Are you sure you want to delete the game \"{{ gameName }}\"?",
+  "DELETE": "Delete",
+  "CANCEL": "Cancel"
 }

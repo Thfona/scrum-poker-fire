@@ -14,5 +14,9 @@
   "SEARCH_GAMES": "Buscar jogos",
   "NO_GAMES_DATA": "Você não possui nenhum jogo salvo ainda. Crie um novo jogo e ele aparecerá aqui!",
   "NO_GAMES_ON_FILTER": "Nenhum jogo para exibir.",
-  "GAMES_ERROR_MESSAGE": ""
+  "GAMES_ERROR_MESSAGE": "Ocorreu um erro ao tentar carregar os seus jogos salvos, por favor tente novamente mais tarde.",
+  "DELETE_GAME_TITLE": "Excluir \"{{ gameName }}\"?",
+  "DELETE_GAME_CONTENT": "Você tem certeza que deseja excluir o jogo \"{{ gameName }}\"?",
+  "DELETE": "Excluir",
+  "CANCEL": "Cancelar"
 }

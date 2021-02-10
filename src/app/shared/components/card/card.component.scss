@@ -1,5 +1,5 @@
-.table {
-  width: 100%;
+.card {
+  overflow: auto;
 }
 
 .card-header {
@@ -12,10 +12,4 @@
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-}
-
-.mat-form-field {
-  font-size: 14px;
-  width: 98.5%;
-  margin-left: 1rem;
 }

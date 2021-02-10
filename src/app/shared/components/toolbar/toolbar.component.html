@@ -1,5 +1,5 @@
 <ng-container *ngIf="user">
-  <ng-container *transloco="let t">
+  <ng-container *transloco="let transloco">
     <mat-toolbar color="primary">
       <button mat-button class="home-button" aria-label="Home button" [disableRipple]="true" (click)="navigateTo('home')">
         <mat-icon>local_fire_department</mat-icon>
@@ -25,7 +25,7 @@
       </ng-container>
       <button mat-menu-item (click)="authService.signOut()">
         <mat-icon>logout</mat-icon>
-        <span>{{ t('SIGN_OUT') }}</span>
+        <span>{{ transloco('SIGN_OUT') }}</span>
       </button>
     </mat-menu>
   </ng-container>

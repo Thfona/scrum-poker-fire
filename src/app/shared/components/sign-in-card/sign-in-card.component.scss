@@ -1,6 +1,8 @@
+@import 'includes';
+
 .card {
   max-width: 310px;
-  padding: 0;
+  padding: 1.5rem;
   text-align: center;
 
   &--signing-in {
@@ -16,9 +18,12 @@
 .logo-button {
   min-height: 50px;
   font-size: 32px;
-  margin-top: 0.5rem !important;
-  margin-bottom: 1rem;
   cursor: text;
+  padding: 0;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: center;
+  color: $primary;
 }
 
 .spinner {

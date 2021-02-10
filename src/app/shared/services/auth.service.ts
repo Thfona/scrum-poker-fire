@@ -11,9 +11,11 @@ import { UserInterface } from '../interfaces/user.interface';
   providedIn: 'root'
 })
 export class AuthService {
+  public userId: string;
   public userDocument: Observable<UserInterface>;
   public isSigningIn: boolean;
   public isWaitingPopUp: boolean;
+  public routeAfterSignIn = '/home';
 
   constructor(
     private angularFireAuth: AngularFireAuth,
@@ -23,8 +25,10 @@ export class AuthService {
     this.userDocument = this.angularFireAuth.authState.pipe(
       switchMap((user) => {
         if (user) {
+          this.userId = user.uid;
           return this.angularFirestore.doc<UserInterface>(`users/${user.uid}`).valueChanges();
         } else {
+          this.userId = null;
           return of(null);
         }
       })
@@ -48,7 +52,7 @@ export class AuthService {
 
     this.isWaitingPopUp = false;
 
-    await this.router.navigate(['/home']);
+    await this.router.navigate([this.routeAfterSignIn]);
 
     this.isSigningIn = false;
 
@@ -56,6 +60,8 @@ export class AuthService {
   }
 
   public async signOut() {
+    this.routeAfterSignIn = '/home';
+
     await this.angularFireAuth.signOut();
 
     return this.router.navigate(['/auth']);

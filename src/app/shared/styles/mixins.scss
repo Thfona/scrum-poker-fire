@@ -17,6 +17,12 @@
   }
 }
 
+@mixin belowHome {
+  @media only screen and (max-width: $bp-home - 1) {
+    @content;
+  }
+}
+
 @mixin belowMedium {
   @media only screen and (max-width: $bp-medium - 1) {
     @content;

@@ -1,4 +1,4 @@
-<ng-container *transloco="let t">
+<ng-container *transloco="let transloco">
   <mat-card class="card" [class.card--signing-in]="authService.isSigningIn">
     <mat-card-content class="card-content">
       <button mat-flat-button class="logo-button" [disableRipple]="true">
@@ -6,20 +6,20 @@
         <span>ScrumPokerFire</span>
       </button>
       <ng-container *ngIf="!authService.isSigningIn">
-        <h2>{{ t('AUTH_WELCOME_TEXT') }}</h2>
-        <h3>{{ t('AUTH_SIGN_IN_TEXT') }}</h3>
+        <h2>{{ transloco('AUTH_WELCOME_TEXT') }}</h2>
+        <h3>{{ transloco('AUTH_SIGN_IN_TEXT') }}</h3>
       </ng-container>
       <ng-container *ngIf="authService.isSigningIn">
         <ng-container *ngIf="authService.isWaitingPopUp">
-          <h3>{{ t('AUTH_POP_UP_TEXT') }}</h3>
-          <h3>{{ t('AUTH_ALLOW_POP_UP_TEXT') }}</h3>
+          <h3>{{ transloco('AUTH_POP_UP_TEXT') }}</h3>
+          <h3>{{ transloco('AUTH_ALLOW_POP_UP_TEXT') }}</h3>
         </ng-container>
         <mat-spinner class="spinner" [diameter]="40"></mat-spinner>
       </ng-container>
     </mat-card-content>
     <mat-card-actions *ngIf="!authService.isSigningIn">
       <button mat-raised-button aria-label="Sign in button" color="primary" class="sign-in-button" (click)="authService.signIn()">
-        <span>{{ t('SIGN_IN_BUTTON_TEXT') }}</span>
+        <span>{{ transloco('SIGN_IN_BUTTON_TEXT') }}</span>
       </button>
     </mat-card-actions>
   </mat-card>

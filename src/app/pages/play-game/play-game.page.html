@@ -1,0 +1,14 @@
+<!-- TODO: Implement actual play page -->
+<ng-container *ngIf="isLoading">
+  <p>loading...</p>
+</ng-container>
+
+<ng-container *ngIf="!isLoading && hasError">
+  <p>error</p>
+</ng-container>
+
+<ng-container *ngIf="!isLoading && !hasError">
+  <pre>
+    {{ game | json }}
+  </pre>
+</ng-container>

@@ -4,11 +4,17 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { LoginGuard } from './shared/guards/login.guard';
 import { AuthPage } from './pages/auth/auth.page';
 import { HomePage } from './pages/home/home.page';
+import { PlayGamePage } from './pages/play-game/play-game.page';
 
 const ROUTES: Routes = [
   {
     path: 'home',
     component: HomePage,
+    canActivate: [LoginGuard]
+  },
+  {
+    path: 'play-game/:gameId',
+    component: PlayGamePage,
     canActivate: [LoginGuard]
   },
   {

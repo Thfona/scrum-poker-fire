@@ -4,7 +4,6 @@ import { EMPTY, Subscription } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { UserInterface } from './shared/interfaces/user.interface';
 import { AuthService } from './shared/services/auth.service';
-import { LocalStorageService } from './shared/services/local-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +11,7 @@ import { LocalStorageService } from './shared/services/local-storage.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  private routerSubscription: Subscription;
+  private routerEventsSubscription: Subscription;
   private userSubscription: Subscription;
   private contentLoadingWhitelist = ['/auth'];
   public user: UserInterface;
@@ -20,12 +19,8 @@ export class AppComponent implements OnInit, OnDestroy {
   public isLoadingContent: boolean;
   public hasError: boolean;
 
-  constructor(
-    private authService: AuthService,
-    private localStorageService: LocalStorageService,
-    private router: Router
-  ) {
-    this.routerSubscription = this.router.events.subscribe((event) => {
+  constructor(private authService: AuthService, private router: Router) {
+    this.routerEventsSubscription = this.router.events.subscribe((event) => {
       if (
         (event instanceof NavigationStart || event instanceof NavigationEnd) &&
         !this.contentLoadingWhitelist.includes(event.url)
@@ -47,19 +42,12 @@ export class AppComponent implements OnInit, OnDestroy {
     this.userSubscription = this.authService.userDocument
       .pipe(
         tap((user) => {
+          this.hasError = false;
           this.user = user;
-
-          if (user) {
-            this.localStorageService.set('userId', user.uid);
-          } else {
-            this.localStorageService.remove('userId');
-          }
-
           this.endLoading();
         }),
         catchError(() => {
           this.hasError = true;
-          this.localStorageService.remove('userId');
           this.endLoading();
           return EMPTY;
         })
@@ -68,8 +56,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.routerSubscription) {
-      this.routerSubscription.unsubscribe();
+    if (this.routerEventsSubscription) {
+      this.routerEventsSubscription.unsubscribe();
     }
 
     if (this.userSubscription) {
@@ -87,7 +75,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private endContentLoading(additionalTimeout = 0) {
-    const timeout = 500 + additionalTimeout;
+    const timeout = 400 + additionalTimeout;
 
     setTimeout(() => {
       this.isLoadingContent = false;
