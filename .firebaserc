@@ -1,4 +1,7 @@
 {
+  "projects": {
+    "default": "scrum-poker-fire"
+  },
   "targets": {
     "scrum-poker-fire": {
       "hosting": {
