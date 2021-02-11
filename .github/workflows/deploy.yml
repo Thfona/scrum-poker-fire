@@ -16,7 +16,10 @@ jobs:
       - name: Install dependencies
         run: npm install --quiet
 
-      - name: Build and deploy to Firebase
+      - name: Build
+        run: npm run build:prod
+
+      - name: Deploy to Firebase
         run: npm run deploy
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

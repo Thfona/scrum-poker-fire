@@ -1,5 +1,3 @@
-@import 'includes';
-
 .card {
   max-width: 310px;
   padding: 1.5rem;
@@ -23,7 +21,6 @@
   margin-bottom: 0.5rem;
   display: flex;
   justify-content: center;
-  color: $primary;
 }
 
 .spinner {

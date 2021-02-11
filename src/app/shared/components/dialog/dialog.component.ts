@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { DialogDataInterface } from '../../interfaces/dialog-data.interface';
+import { DialogContentComponent } from './dialog-content/dialog-content.component';
 
 @Component({
   selector: 'app-dialog-component',
-  templateUrl: './dialog.component.html'
+  template: ''
 })
 export class DialogComponent {
   @Input() data: DialogDataInterface;
@@ -23,24 +24,5 @@ export class DialogComponent {
         this.confirmEvent.emit();
       }
     });
-  }
-}
-
-@Component({
-  selector: 'app-dialog-content-component',
-  templateUrl: './dialog-content.component.html',
-  styleUrls: ['./dialog-content.component.scss']
-})
-export class DialogContentComponent {
-  public cancelButtonDefaultTextCode = 'CANCEL';
-
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogDataInterface) {}
-
-  public getConfirmButtonClasses() {
-    const classes: string[] = ['confirm-button'];
-
-    classes.push(`confirm-button--${this.data.confirmButtonColor}`);
-
-    return classes;
   }
 }

@@ -56,7 +56,10 @@ td.mat-footer-cell {
 
 .options-button {
   box-shadow: none !important;
-  background-color: transparent !important;
+
+  &:not(:hover) {
+    background-color: transparent !important;
+  }
 
   &:hover {
     .mat-icon {
@@ -64,17 +67,7 @@ td.mat-footer-cell {
     }
   }
 
-  &.edit-button {
-    &:hover {
-      background-color: $accent !important;
-    }
-  }
-
   &.delete-button {
     margin-left: 0.5rem;
-
-    &:hover {
-      background-color: $warn !important;
-    }
   }
 }
