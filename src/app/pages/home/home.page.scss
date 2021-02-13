@@ -5,6 +5,9 @@
 }
 
 .table-container {
+  width: 100%;
+  overflow: auto;
+
   @include belowHome {
     display: inline-block;
     margin-right: 1rem;
@@ -39,6 +42,10 @@ td.mat-footer-cell {
   width: 100%;
   margin-left: 1rem;
   margin-right: 1rem;
+}
+
+::ng-deep .mat-form-field-infix {
+  width: 100% !important;
 }
 
 .table-row {

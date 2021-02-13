@@ -27,6 +27,7 @@ export class HomePage implements OnInit, OnDestroy {
   public isLoading: boolean;
   public hasError: boolean;
   public cardTitleCode = 'SAVED_GAMES';
+  public headerButtonTitleCode = 'CREATE_NEW_GAME_BUTTON_TEXT';
   public errorMessageCode = 'GAMES_ERROR_MESSAGE';
 
   constructor(private gamesService: GamesService, private router: Router, private translocoService: TranslocoService) {}
@@ -79,6 +80,11 @@ export class HomePage implements OnInit, OnDestroy {
 
       await this.router.navigate([`/play-game/${GAME_ID}`]);
     }
+  }
+
+  // TODO: Finish implementation
+  public handleCreateNewGameButtonClick() {
+    // console.log('create');
   }
 
   // TODO: Finish implementation

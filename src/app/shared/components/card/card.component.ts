@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-card-component',
@@ -9,5 +9,12 @@ export class CardComponent {
   @Input() isLoading: boolean;
   @Input() hasError: boolean;
   @Input() cardTitleCode: string;
+  @Input() shouldDisplayHeaderButton: boolean;
+  @Input() headerButtonTitleCode: string;
   @Input() errorMessageCode: string;
+  @Output() headerButtonEvent = new EventEmitter();
+
+  public handleHeaderButtonClick() {
+    this.headerButtonEvent.emit();
+  }
 }

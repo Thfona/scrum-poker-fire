@@ -1,6 +1,14 @@
 <ng-container *transloco="let transloco">
   <div class="root">
-    <app-card-component [isLoading]="isLoading" [hasError]="hasError" [cardTitleCode]="cardTitleCode" [errorMessageCode]="errorMessageCode">
+    <app-card-component
+      [isLoading]="isLoading"
+      [hasError]="hasError"
+      [cardTitleCode]="cardTitleCode"
+      [shouldDisplayHeaderButton]="true"
+      [headerButtonTitleCode]="headerButtonTitleCode"
+      [errorMessageCode]="errorMessageCode"
+      (headerButtonEvent)="handleCreateNewGameButtonClick()"
+    >
       <mat-card-content>
         <div class="filter-container">
           <mat-form-field>

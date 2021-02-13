@@ -19,5 +19,6 @@
   "DELETE_GAME_CONTENT": "Você tem certeza que deseja excluir o jogo \"{{ gameName }}\"?",
   "DELETE": "Excluir",
   "CANCEL": "Cancelar",
-  "PASS_CARD_TEXT": "Passar"
+  "PASS_CARD_TEXT": "Passar",
+  "CREATE_NEW_GAME_BUTTON_TEXT": "Criar Novo Jogo"
 }

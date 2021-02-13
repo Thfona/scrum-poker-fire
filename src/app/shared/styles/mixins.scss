@@ -5,8 +5,20 @@
   }
 }
 
+@mixin belowToolbar {
+  @media only screen and (max-width: $bp-toolbar - 1) {
+    @content;
+  }
+}
+
 @mixin belowSmall {
   @media only screen and (max-width: $bp-small - 1) {
+    @content;
+  }
+}
+
+@mixin belowCard {
+  @media only screen and (max-width: $bp-card - 1) {
     @content;
   }
 }

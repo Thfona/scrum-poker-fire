@@ -19,5 +19,6 @@
   "DELETE_GAME_CONTENT": "Are you sure you want to delete the game \"{{ gameName }}\"?",
   "DELETE": "Delete",
   "CANCEL": "Cancel",
-  "PASS_CARD_TEXT": "Pass"
+  "PASS_CARD_TEXT": "Pass",
+  "CREATE_NEW_GAME_BUTTON_TEXT": "Create New Game"
 }

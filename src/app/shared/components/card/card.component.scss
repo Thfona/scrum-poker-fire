@@ -1,9 +1,42 @@
+@import 'includes';
+
 .card {
   overflow: auto;
 }
 
 .card-header {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  justify-content: space-between;
+
+  @include belowCard {
+    flex-direction: column;
+    margin-bottom: 0;
+  }
+}
+
+.header-text {
+  margin-top: 4px;
+  margin-bottom: 0 !important;
+
+  @include belowCard {
+    margin-bottom: 1rem !important;
+  }
+}
+
+.header-button-container {
+  margin: 0 16px;
+
+  @include belowCard {
+    margin-bottom: 1rem;
+  }
+}
+
+.header-button {
+  color: white;
+  padding: 8px;
+  line-height: normal;
+  width: 100%;
+  min-width: 0;
 }
 
 .card-content-placeholder {
