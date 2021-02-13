@@ -13,72 +13,64 @@ export class GamesService {
   constructor(private angularFirestore: AngularFirestore, private authService: AuthService) {}
 
   public getGame(gameId: string) {
-    const gameDocument: AngularFirestoreDocument<GameInterface> = this.angularFirestore.doc(`/games/${gameId}`);
+    const GAME_DOCUMENT: AngularFirestoreDocument<GameInterface> = this.angularFirestore.doc(`/games/${gameId}`);
 
-    const game = gameDocument.valueChanges();
+    const GAME = GAME_DOCUMENT.valueChanges();
 
-    return game;
+    return GAME;
   }
 
   public getGames() {
-    const userId = this.authService.userId;
+    const USER_ID = this.authService.userId;
 
-    const gamesCollection: AngularFirestoreCollection<GameInterface> = this.angularFirestore.collection(
+    const GAMES_COLLECTION: AngularFirestoreCollection<GameInterface> = this.angularFirestore.collection(
       'games',
       (ref) => {
-        return ref.where('ownerId', '==', userId).orderBy('creationDate', 'desc');
+        return ref.where('ownerId', '==', USER_ID).orderBy('creationDate', 'desc');
       }
     );
 
-    const games = gamesCollection.valueChanges();
+    const GAMES = GAMES_COLLECTION.valueChanges();
 
-    return games;
+    return GAMES;
   }
 
   // TODO: Finish implementation
   public createGame(data: FormGameInterface) {
-    const id = generateUniqueIdUtil();
-    const userId = this.authService.userId;
-    const date = dateFormatterUtil(new Date());
+    const GAME_ID = generateUniqueIdUtil();
+    const USER_ID = this.authService.userId;
+    const CREATION_DATE = dateFormatterUtil(new Date());
 
-    const stories = data.stories.map((story) => {
-      return {
-        index: story.index,
-        name: story.name,
-        score: -1
-      };
-    });
-
-    const game: GameInterface = {
-      id,
-      ownerId: userId,
-      name: data.name,
-      description: data.description,
-      creationDate: date,
-      stories,
+    const GAME: GameInterface = {
+      ...data,
+      id: GAME_ID,
+      ownerId: USER_ID,
+      creationDate: CREATION_DATE,
+      stories: [],
       session: {
         isActive: false,
         currentStoryIndex: 0,
         players: [],
         spectators: []
-      }
+      },
+      bannedPlayers: []
     };
 
-    const gamesCollection: AngularFirestoreCollection<GameInterface> = this.angularFirestore.collection('games');
+    const GAMES_COLLECTION: AngularFirestoreCollection<GameInterface> = this.angularFirestore.collection('games');
 
     // console.log(game)
     // return gamesCollection.doc(id).set(game);
   }
 
-  public updateGame(gameId: string, data: GameInterface) {
-    const gameDocument: AngularFirestoreDocument<GameInterface> = this.angularFirestore.doc(`/games/${gameId}`);
+  public updateGame(gameId: string, data: FormGameInterface) {
+    const GAME_DOCUMENT: AngularFirestoreDocument<GameInterface> = this.angularFirestore.doc(`/games/${gameId}`);
 
-    return gameDocument.update(data);
+    return GAME_DOCUMENT.update({ ...data });
   }
 
   public deleteGame(gameId: string) {
-    const gameDocument: AngularFirestoreDocument<GameInterface> = this.angularFirestore.doc(`/games/${gameId}`);
+    const GAME_DOCUMENT: AngularFirestoreDocument<GameInterface> = this.angularFirestore.doc(`/games/${gameId}`);
 
-    return gameDocument.delete();
+    return GAME_DOCUMENT.delete();
   }
 }

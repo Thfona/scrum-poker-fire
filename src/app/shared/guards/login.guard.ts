@@ -11,14 +11,14 @@ export class LoginGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(_, routerStateSnapshot: RouterStateSnapshot): Observable<boolean> {
-    const routeAfterSignIn = routerStateSnapshot.url;
+    const ROUTE_AFTER_SIGN_IN = routerStateSnapshot.url;
 
     return this.authService.userDocument.pipe(
       take(1),
       map((user) => !!user),
       tap((loggedIn) => {
         if (!loggedIn) {
-          this.authService.routeAfterSignIn = routeAfterSignIn;
+          this.authService.routeAfterSignIn = ROUTE_AFTER_SIGN_IN;
 
           this.router.navigate(['/auth']);
         }

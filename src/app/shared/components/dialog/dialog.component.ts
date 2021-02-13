@@ -14,12 +14,12 @@ export class DialogComponent {
   constructor(private matDialog: MatDialog) {}
 
   public openDialog() {
-    const dialogReference = this.matDialog.open(DialogContentComponent, {
+    const DIALOG_REFERENCE = this.matDialog.open(DialogContentComponent, {
       data: this.data,
       autoFocus: false
     });
 
-    dialogReference.afterClosed().subscribe((result) => {
+    DIALOG_REFERENCE.afterClosed().subscribe((result) => {
       if (result) {
         this.confirmEvent.emit();
       }

@@ -39,11 +39,11 @@ export class AuthService {
     this.isSigningIn = true;
     this.isWaitingPopUp = true;
 
-    const provider = new firebase.auth.GoogleAuthProvider();
+    const PROVIDER = new firebase.auth.GoogleAuthProvider();
     let credential: firebase.auth.UserCredential;
 
     try {
-      credential = await this.angularFireAuth.signInWithPopup(provider);
+      credential = await this.angularFireAuth.signInWithPopup(PROVIDER);
     } catch {
       this.isSigningIn = false;
       this.isWaitingPopUp = false;
@@ -68,15 +68,15 @@ export class AuthService {
   }
 
   private updateUserData({ uid, email, displayName, photoURL }: UserInterface) {
-    const userReference: AngularFirestoreDocument<UserInterface> = this.angularFirestore.doc(`users/${uid}`);
+    const USER_REFERENCE: AngularFirestoreDocument<UserInterface> = this.angularFirestore.doc(`users/${uid}`);
 
-    const data = {
+    const DATA = {
       uid,
       email,
       displayName,
       photoURL
     };
 
-    return userReference.set(data, { merge: true });
+    return USER_REFERENCE.set(DATA, { merge: true });
   }
 }

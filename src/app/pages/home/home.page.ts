@@ -65,39 +65,39 @@ export class HomePage implements OnInit, OnDestroy {
     clearTimeout(this.timeout);
 
     this.timeout = setTimeout(() => {
-      const filterValue = (event.target as HTMLInputElement).value;
+      const FILTER_VALUE = (event.target as HTMLInputElement).value;
 
-      this.dataSource.filter = filterValue.trim().toLowerCase();
+      this.dataSource.filter = FILTER_VALUE.trim().toLowerCase();
     }, 600);
   }
 
   public async handleRowClick(event: Event, game: GameInterface) {
-    const elementTag = (event.target as HTMLElement).tagName;
+    const ELEMENT_TAG = (event.target as HTMLElement).tagName;
 
-    if (elementTag !== 'BUTTON' && elementTag !== 'MAT-ICON') {
-      const gameId = game.id;
+    if (ELEMENT_TAG !== 'BUTTON' && ELEMENT_TAG !== 'MAT-ICON') {
+      const GAME_ID = game.id;
 
-      await this.router.navigate([`/play-game/${gameId}`]);
+      await this.router.navigate([`/play-game/${GAME_ID}`]);
     }
   }
 
   // TODO: Finish implementation
   public handleRowEditClick(game: GameInterface) {
-    const gameId = game.id;
+    const GAME_ID = game.id;
   }
 
   public handleRowDeleteClick(game: GameInterface) {
     this.gameToDeleteId = game.id;
-    const gameName = game.name;
+    const GAME_NAME = game.name;
 
-    const deleteGameDialogData: DialogDataInterface = {
-      title: this.translocoService.translate('DELETE_GAME_TITLE', { gameName }),
-      content: this.translocoService.translate('DELETE_GAME_CONTENT', { gameName }),
+    const DELETE_GAME_DIALOG_DATA: DialogDataInterface = {
+      title: this.translocoService.translate('DELETE_GAME_TITLE', { gameName: GAME_NAME }),
+      content: this.translocoService.translate('DELETE_GAME_CONTENT', { gameName: GAME_NAME }),
       confirmButtonText: this.translocoService.translate('DELETE'),
       confirmButtonColor: 'warn'
     };
 
-    this.deleteGameDialog.data = deleteGameDialogData;
+    this.deleteGameDialog.data = DELETE_GAME_DIALOG_DATA;
 
     this.deleteGameDialog.openDialog();
   }
