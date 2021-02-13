@@ -8,7 +8,7 @@
   margin-bottom: 1rem;
   justify-content: space-between;
 
-  @include belowCard {
+  @include belowSmallMedium {
     flex-direction: column;
     margin-bottom: 0;
   }
@@ -18,7 +18,7 @@
   margin-top: 4px;
   margin-bottom: 0 !important;
 
-  @include belowCard {
+  @include belowSmallMedium {
     margin-bottom: 1rem !important;
   }
 }
@@ -26,7 +26,7 @@
 .header-button-container {
   margin: 0 16px;
 
-  @include belowCard {
+  @include belowSmallMedium {
     margin-bottom: 1rem;
   }
 }

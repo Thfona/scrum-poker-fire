@@ -7,11 +7,6 @@
 .table-container {
   width: 100%;
   overflow: auto;
-
-  @include belowHome {
-    display: inline-block;
-    margin-right: 1rem;
-  }
 }
 
 .table {

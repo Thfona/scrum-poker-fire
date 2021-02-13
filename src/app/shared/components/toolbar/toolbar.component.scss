@@ -8,7 +8,7 @@
 }
 
 .home-button-text {
-  @include belowToolbar {
+  @include belowSmall {
     display: none;
   }
 }
