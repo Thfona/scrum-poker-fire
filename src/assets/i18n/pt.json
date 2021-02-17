@@ -20,6 +20,8 @@
   "STORY_TIMER": "Cronômetro de estórias",
   "STORY_TIMER_MINUTES": "Minutos do cronômetro",
   "SEARCH_GAMES": "Buscar jogos",
+  "NUMBER_OF_STORIES": "Qtd. de Estórias",
+  "TOTAL_EFFORT": "Esforço Total",
   "NO_GAMES_DATA": "Você não possui nenhum jogo salvo ainda. Crie um novo jogo e ele aparecerá aqui!",
   "NO_GAMES_ON_FILTER": "Nenhum jogo para exibir.",
   "GAMES_ERROR_MESSAGE": "Ocorreu um erro ao tentar carregar os seus jogos salvos, por favor tente novamente mais tarde.",

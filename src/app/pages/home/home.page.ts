@@ -10,6 +10,7 @@ import { GameDialogDataInterface } from 'src/app/shared/interfaces/game-dialog-d
 import { GameDialogResultInterface } from 'src/app/shared/interfaces/game-dialog-result.interface';
 import { GameInterface } from 'src/app/shared/interfaces/game.interface';
 import { GameSettingsInterface } from 'src/app/shared/interfaces/game-settings.interface';
+import { StoryInterface } from 'src/app/shared/interfaces/story.interface';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { DomainService } from 'src/app/shared/services/domain.service';
 import { GamesService } from 'src/app/shared/services/games.service';
@@ -32,7 +33,15 @@ export class HomePage implements OnInit, OnDestroy {
   private gameToDeleteId: string;
   private hasLoadedFirstTime: boolean;
   private gameDialogOperation: 'create' | 'edit';
-  public displayedColumns: string[] = ['name', 'description', 'creationDate', 'options'];
+  public displayedColumns: string[] = [
+    'name',
+    'description',
+    'cardSet',
+    'numberOfStories',
+    'totalEffort',
+    'creationDate',
+    'options'
+  ];
   public games: GameInterface[] = [];
   public dataSource: MatTableDataSource<GameInterface>;
   public isLoading: boolean;
@@ -101,6 +110,20 @@ export class HomePage implements OnInit, OnDestroy {
 
       this.dataSource.filter = FILTER_VALUE.trim().toLowerCase();
     }, 600);
+  }
+
+  public calculateTotalGameEffort(stories: StoryInterface[]) {
+    if (!stories.length) {
+      return 0;
+    }
+
+    let total = 0;
+
+    stories.map((story) => {
+      total += story.score;
+    });
+
+    return total;
   }
 
   public async handleRowClick(event: Event, game: GameInterface) {

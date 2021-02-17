@@ -20,6 +20,8 @@
   "STORY_TIMER": "Story timer",
   "STORY_TIMER_MINUTES": "Timer minutes",
   "SEARCH_GAMES": "Search games",
+  "NUMBER_OF_STORIES": "No. of Stories",
+  "TOTAL_EFFORT": "Total Effort",
   "NO_GAMES_DATA": "You don't have any saved games yet. Create a new game and it will show up here!",
   "NO_GAMES_ON_FILTER": "No games to display.",
   "GAMES_ERROR_MESSAGE": "There was an error while trying to load your saved games, please try again later.",
