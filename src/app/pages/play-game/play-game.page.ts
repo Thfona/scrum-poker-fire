@@ -24,7 +24,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading = true;
 
-    this.userId = this.authService.userId;
+    this.userId = this.authService.user.uid;
     this.gameId = this.route.snapshot.paramMap.get('gameId');
 
     this.gameSubscription = this.gamesService

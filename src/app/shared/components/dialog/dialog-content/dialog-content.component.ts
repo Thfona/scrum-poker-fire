@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DialogDataInterface } from '../../../interfaces/dialog-data.interface';
+import { DialogDataInterface } from 'src/app/shared/interfaces/dialog-data.interface';
 
 @Component({
   selector: 'app-dialog-content-component',
@@ -8,7 +8,5 @@ import { DialogDataInterface } from '../../../interfaces/dialog-data.interface';
   styleUrls: ['./dialog-content.component.scss']
 })
 export class DialogContentComponent {
-  public cancelButtonDefaultTextCode = 'CANCEL';
-
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogDataInterface) {}
 }

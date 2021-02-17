@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { DialogDataInterface } from '../../interfaces/dialog-data.interface';
 import { DialogContentComponent } from './dialog-content/dialog-content.component';
 
@@ -7,11 +8,18 @@ import { DialogContentComponent } from './dialog-content/dialog-content.componen
   selector: 'app-dialog-component',
   template: ''
 })
-export class DialogComponent {
+export class DialogComponent implements OnDestroy {
   @Input() data: DialogDataInterface;
   @Output() confirmEvent = new EventEmitter();
+  private dialogSubscription: Subscription;
 
   constructor(private matDialog: MatDialog) {}
+
+  ngOnDestroy() {
+    if (this.dialogSubscription) {
+      this.dialogSubscription.unsubscribe();
+    }
+  }
 
   public openDialog() {
     const DIALOG_REFERENCE = this.matDialog.open(DialogContentComponent, {
@@ -19,7 +27,7 @@ export class DialogComponent {
       autoFocus: false
     });
 
-    DIALOG_REFERENCE.afterClosed().subscribe((result) => {
+    this.dialogSubscription = DIALOG_REFERENCE.afterClosed().subscribe((result) => {
       if (result) {
         this.confirmEvent.emit();
       }

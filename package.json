@@ -1,7 +1,7 @@
 {
   "name": "scrum-poker-fire",
   "version": "1.0.0",
-  "description": "Front-End for the ScrumPokerFire website.",
+  "description": "Front-End for the ScrumPokerFire application.",
   "author": "Thfona",
   "license": "MIT",
   "private": true,
@@ -35,6 +35,7 @@
     "@auth0/angular-jwt": "5.0.2",
     "@ngneat/transloco": "2.20.0",
     "@ngneat/transloco-locale": "1.4.0",
+    "@uiowa/digit-only": "2.2.1",
     "firebase": "8.2.5",
     "ngx-progressbar": "6.1.0",
     "rxjs": "6.6.3",

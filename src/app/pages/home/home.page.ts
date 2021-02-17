@@ -6,9 +6,16 @@ import { TranslocoService } from '@ngneat/transloco';
 import { EMPTY, Subscription } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { DialogDataInterface } from 'src/app/shared/interfaces/dialog-data.interface';
+import { GameDialogDataInterface } from 'src/app/shared/interfaces/game-dialog-data.interface';
+import { GameDialogResultInterface } from 'src/app/shared/interfaces/game-dialog-result.interface';
 import { GameInterface } from 'src/app/shared/interfaces/game.interface';
+import { GameSettingsInterface } from 'src/app/shared/interfaces/game-settings.interface';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { DomainService } from 'src/app/shared/services/domain.service';
 import { GamesService } from 'src/app/shared/services/games.service';
+import { UserService } from 'src/app/shared/services/user.service';
 import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
+import { GameDialogComponent } from 'src/app/shared/components/game-dialog/game-dialog.component';
 
 @Component({
   selector: 'app-home-page',
@@ -17,10 +24,14 @@ import { DialogComponent } from 'src/app/shared/components/dialog/dialog.compone
 })
 export class HomePage implements OnInit, OnDestroy {
   @ViewChild('tablePaginator') paginator: MatPaginator;
+  @ViewChild('gameDialog') gameDialog: GameDialogComponent;
   @ViewChild('deleteGameDialog') deleteGameDialog: DialogComponent;
   private gamesSubscription: Subscription;
   private timeout: any;
+  private gameToEditId: string;
   private gameToDeleteId: string;
+  private hasLoadedFirstTime: boolean;
+  private gameDialogOperation: 'create' | 'edit';
   public displayedColumns: string[] = ['name', 'description', 'creationDate', 'options'];
   public games: GameInterface[] = [];
   public dataSource: MatTableDataSource<GameInterface>;
@@ -30,7 +41,14 @@ export class HomePage implements OnInit, OnDestroy {
   public headerButtonTitleCode = 'CREATE_NEW_GAME_BUTTON_TEXT';
   public errorMessageCode = 'GAMES_ERROR_MESSAGE';
 
-  constructor(private gamesService: GamesService, private router: Router, private translocoService: TranslocoService) {}
+  constructor(
+    private authService: AuthService,
+    private domainService: DomainService,
+    private gamesService: GamesService,
+    private router: Router,
+    private translocoService: TranslocoService,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
     this.isLoading = true;
@@ -42,7 +60,12 @@ export class HomePage implements OnInit, OnDestroy {
           this.hasError = false;
           this.games = games;
           this.dataSource = new MatTableDataSource(this.games);
-          this.isLoading = false;
+
+          if (!this.hasLoadedFirstTime) {
+            this.isLoading = false;
+            this.hasLoadedFirstTime = true;
+          }
+
           setTimeout(() => {
             this.dataSource.paginator = this.paginator;
           }, 0);
@@ -60,6 +83,14 @@ export class HomePage implements OnInit, OnDestroy {
     if (this.gamesSubscription) {
       this.gamesSubscription.unsubscribe();
     }
+  }
+
+  private endLoading() {
+    this.isLoading = false;
+
+    setTimeout(() => {
+      this.dataSource.paginator = this.paginator;
+    }, 0);
   }
 
   public applyFilter(event: Event) {
@@ -82,14 +113,91 @@ export class HomePage implements OnInit, OnDestroy {
     }
   }
 
-  // TODO: Finish implementation
   public handleCreateNewGameButtonClick() {
-    // console.log('create');
+    this.gameDialogOperation = 'create';
+    const USER = this.authService.user;
+    const DOMAIN_DEFAULT_GAME_SETTINGS = this.domainService.getDomain().defaultGameSettings
+      .values as GameSettingsInterface;
+
+    const DEFAULT_GAME_SETTINGS = USER.defaultGameSettings ? USER.defaultGameSettings : DOMAIN_DEFAULT_GAME_SETTINGS;
+
+    const CREATE_GAME_DIALOG_DATA: GameDialogDataInterface = {
+      title: this.translocoService.translate('CREATE_GAME_TITLE'),
+      formData: {
+        name: '',
+        description: '',
+        ...DEFAULT_GAME_SETTINGS
+      }
+    };
+
+    this.gameDialog.data = CREATE_GAME_DIALOG_DATA;
+
+    this.gameDialog.openDialog();
   }
 
-  // TODO: Finish implementation
   public handleRowEditClick(game: GameInterface) {
-    const GAME_ID = game.id;
+    this.gameDialogOperation = 'edit';
+    this.gameToEditId = game.id;
+    const GAME_NAME = game.name;
+
+    const EDIT_GAME_DIALOG_DATA: GameDialogDataInterface = {
+      title: this.translocoService.translate('EDIT_GAME_TITLE', { gameName: GAME_NAME }),
+      formData: {
+        name: GAME_NAME,
+        description: game.description,
+        teamVelocity: game.teamVelocity,
+        shareVelocity: game.shareVelocity,
+        cardSet: game.cardSet,
+        autoFlip: game.autoFlip,
+        allowVoteChangeAfterReveal: game.allowVoteChangeAfterReveal,
+        calculateScore: game.calculateScore,
+        storyTimer: game.storyTimer,
+        storyTimerMinutes: game.storyTimerMinutes
+      }
+    };
+
+    this.gameDialog.data = EDIT_GAME_DIALOG_DATA;
+
+    this.gameDialog.openDialog();
+  }
+
+  public async handleGameDialogConfirmation(gameDialogResult: GameDialogResultInterface) {
+    this.isLoading = true;
+
+    let gameId: string;
+
+    if (this.gameDialogOperation === 'create') {
+      await this.gamesService.createGame(gameDialogResult.formValue);
+
+      gameId = this.gamesService.latestCreatedGameId;
+    }
+
+    if (this.gameDialogOperation === 'edit') {
+      gameId = this.gameToEditId;
+
+      await this.gamesService.updateGame(gameId, gameDialogResult.formValue);
+    }
+
+    if (gameDialogResult.saveAsDefaultSettings) {
+      const GAME_SETTINGS: GameSettingsInterface = {
+        teamVelocity: gameDialogResult.formValue.teamVelocity,
+        shareVelocity: gameDialogResult.formValue.shareVelocity,
+        cardSet: gameDialogResult.formValue.cardSet,
+        autoFlip: gameDialogResult.formValue.autoFlip,
+        allowVoteChangeAfterReveal: gameDialogResult.formValue.allowVoteChangeAfterReveal,
+        calculateScore: gameDialogResult.formValue.calculateScore,
+        storyTimer: gameDialogResult.formValue.storyTimer,
+        storyTimerMinutes: gameDialogResult.formValue.storyTimerMinutes
+      };
+
+      await this.userService.updateUserDefaultGameSettings(GAME_SETTINGS);
+    }
+
+    this.endLoading();
+
+    if (gameDialogResult.start) {
+      this.router.navigate([`play-game/${gameId}`]);
+    }
   }
 
   public handleRowDeleteClick(game: GameInterface) {
@@ -108,9 +216,11 @@ export class HomePage implements OnInit, OnDestroy {
     this.deleteGameDialog.openDialog();
   }
 
-  public handleDeleteConfirmation() {
+  public async handleDeleteConfirmation() {
     this.isLoading = true;
 
-    this.gamesService.deleteGame(this.gameToDeleteId);
+    await this.gamesService.deleteGame(this.gameToDeleteId);
+
+    this.endLoading();
   }
 }

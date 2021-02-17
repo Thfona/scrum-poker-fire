@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { EMPTY, Subscription } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, concatMap, map, tap } from 'rxjs/operators';
 import { UserInterface } from './shared/interfaces/user.interface';
 import { AuthService } from './shared/services/auth.service';
+import { DomainService } from './shared/services/domain.service';
 
 @Component({
   selector: 'app-root',
@@ -12,14 +13,14 @@ import { AuthService } from './shared/services/auth.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   private routerEventsSubscription: Subscription;
-  private userSubscription: Subscription;
+  private dataSubscription: Subscription;
   private contentLoadingWhitelist = ['/auth'];
   public user: UserInterface;
   public isLoading: boolean;
   public isLoadingContent: boolean;
   public hasError: boolean;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private domainService: DomainService, private router: Router) {
     this.routerEventsSubscription = this.router.events.subscribe((event) => {
       if (
         (event instanceof NavigationStart || event instanceof NavigationEnd) &&
@@ -39,11 +40,15 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading = true;
 
-    this.userSubscription = this.authService.userDocument
+    this.dataSubscription = this.authService.userDocument
       .pipe(
-        tap((user) => {
-          this.hasError = false;
+        map((user) => {
           this.user = user;
+        }),
+        concatMap(() => this.domainService.getDomainItems()),
+        tap((domain) => {
+          this.hasError = false;
+          this.domainService.setDomain(domain);
           this.endLoading();
         }),
         catchError(() => {
@@ -60,8 +65,8 @@ export class AppComponent implements OnInit, OnDestroy {
       this.routerEventsSubscription.unsubscribe();
     }
 
-    if (this.userSubscription) {
-      this.userSubscription.unsubscribe();
+    if (this.dataSubscription) {
+      this.dataSubscription.unsubscribe();
     }
   }
 

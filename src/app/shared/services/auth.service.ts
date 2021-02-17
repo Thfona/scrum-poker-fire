@@ -11,7 +11,7 @@ import { UserInterface } from '../interfaces/user.interface';
   providedIn: 'root'
 })
 export class AuthService {
-  public userId: string;
+  public user: UserInterface;
   public userDocument: Observable<UserInterface>;
   public isSigningIn: boolean;
   public isWaitingPopUp: boolean;
@@ -25,10 +25,10 @@ export class AuthService {
     this.userDocument = this.angularFireAuth.authState.pipe(
       switchMap((user) => {
         if (user) {
-          this.userId = user.uid;
+          this.user = user;
           return this.angularFirestore.doc<UserInterface>(`users/${user.uid}`).valueChanges();
         } else {
-          this.userId = null;
+          this.user = null;
           return of(null);
         }
       })
@@ -68,7 +68,7 @@ export class AuthService {
   }
 
   private updateUserData({ uid, email, displayName, photoURL }: UserInterface) {
-    const USER_REFERENCE: AngularFirestoreDocument<UserInterface> = this.angularFirestore.doc(`users/${uid}`);
+    const USER_DOCUMENT: AngularFirestoreDocument<UserInterface> = this.angularFirestore.doc(`users/${uid}`);
 
     const DATA = {
       uid,
@@ -77,6 +77,6 @@ export class AuthService {
       photoURL
     };
 
-    return USER_REFERENCE.set(DATA, { merge: true });
+    return USER_DOCUMENT.set(DATA, { merge: true });
   }
 }

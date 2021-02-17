@@ -10,6 +10,8 @@ import { generateUniqueIdUtil } from '../utils/generateUniqueId.util';
   providedIn: 'root'
 })
 export class GamesService {
+  public latestCreatedGameId: string;
+
   constructor(private angularFirestore: AngularFirestore, private authService: AuthService) {}
 
   public getGame(gameId: string) {
@@ -21,7 +23,7 @@ export class GamesService {
   }
 
   public getGames() {
-    const USER_ID = this.authService.userId;
+    const USER_ID = this.authService.user.uid;
 
     const GAMES_COLLECTION: AngularFirestoreCollection<GameInterface> = this.angularFirestore.collection(
       'games',
@@ -35,11 +37,12 @@ export class GamesService {
     return GAMES;
   }
 
-  // TODO: Finish implementation
   public createGame(data: FormGameInterface) {
     const GAME_ID = generateUniqueIdUtil();
-    const USER_ID = this.authService.userId;
+    const USER_ID = this.authService.user.uid;
     const CREATION_DATE = dateFormatterUtil(new Date());
+
+    this.latestCreatedGameId = GAME_ID;
 
     const GAME: GameInterface = {
       ...data,
@@ -58,8 +61,7 @@ export class GamesService {
 
     const GAMES_COLLECTION: AngularFirestoreCollection<GameInterface> = this.angularFirestore.collection('games');
 
-    // console.log(game)
-    // return gamesCollection.doc(id).set(game);
+    return GAMES_COLLECTION.doc(GAME_ID).set(GAME);
   }
 
   public updateGame(gameId: string, data: FormGameInterface) {

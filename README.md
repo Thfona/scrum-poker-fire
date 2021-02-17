@@ -1,6 +1,6 @@
 # ScrumPokerFire
 
-Front-End for the ScrumPokerFire website.
+Front-End for the ScrumPokerFire application.
 
 ## Scripts
 

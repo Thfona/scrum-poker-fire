@@ -13,7 +13,7 @@
         <div class="filter-container">
           <mat-form-field>
             <mat-label>{{ transloco('SEARCH_GAMES') }}</mat-label>
-            <input matInput (keyup)="applyFilter($event)" #input>
+            <input matInput (keyup)="applyFilter($event)">
           </mat-form-field>
         </div>
 
@@ -63,6 +63,8 @@
       </mat-card-content>
     </app-card-component>
   </div>
+
+  <app-game-dialog-component #gameDialog (confirmEvent)="handleGameDialogConfirmation($event)"></app-game-dialog-component>
 
   <app-dialog-component #deleteGameDialog (confirmEvent)="handleDeleteConfirmation()"></app-dialog-component>
 </ng-container>
