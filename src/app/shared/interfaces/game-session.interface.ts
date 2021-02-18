@@ -3,6 +3,7 @@ import { PlayerInterface } from './player.interface';
 
 export interface GameSessionInterface {
   isActive: boolean;
+  hasStarted: boolean;
   currentStoryIndex: number;
   players: PlayerInterface[];
   spectators: GameSessionUserInterface[];

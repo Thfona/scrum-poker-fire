@@ -71,16 +71,12 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private endLoading() {
-    const TIMEOUT = 200;
-
-    setTimeout(() => {
-      this.isLoading = false;
-      this.endContentLoading(TIMEOUT);
-    }, TIMEOUT);
+    this.isLoading = false;
+    this.endContentLoading();
   }
 
-  private endContentLoading(additionalTimeout = 0) {
-    const TIMEOUT = 400 + additionalTimeout;
+  private endContentLoading() {
+    const TIMEOUT = 300;
 
     setTimeout(() => {
       this.isLoadingContent = false;

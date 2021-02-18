@@ -1,7 +1,6 @@
 import { GameSessionUserInterface } from './game-session-user.interface';
+import { PlayerVoteInferface } from './player-vote.interface';
 
 export interface PlayerInterface extends GameSessionUserInterface {
-  vote: number;
-  skippedVote: boolean;
-  voteSkipValue: string;
+  vote: PlayerVoteInferface;
 }

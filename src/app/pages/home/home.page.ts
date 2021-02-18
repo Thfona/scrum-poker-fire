@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslocoService } from '@ngneat/transloco';
 import { EMPTY, Subscription } from 'rxjs';
@@ -17,6 +18,8 @@ import { GamesService } from 'src/app/shared/services/games.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
 import { GameDialogComponent } from 'src/app/shared/components/game-dialog/game-dialog.component';
+import { SNACKBAR_ACTION } from 'src/app/shared/constants/snackbar-action.constant';
+import { SNACKBAR_CONFIGURATION } from 'src/app/shared/constants/snackbar-configuration.constant';
 
 @Component({
   selector: 'app-home-page',
@@ -55,6 +58,7 @@ export class HomePage implements OnInit, OnDestroy {
     private domainService: DomainService,
     private gamesService: GamesService,
     private router: Router,
+    private snackBar: MatSnackBar,
     private translocoService: TranslocoService,
     private userService: UserService
   ) {}
@@ -185,12 +189,23 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   public async handleGameDialogConfirmation(gameDialogResult: GameDialogResultInterface) {
+    let hasError = false;
     this.isLoading = true;
 
     let gameId: string;
 
     if (this.gameDialogOperation === 'create') {
-      await this.gamesService.createGame(gameDialogResult.formValue);
+      try {
+        await this.gamesService.createGame(gameDialogResult.formValue);
+      } catch {
+        hasError = true;
+
+        this.snackBar.open(
+          this.translocoService.translate('CREATE_GAME_ERROR'),
+          this.translocoService.translate(SNACKBAR_ACTION),
+          SNACKBAR_CONFIGURATION
+        );
+      }
 
       gameId = this.gamesService.latestCreatedGameId;
     }
@@ -198,7 +213,17 @@ export class HomePage implements OnInit, OnDestroy {
     if (this.gameDialogOperation === 'edit') {
       gameId = this.gameToEditId;
 
-      await this.gamesService.updateGame(gameId, gameDialogResult.formValue);
+      try {
+        await this.gamesService.updateGame(gameId, gameDialogResult.formValue);
+      } catch {
+        hasError = true;
+
+        this.snackBar.open(
+          this.translocoService.translate('EDIT_GAME_ERROR'),
+          this.translocoService.translate(SNACKBAR_ACTION),
+          SNACKBAR_CONFIGURATION
+        );
+      }
     }
 
     if (gameDialogResult.saveAsDefaultSettings) {
@@ -213,12 +238,20 @@ export class HomePage implements OnInit, OnDestroy {
         storyTimerMinutes: gameDialogResult.formValue.storyTimerMinutes
       };
 
-      await this.userService.updateUserDefaultGameSettings(GAME_SETTINGS);
+      try {
+        await this.userService.updateUserDefaultGameSettings(GAME_SETTINGS);
+      } catch {
+        this.snackBar.open(
+          this.translocoService.translate('UPDATE_USER_DEFAULT_GAME_SETTINGS_ERROR'),
+          this.translocoService.translate(SNACKBAR_ACTION),
+          SNACKBAR_CONFIGURATION
+        );
+      }
     }
 
     this.endLoading();
 
-    if (gameDialogResult.start) {
+    if (gameDialogResult.start && !hasError) {
       this.router.navigate([`play-game/${gameId}`]);
     }
   }
@@ -242,7 +275,15 @@ export class HomePage implements OnInit, OnDestroy {
   public async handleDeleteConfirmation() {
     this.isLoading = true;
 
-    await this.gamesService.deleteGame(this.gameToDeleteId);
+    try {
+      await this.gamesService.deleteGame(this.gameToDeleteId);
+    } catch {
+      this.snackBar.open(
+        this.translocoService.translate('DELETE_GAME_ERROR'),
+        this.translocoService.translate(SNACKBAR_ACTION),
+        SNACKBAR_CONFIGURATION
+      );
+    }
 
     this.endLoading();
   }

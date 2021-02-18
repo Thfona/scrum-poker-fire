@@ -16,8 +16,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatRippleModule } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { TranslocoRootModule } from '../transloco-root.module';
@@ -63,8 +65,10 @@ const MODULES = [
   MatProgressSpinnerModule,
   MatRadioModule,
   MatRippleModule,
+  MatSnackBarModule,
   MatTableModule,
   MatToolbarModule,
+  MatTooltipModule,
   RouterModule,
   TranslocoRootModule
 ];

@@ -18,7 +18,7 @@
       </ng-container>
     </mat-card-content>
     <mat-card-actions *ngIf="!authService.isSigningIn">
-      <button mat-raised-button aria-label="Sign in button" color="primary" class="sign-in-button" (click)="authService.signIn()">
+      <button mat-raised-button aria-label="Sign in button" color="primary" class="sign-in-button" (click)="signIn()">
         <span>{{ transloco('SIGN_IN_BUTTON_TEXT') }}</span>
       </button>
     </mat-card-actions>
