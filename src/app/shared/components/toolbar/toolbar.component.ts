@@ -10,10 +10,16 @@ import { AuthService } from '../../services/auth.service';
 })
 export class ToolbarComponent {
   @Input() user: UserInterface;
+  public gitHubLogoSrc = 'assets/svg/github-circle-white-transparent.svg';
+  public gitHubRepositoryLink = 'https://github.com/Thfona/scrum-poker-fire-frontend';
 
   constructor(public authService: AuthService, private router: Router) {}
 
   public navigateTo(route: string) {
     return this.router.navigate([`/${route}`]);
+  }
+
+  public openGitHubRepository() {
+    window.open(this.gitHubRepositoryLink, '_blank');
   }
 }

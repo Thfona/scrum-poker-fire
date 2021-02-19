@@ -7,6 +7,9 @@
         <span class="home-button-text">ScrumPokerFire</span>
       </button>
       <span class="spacer"></span>
+      <div class="github-link-container">
+        <img class="github-link" [src]="gitHubLogoSrc" (click)="openGitHubRepository()">
+      </div>
       <div *ngIf="user.photoURL" class="avatar-container">
         <div matRipple class="avatar-button" [matMenuTriggerFor]="menu">
           <img class="avatar" aria-label="User menu" [src]="user.photoURL">

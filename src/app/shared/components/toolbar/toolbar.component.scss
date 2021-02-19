@@ -17,6 +17,19 @@
   flex: 1 1 auto;
 }
 
+.github-link-container {
+  margin-right: 1.5rem;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  justify-content: center;
+}
+
+.github-link {
+  width: 100%;
+  cursor: pointer;
+}
+
 .avatar-container {
   padding-right: 1.25rem;
 }
