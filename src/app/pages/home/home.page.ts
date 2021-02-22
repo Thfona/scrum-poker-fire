@@ -24,7 +24,8 @@ import { SNACKBAR_CONFIGURATION } from 'src/app/shared/constants/snackbar-config
 @Component({
   selector: 'app-home-page',
   templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss']
+  styleUrls: ['./home.page.scss'],
+  providers: [GamesService, UserService]
 })
 export class HomePage implements OnInit, OnDestroy {
   @ViewChild('tablePaginator') paginator: MatPaginator;
@@ -134,9 +135,7 @@ export class HomePage implements OnInit, OnDestroy {
     const ELEMENT_TAG = (event.target as HTMLElement).tagName;
 
     if (ELEMENT_TAG !== 'BUTTON' && ELEMENT_TAG !== 'MAT-ICON') {
-      const GAME_ID = game.id;
-
-      await this.router.navigate([`/play-game/${GAME_ID}`]);
+      await this.router.navigate([`/play-game/${game.id}`]);
     }
   }
 
@@ -165,12 +164,11 @@ export class HomePage implements OnInit, OnDestroy {
   public handleRowEditClick(game: GameInterface) {
     this.gameDialogOperation = 'edit';
     this.gameToEditId = game.id;
-    const GAME_NAME = game.name;
 
     const EDIT_GAME_DIALOG_DATA: GameDialogDataInterface = {
-      title: this.translocoService.translate('EDIT_GAME_TITLE', { gameName: GAME_NAME }),
+      title: this.translocoService.translate('EDIT_GAME_TITLE', { gameName: game.name }),
       formData: {
-        name: GAME_NAME,
+        name: game.name,
         description: game.description,
         teamVelocity: game.teamVelocity,
         shareVelocity: game.shareVelocity,
@@ -258,11 +256,10 @@ export class HomePage implements OnInit, OnDestroy {
 
   public handleRowDeleteClick(game: GameInterface) {
     this.gameToDeleteId = game.id;
-    const GAME_NAME = game.name;
 
     const DELETE_GAME_DIALOG_DATA: DialogDataInterface = {
-      title: this.translocoService.translate('DELETE_GAME_TITLE', { gameName: GAME_NAME }),
-      content: this.translocoService.translate('DELETE_GAME_CONTENT', { gameName: GAME_NAME }),
+      title: this.translocoService.translate('DELETE_GAME_TITLE', { gameName: game.name }),
+      content: this.translocoService.translate('DELETE_GAME_CONTENT', { gameName: game.name }),
       confirmButtonText: this.translocoService.translate('DELETE'),
       confirmButtonColor: 'warn'
     };

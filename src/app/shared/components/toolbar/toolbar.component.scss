@@ -1,5 +1,10 @@
 @import 'includes';
 
+.toolbar {
+  position: relative;
+  z-index: 10;
+}
+
 .home-button {
   font-size: 20px;
   padding: 0;
@@ -8,7 +13,7 @@
 }
 
 .home-button-text {
-  @include belowSmall {
+  @include belowSmallMedium {
     display: none;
   }
 }
@@ -21,13 +26,21 @@
   margin-right: 1.5rem;
   width: 26px;
   height: 26px;
-  display: flex;
-  justify-content: center;
+
+  @include belowVerySmall {
+    display: none;
+  }
 }
 
 .github-link {
   width: 100%;
   cursor: pointer;
+}
+
+.github-menu-item {
+  @include fromVerySmall {
+    display: none;
+  }
 }
 
 .avatar-container {

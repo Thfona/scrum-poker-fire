@@ -30,6 +30,7 @@ import { ErrorComponent } from './components/error/error.component';
 import { GameDialogComponent } from './components/game-dialog/game-dialog.component';
 import { GameDialogContentComponent } from './components/game-dialog/game-dialog-content/game-dialog-content.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SignInCardComponent } from './components/sign-in-card/sign-in-card.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
@@ -41,6 +42,7 @@ const COMPONENTS = [
   GameDialogComponent,
   GameDialogContentComponent,
   LoadingComponent,
+  SidenavComponent,
   SignInCardComponent,
   ToolbarComponent
 ];

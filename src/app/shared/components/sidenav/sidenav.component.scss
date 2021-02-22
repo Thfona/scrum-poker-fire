@@ -1,0 +1,48 @@
+@import 'includes';
+
+.sidenav {
+  height: calc(100% - #{$toolbar-height});
+  top: calc(0% + #{$toolbar-height});
+  width: $sidenav-width;
+  position: fixed;
+  right: 0%;
+  z-index: 9;
+  background-color: white;
+  border-left: 1px solid lightgrey;
+
+  @include belowLarge {
+    width: $sidenav-width-below-large;
+  }
+
+  @include belowSmallMedium {
+    height: calc(100% - #{$toolbar-height-below-small-medium});
+    top: calc(0% + #{$toolbar-height-below-small-medium});
+  }
+
+  @include belowSmall {
+    width: 100%;
+  }
+}
+
+.sidenav-menu {
+  position: fixed;
+  top: calc(2rem + #{$toolbar-height});
+  right: 2rem;
+  z-index: 8;
+
+  @include belowSmallMedium {
+    top: calc(2rem + #{$toolbar-height-below-small-medium});
+  }
+}
+
+.sidenav-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.32);
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}

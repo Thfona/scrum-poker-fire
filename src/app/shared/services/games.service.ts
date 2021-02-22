@@ -4,14 +4,11 @@ import firebase from 'firebase/app';
 import { FormGameInterface } from '../interfaces/form-game.interface';
 import { GameInterface } from '../interfaces/game.interface';
 import { GameSessionUserInterface } from '../interfaces/game-session-user.interface';
-import { PlayerInterface } from '../interfaces/player.interface';
 import { AuthService } from './auth.service';
 import { dateFormatterUtil } from '../utils/dateFormatter.util';
 import { generateUniqueIdUtil } from '../utils/generateUniqueId.util';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class GamesService {
   public latestCreatedGameId: string;
 
@@ -57,10 +54,9 @@ export class GamesService {
         isActive: false,
         hasStarted: false,
         currentStoryIndex: 0,
-        players: [],
-        spectators: []
+        users: []
       },
-      bannedPlayers: []
+      bannedUsers: []
     };
 
     const GAMES_COLLECTION: AngularFirestoreCollection<GameInterface> = this.angularFirestore.collection('games');
@@ -78,6 +74,16 @@ export class GamesService {
     const GAME_DOCUMENT: AngularFirestoreDocument<GameInterface> = this.angularFirestore.doc(`/games/${gameId}`);
 
     return GAME_DOCUMENT.delete();
+  }
+
+  public updateBannedUsers(gameId: string, userId: string, operation: 'add' | 'remove') {
+    const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
+
+    if (operation === 'add') {
+      return GAME_DOCUMENT.update({ bannedUsers: firebase.firestore.FieldValue.arrayUnion(userId) });
+    } else {
+      return GAME_DOCUMENT.update({ bannedUsers: firebase.firestore.FieldValue.arrayRemove(userId) });
+    }
   }
 
   public updateGameSessionIsActive(gameId: string, isActive: boolean) {
@@ -98,35 +104,13 @@ export class GamesService {
     return GAME_DOCUMENT.update({ 'session.currentStoryIndex': currentStoryIndex });
   }
 
-  public updateGameSessionPlayers(gameId: string, player: PlayerInterface, operation: 'add' | 'remove') {
+  public updateGameSessionUsers(gameId: string, user: GameSessionUserInterface, operation: 'add' | 'remove') {
     const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
 
     if (operation === 'add') {
-      return GAME_DOCUMENT.update({ 'session.players': firebase.firestore.FieldValue.arrayUnion(player) });
+      return GAME_DOCUMENT.update({ 'session.users': firebase.firestore.FieldValue.arrayUnion(user) });
     } else {
-      return GAME_DOCUMENT.update({ 'session.players': firebase.firestore.FieldValue.arrayRemove(player) });
+      return GAME_DOCUMENT.update({ 'session.users': firebase.firestore.FieldValue.arrayRemove(user) });
     }
-  }
-
-  public clearGameSessionPlayers(gameId: string) {
-    const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
-
-    return GAME_DOCUMENT.update({ 'session.players': [] });
-  }
-
-  public updateGameSessionSpectators(gameId: string, spectator: GameSessionUserInterface, operation: 'add' | 'remove') {
-    const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
-
-    if (operation === 'add') {
-      return GAME_DOCUMENT.update({ 'session.spectators': firebase.firestore.FieldValue.arrayUnion(spectator) });
-    } else {
-      return GAME_DOCUMENT.update({ 'session.spectators': firebase.firestore.FieldValue.arrayRemove(spectator) });
-    }
-  }
-
-  public clearGameSessionSpectators(gameId: string) {
-    const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
-
-    return GAME_DOCUMENT.update({ 'session.spectators': [] });
   }
 }

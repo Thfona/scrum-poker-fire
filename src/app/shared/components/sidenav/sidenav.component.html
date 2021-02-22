@@ -1,0 +1,10 @@
+<div class="sidenav-overlay" *ngIf="shouldDisplayOverlay" (click)="toggle()"></div>
+<button mat-mini-fab class="sidenav-menu" *ngIf="shouldDisplayMenuButton" color="primary" aria-label="Open sidenav"
+  (click)="toggle()">
+  <mat-icon>menu</mat-icon>
+</button>
+<div class="sidenav" [@slide]="sidenavService.sidenavState">
+  <div>
+    content
+  </div>
+</div>

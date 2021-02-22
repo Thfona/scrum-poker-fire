@@ -1,14 +1,23 @@
-<!-- TODO: Implement actual play page -->
 <ng-container *ngIf="isLoading">
-  <p>loading...</p>
+  <div class="loading-container">
+    <app-loading-component [center]="false" [size]="'medium'"></app-loading-component>
+  </div>
 </ng-container>
 
 <ng-container *ngIf="!isLoading && hasError">
-  <p>error</p>
+  <div class="content-container error-container">
+    <app-error-component [center]="false" [message]="errorMessageCode"></app-error-component>
+  </div>
 </ng-container>
 
+<!-- TODO: Implement actual play page -->
 <ng-container *ngIf="!isLoading && !hasError">
-  <pre>
-    {{ game | json }}
-  </pre>
+  <div class="main-content content-width">
+    <div class="content-container">
+      <pre>Game: {{ game | json }}</pre>
+    </div>
+  </div>
+  <div class="cards-container content-width"></div>
+  <app-sidenav-component [shouldDisplayOverlay]="!isDesktop && sidenavService.isSidenavOpen"
+    [shouldDisplayMenuButton]="!isDesktop"></app-sidenav-component>
 </ng-container>

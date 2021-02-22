@@ -25,6 +25,7 @@
   "NO_GAMES_DATA": "Você não possui nenhum jogo salvo ainda. Crie um novo jogo e ele aparecerá aqui!",
   "NO_GAMES_ON_FILTER": "Nenhum jogo para exibir.",
   "GAMES_ERROR_MESSAGE": "Ocorreu um erro ao tentar carregar os seus jogos salvos, por favor tente novamente mais tarde.",
+  "PLAY_GAME_ERROR_MESSAGE": "Ocorreu um erro ao tentar carregar o jogo, por favor tente novamente mais tarde.",
   "CREATE_GAME_TITLE": "Criar jogo",
   "EDIT_GAME_TITLE": "Editar \"{{ gameName }}\"",
   "DELETE_GAME_TITLE": "Excluir \"{{ gameName }}\"?",

@@ -4,9 +4,7 @@ import { GameSettingsInterface } from '../interfaces/game-settings.interface';
 import { UserInterface } from '../interfaces/user.interface';
 import { AuthService } from './auth.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class UserService {
   constructor(private angularFirestore: AngularFirestore, private authService: AuthService) {}
 
