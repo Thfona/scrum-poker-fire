@@ -10,14 +10,52 @@
   </div>
 </ng-container>
 
-<!-- TODO: Implement actual play page -->
+<!-- TODO: Finish play page implementation -->
 <ng-container *ngIf="!isLoading && !hasError">
-  <div class="main-content content-width">
-    <div class="content-container">
-      <pre>Game: {{ game | json }}</pre>
+  <ng-container *transloco="let transloco">
+    <div class="main-content content-width" [class.game-not-started]="!game.session.hasStarted">
+      <div class="content-container">
+        <button mat-raised-button color="primary" class="button" (click)="handleInviteButtonClick()">
+          {{ transloco('INVITE') }}
+        </button>
+        <button mat-raised-button *ngIf="isHost && game.stories.length" color="accent" class="button"
+          (click)="handleStartGameButtonClick()">
+          {{ transloco('START_GAME') }}
+        </button>
+        <div *ngIf="isHost && !game.stories.length">
+          {{ transloco('NO_STORIES_TEXT') }}
+        </div>
+        <div *ngIf="!isHost && !game.session.hasStarted">
+          {{ transloco('WAITING_HOST_TEXT') }}
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="cards-container content-width"></div>
-  <app-sidenav-component [shouldDisplayOverlay]="!isDesktop && sidenavService.isSidenavOpen"
-    [shouldDisplayMenuButton]="!isDesktop"></app-sidenav-component>
+
+    <div class="cards-container content-width" *ngIf="isPlayer && game.session.hasStarted">
+      <ng-container *ngFor="let card of cards; let i = index">
+        <div class="card" [ngClass]="{
+            'first': i === 0,
+            'selected': getIsCardSelected(card)
+          }" [ngStyle]="{
+            'margin-left': getCardMargin(i),
+            'z-index': getCardZIndex(i)
+          }" (click)="handleCardClick(card)">
+          <app-game-card-component [color]="getIsCardSelected(card) ? 'primary' : (card.value >= 0 ? 'accent' : 'white')"
+            [displayValue]="card.displayValue" [interactive]="true" [isCardFront]="true"
+            [marginRight]="i === cards.length - 1" [shouldDisplayCornerValue]="true">
+          </app-game-card-component>
+        </div>
+      </ng-container>
+    </div>
+
+    <app-sidenav-component [shouldDisplayOverlay]="!isDesktop && sidenavService.isSidenavOpen"
+      [shouldDisplayMenuButton]="!isDesktop">
+      <div>
+        sidenav-content
+      </div>
+    </app-sidenav-component>
+
+    <app-game-dialog-component #editGameDialog (confirmEvent)="handleEditGameDialogConfirmation($event)">
+    </app-game-dialog-component>
+  </ng-container>
 </ng-container>
