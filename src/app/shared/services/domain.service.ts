@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { DomainInterface } from '../interfaces/domain-interface';
 import { DomainItemInterface } from '../interfaces/domain-item.interface';
 
 @Injectable({
@@ -8,7 +9,7 @@ import { DomainItemInterface } from '../interfaces/domain-item.interface';
 export class DomainService {
   private domain: any;
 
-  public getDomain() {
+  public getDomain(): DomainInterface {
     return this.domain;
   }
 

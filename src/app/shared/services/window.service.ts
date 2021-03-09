@@ -27,15 +27,15 @@ export function windowFactory(browserWindowRef: BrowserWindowRef, platformId: Ob
   return new Object();
 }
 
-const browserWindowProvider: ClassProvider = {
+const BROWSER_WINDOW_PROVIDER: ClassProvider = {
   provide: WindowRef,
   useClass: BrowserWindowRef
 };
 
-const windowProvider: FactoryProvider = {
+const WINDOW_PROVIDER: FactoryProvider = {
   provide: WINDOW,
   useFactory: windowFactory,
   deps: [WindowRef, PLATFORM_ID]
 };
 
-export const WINDOW_PROVIDERS = [browserWindowProvider, windowProvider];
+export const WINDOW_PROVIDERS = [BROWSER_WINDOW_PROVIDER, WINDOW_PROVIDER];

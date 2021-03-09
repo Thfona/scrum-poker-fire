@@ -85,7 +85,7 @@
     <button mat-button
       [mat-dialog-close]="{ save: true, start: false, formValue: formGroup.value, saveAsDefaultSettings: saveAsDefaultSettings }"
       [disabled]="formGroup.invalid" color="primary" class="action-button">{{ transloco('SAVE') }}</button>
-    <button mat-button
+    <button mat-button *ngIf="data.shouldDisplaySaveAndStart"
       [mat-dialog-close]="{ save: true, start: true, formValue: formGroup.value, saveAsDefaultSettings: saveAsDefaultSettings }"
       [disabled]="formGroup.invalid" color="accent" class="action-button">
       {{ transloco('SAVE_AND_START_BUTTON_TEXT') }}

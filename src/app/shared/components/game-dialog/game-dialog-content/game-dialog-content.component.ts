@@ -2,8 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslocoService } from '@ngneat/transloco';
-import { CardInterface } from 'src/app/shared/interfaces/card.interface';
 import { CardSetInterface } from 'src/app/shared/interfaces/card-set.interface';
+import { GameCardInterface } from 'src/app/shared/interfaces/game-card.interface';
 import { GameDialogDataInterface } from 'src/app/shared/interfaces/game-dialog-data.interface';
 import { DomainService } from 'src/app/shared/services/domain.service';
 
@@ -13,7 +13,7 @@ import { DomainService } from 'src/app/shared/services/domain.service';
   styleUrls: ['./game-dialog-content.component.scss']
 })
 export class GameDialogContentComponent implements OnInit {
-  private voteSkipOptions: string[];
+  private voteSkipOptions: GameCardInterface[];
   public cardSets: CardSetInterface[];
   public formGroup: FormGroup;
   public saveAsDefaultSettings = false;
@@ -47,7 +47,7 @@ export class GameDialogContentComponent implements OnInit {
     this.saveAsDefaultSettings = !this.saveAsDefaultSettings;
   }
 
-  public getCardSetDisplayValues(cards: CardInterface[]) {
+  public getCardSetDisplayValues(cards: GameCardInterface[]) {
     let cardDisplayValues = '(';
 
     cards.map((card) => {
@@ -55,7 +55,7 @@ export class GameDialogContentComponent implements OnInit {
     });
 
     this.voteSkipOptions.map((item) => {
-      cardDisplayValues = cardDisplayValues.concat(this.translocoService.translate(item).concat(', '));
+      cardDisplayValues = cardDisplayValues.concat(this.translocoService.translate(item.displayValue).concat(', '));
     });
 
     cardDisplayValues = cardDisplayValues.slice(0, -2).concat(')');

@@ -153,7 +153,8 @@ export class HomePage implements OnInit, OnDestroy {
         name: '',
         description: '',
         ...DEFAULT_GAME_SETTINGS
-      }
+      },
+      shouldDisplaySaveAndStart: true
     };
 
     this.gameDialog.data = CREATE_GAME_DIALOG_DATA;
@@ -178,7 +179,8 @@ export class HomePage implements OnInit, OnDestroy {
         calculateScore: game.calculateScore,
         storyTimer: game.storyTimer,
         storyTimerMinutes: game.storyTimerMinutes
-      }
+      },
+      shouldDisplaySaveAndStart: true
     };
 
     this.gameDialog.data = EDIT_GAME_DIALOG_DATA;

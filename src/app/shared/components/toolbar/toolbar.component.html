@@ -22,7 +22,7 @@
     <mat-menu #menu="matMenu">
       <ng-container *ngIf="user.displayName">
         <div class="user-info">
-          <img *ngIf="user.photoURL" class="avatar avatar--info" [src]="user.photoURL">
+          <img *ngIf="user.photoURL" class="avatar info" [src]="user.photoURL">
           <span class="display-name">{{ user.displayName }}</span>
         </div>
         <mat-divider class="menu-divider"></mat-divider>

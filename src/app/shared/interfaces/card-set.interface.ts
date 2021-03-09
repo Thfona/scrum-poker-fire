@@ -1,6 +1,6 @@
-import { CardInterface } from './card.interface';
+import { GameCardInterface } from './game-card.interface';
 
 export interface CardSetInterface {
   name: string;
-  cards: CardInterface[];
+  cards: GameCardInterface[];
 }

@@ -4,6 +4,7 @@ import firebase from 'firebase/app';
 import { FormGameInterface } from '../interfaces/form-game.interface';
 import { GameInterface } from '../interfaces/game.interface';
 import { GameSessionUserInterface } from '../interfaces/game-session-user.interface';
+import { GameVoteInterface } from '../interfaces/game-vote.interface';
 import { AuthService } from './auth.service';
 import { dateFormatterUtil } from '../utils/dateFormatter.util';
 import { generateUniqueIdUtil } from '../utils/generateUniqueId.util';
@@ -53,8 +54,9 @@ export class GamesService {
       session: {
         isActive: false,
         hasStarted: false,
-        currentStoryIndex: 0,
-        users: []
+        currentStoryId: '',
+        users: [],
+        votes: []
       },
       bannedUsers: []
     };
@@ -98,10 +100,10 @@ export class GamesService {
     return GAME_DOCUMENT.update({ 'session.hasStarted': hasStarted });
   }
 
-  public updateGameSessionCurrentStory(gameId: string, currentStoryIndex: number) {
+  public updateGameSessionCurrentStory(gameId: string, currentStoryId: string) {
     const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
 
-    return GAME_DOCUMENT.update({ 'session.currentStoryIndex': currentStoryIndex });
+    return GAME_DOCUMENT.update({ 'session.currentStoryId': currentStoryId });
   }
 
   public updateGameSessionUsers(gameId: string, user: GameSessionUserInterface, operation: 'add' | 'remove') {
@@ -111,6 +113,16 @@ export class GamesService {
       return GAME_DOCUMENT.update({ 'session.users': firebase.firestore.FieldValue.arrayUnion(user) });
     } else {
       return GAME_DOCUMENT.update({ 'session.users': firebase.firestore.FieldValue.arrayRemove(user) });
+    }
+  }
+
+  public updateGameSessionVotes(gameId: string, vote: GameVoteInterface, operation: 'add' | 'remove') {
+    const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
+
+    if (operation === 'add') {
+      return GAME_DOCUMENT.update({ 'session.votes': firebase.firestore.FieldValue.arrayUnion(vote) });
+    } else {
+      return GAME_DOCUMENT.update({ 'session.votes': firebase.firestore.FieldValue.arrayRemove(vote) });
     }
   }
 }
