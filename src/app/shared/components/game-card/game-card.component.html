@@ -1,0 +1,10 @@
+<ng-container *transloco="let transloco">
+  <div [ngClass]="['card', 'mat-elevation-z4', color, interactive ? 'interactive' : '', marginRight ? 'margin-right' : '']">
+    <ng-container *ngIf="isCardFront">
+      <span class="corner-value" *ngIf="shouldDisplayCornerValue">{{ transloco(displayValue) }}</span>
+      <span class="center-value">{{ transloco(displayValue) }}</span>
+    </ng-container>
+    <!-- TODO: Implement card back -->
+    <ng-container *ngIf="!isCardFront"></ng-container>
+  </div>
+</ng-container>

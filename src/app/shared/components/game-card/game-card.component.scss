@@ -1,0 +1,56 @@
+@import 'includes';
+
+.card {
+  height: 140px;
+  width: 100px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.primary {
+    color: white;
+    background-color: #673ab7;
+  }
+
+  &.accent {
+    color: white;
+    background-color: #4caf50;
+  }
+
+  &.white {
+    color: #a0a0a0;
+    background-color: white;
+  }
+
+  &.grey {
+    color: #a0a0a0;
+    background-color: #f8f8f8;
+  }
+
+  &.small {
+    height: 70px;
+    width: 50px;
+  }
+
+  &.interactive {
+    cursor: pointer;
+  }
+
+  &.margin-right {
+    margin-right: $card-margin;
+  }
+}
+
+.corner-value {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.center-value {
+  font-size: 35px;
+  font-weight: 700;
+}

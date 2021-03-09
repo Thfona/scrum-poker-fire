@@ -27,6 +27,7 @@ import { CardComponent } from './components/card/card.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { DialogContentComponent } from './components/dialog/dialog-content/dialog-content.component';
 import { ErrorComponent } from './components/error/error.component';
+import { GameCardComponent } from './components/game-card/game-card.component';
 import { GameDialogComponent } from './components/game-dialog/game-dialog.component';
 import { GameDialogContentComponent } from './components/game-dialog/game-dialog-content/game-dialog-content.component';
 import { LoadingComponent } from './components/loading/loading.component';
@@ -39,6 +40,7 @@ const COMPONENTS = [
   DialogComponent,
   DialogContentComponent,
   ErrorComponent,
+  GameCardComponent,
   GameDialogComponent,
   GameDialogContentComponent,
   LoadingComponent,
