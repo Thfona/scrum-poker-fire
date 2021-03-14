@@ -14,13 +14,21 @@
   <ng-container *transloco="let transloco">
     <div class="main-content content-width" [class.game-not-started]="!isPlayer || !game.session.hasStarted">
       <div class="content-container">
-        <ng-container *ngIf="isHost">
-          <div class="content-buttons-container small-medium-flex justify-content">
+        <div class="content-header-buttons-container large-flex">
+          <div class="content-buttons-container large-flex">
             <div class="buttons-container">
               <button mat-raised-button color="primary" class="button margin" (click)="handleInviteButtonClick()">
                 <div class="button-content">
                   <mat-icon>person_add</mat-icon>
                   <span class="button-text">{{ transloco('INVITE') }}</span>
+                </div>
+              </button>
+            </div>
+            <div class="buttons-container">
+              <button mat-raised-button color="primary" class="button margin" (click)="swapUserRole(userId)">
+                <div class="button-content">
+                  <mat-icon>{{ isPlayer ? 'sports_esports' : 'visibility'}}</mat-icon>
+                  <span class="button-text">{{ transloco(isPlayer ? 'PLAYING_TEXT' : 'SPECTATING_TEXT') }}</span>
                 </div>
               </button>
               <button mat-raised-button *ngIf="game.stories.length && !game.session.hasStarted" color="accent"
@@ -31,6 +39,8 @@
                 </div>
               </button>
             </div>
+          </div>
+          <div *ngIf="isHost" class="content-buttons-container large-flex">
             <div class="buttons-container">
               <button mat-raised-button color="primary" class="button margin" (click)="handleUsersButtonClick()">
                 <div class="button-content">
@@ -46,15 +56,15 @@
               </button>
             </div>
           </div>
+        </div>
 
-          <ng-container *ngIf="!game.session.hasStarted">
-            <div *ngIf="!game.stories.length">
-              <p class="text">{{ transloco('NO_STORIES_TEXT') }}</p>
-            </div>
-            <div *ngIf="game.stories.length">
-              <p class="text">{{ transloco('ALL_SET_TEXT') }}</p>
-            </div>
-          </ng-container>
+        <ng-container *ngIf="isHost && !game.session.hasStarted">
+          <div *ngIf="!game.stories.length">
+            <p class="text">{{ transloco('NO_STORIES_TEXT') }}</p>
+          </div>
+          <div *ngIf="game.stories.length">
+            <p class="text">{{ transloco('ALL_SET_TEXT') }}</p>
+          </div>
         </ng-container>
 
         <div *ngIf="!isHost && !game.session.hasStarted">
@@ -154,20 +164,28 @@
     <app-sidenav-component [shouldDisplayOverlay]="!isDesktop && sidenavService.isSidenavOpen"
       [shouldDisplayMenuButton]="!isDesktop">
       <div class="story header">
-        <span>#</span>
-        <span>{{ transloco('STORY') }}</span>
-        <span>{{ transloco('SCORE') }}</span>
+        <span class="story-column">#</span>
+        <span class="story-column">{{ transloco('STORY') }}</span>
+        <span class="story-column right">{{ transloco('SCORE') }}</span>
       </div>
-      <div *ngFor="let story of game.stories" class="story"
-        [ngClass]="{'active': currentStoryIndex === story.index, 'interactive': isHost}"
-        (click)="handleStoriesRowClick(story)">
-        <span>{{ story.index }}</span>
-        <span>{{ story.name }}</span>
-        <span>{{ story.score || '-' }}</span>
-      </div>
+      <ng-container *ngIf="!game.stories.length">
+        <div class="no-stories-container">
+          <span class="story-column">{{ transloco('NO_STORIES_FOUND_TEXT') }}</span>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="game.stories.length">
+        <div *ngFor="let story of game.stories" class="story"
+          [ngClass]="{'active': currentStoryIndex === story.index, 'interactive': isHost}"
+          (click)="handleStoriesRowClick(story)">
+          <span class="story-column">{{ story.index }}</span>
+          <span class="story-column">{{ story.name }}</span>
+          <span class="story-column right">{{ story.score || '-' }}</span>
+        </div>
+      </ng-container>
       <ng-container *ngIf="isHost">
         <div class="sidenav-buttons">
-          <button mat-raised-button color="accent" class="button full-width full-width-margin" (click)="handleAddStoriesButtonClick()">
+          <button mat-raised-button color="accent" class="button full-width full-width-margin"
+            (click)="handleAddStoriesButtonClick()">
             <div class="button-content">
               <mat-icon>add_circle_outline</mat-icon>
               <span class="button-text">{{ transloco('ADD_STORIES') }}</span>

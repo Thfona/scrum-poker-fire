@@ -118,11 +118,9 @@ export class PlayGamePage implements OnInit, OnDestroy {
 
           const CURRENT_STORY = this.game.stories.find((story) => story.id === this.currentStoryId);
 
-          if (CURRENT_STORY) {
-            this.currentStoryIndex = CURRENT_STORY.index;
-            this.currentStoryName = CURRENT_STORY.name;
-            this.hasFlippedCards = CURRENT_STORY.hasFlippedCards;
-          }
+          this.currentStoryIndex = CURRENT_STORY ? CURRENT_STORY.index : null;
+          this.currentStoryName = CURRENT_STORY ? CURRENT_STORY.name : '';
+          this.hasFlippedCards = CURRENT_STORY ? CURRENT_STORY.hasFlippedCards : false;
 
           this.userCurrentVote = this.game.session.votes.find(
             (vote) => vote.userId === this.userId && vote.storyId === this.currentStoryId
@@ -149,6 +147,12 @@ export class PlayGamePage implements OnInit, OnDestroy {
           const voteSkipOptions = DOMAIN.voteSkipOptions.values;
 
           this.cards = [...cards, ...voteSkipOptions];
+
+          const SESSION_USER = this.game.session.users.find((user) => user.id === this.userId);
+
+          if (SESSION_USER) {
+            this.isPlayer = SESSION_USER.isPlayer;
+          }
 
           if (!this.hasInitializedSession) {
             if (this.game.ownerId === this.userId) {
@@ -190,15 +194,13 @@ export class PlayGamePage implements OnInit, OnDestroy {
 
   private async updateSession() {
     try {
-      if (this.isHost) {
+      if (this.isHost && !this.game.session.isActive) {
         await this.gamesService.updateGameSessionIsActive(this.gameId, true);
       }
 
       const SESSION_USER = this.game.session.users.find((user) => user.id === this.userId);
 
-      if (SESSION_USER) {
-        this.isPlayer = SESSION_USER.isPlayer;
-      } else {
+      if (!SESSION_USER) {
         this.isPlayer = true;
 
         const NEW_SESSION_USER = {
@@ -225,8 +227,6 @@ export class PlayGamePage implements OnInit, OnDestroy {
       SESSION_USER.isPlayer = !SESSION_USER.isPlayer;
 
       await this.gamesService.updateGameSessionUsers(this.gameId, SESSION_USER, 'add');
-
-      this.isPlayer = !this.isPlayer;
     } catch {
       this.handlePromiseError();
     }

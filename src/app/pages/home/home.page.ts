@@ -51,7 +51,8 @@ export class HomePage implements OnInit, OnDestroy {
   public isLoading: boolean;
   public hasError: boolean;
   public cardTitleCode = 'SAVED_GAMES';
-  public headerButtonTitleCode = 'CREATE_NEW_GAME_BUTTON_TEXT';
+  public headerButtonIconCode = 'add';
+  public headerButtonTextCode = 'CREATE_NEW_GAME_BUTTON_TEXT';
   public errorMessageCode = 'GAMES_ERROR_MESSAGE';
 
   constructor(

@@ -10,7 +10,8 @@ export class CardComponent {
   @Input() hasError: boolean;
   @Input() cardTitleCode: string;
   @Input() shouldDisplayHeaderButton: boolean;
-  @Input() headerButtonTitleCode: string;
+  @Input() headerButtonIconCode: string;
+  @Input() headerButtonTextCode: string;
   @Input() errorMessageCode: string;
   @Output() headerButtonEvent = new EventEmitter();
 
