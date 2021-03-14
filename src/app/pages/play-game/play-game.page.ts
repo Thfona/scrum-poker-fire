@@ -119,8 +119,11 @@ export class PlayGamePage implements OnInit, OnDestroy {
           const CURRENT_STORY = this.game.stories.find((story) => story.id === this.currentStoryId);
 
           this.currentStoryIndex = CURRENT_STORY ? CURRENT_STORY.index : null;
-          this.currentStoryName = CURRENT_STORY ? CURRENT_STORY.name : '';
-          this.hasFlippedCards = CURRENT_STORY ? CURRENT_STORY.hasFlippedCards : false;
+
+          if (CURRENT_STORY) {
+            this.currentStoryName = CURRENT_STORY.name;
+            this.hasFlippedCards = CURRENT_STORY.hasFlippedCards;
+          }
 
           this.userCurrentVote = this.game.session.votes.find(
             (vote) => vote.userId === this.userId && vote.storyId === this.currentStoryId
