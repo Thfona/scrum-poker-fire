@@ -5,6 +5,7 @@ import { FormGameInterface } from '../interfaces/form-game.interface';
 import { GameInterface } from '../interfaces/game.interface';
 import { GameSessionUserInterface } from '../interfaces/game-session-user.interface';
 import { GameVoteInterface } from '../interfaces/game-vote.interface';
+import { StoryInterface } from '../interfaces/story.interface';
 import { AuthService } from './auth.service';
 import { dateFormatterUtil } from '../utils/dateFormatter.util';
 import { generateUniqueIdUtil } from '../utils/generateUniqueId.util';
@@ -88,6 +89,22 @@ export class GamesService {
     }
   }
 
+  public updateStories(gameId: string, story: StoryInterface, operation: 'add' | 'remove') {
+    const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
+
+    if (operation === 'add') {
+      return GAME_DOCUMENT.update({ stories: firebase.firestore.FieldValue.arrayUnion(story) });
+    } else {
+      return GAME_DOCUMENT.update({ stories: firebase.firestore.FieldValue.arrayRemove(story) });
+    }
+  }
+
+  public updateStoriesList(gameId: string, stories: StoryInterface[]) {
+    const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
+
+    return GAME_DOCUMENT.update({ stories });
+  }
+
   public updateGameSessionIsActive(gameId: string, isActive: boolean) {
     const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
 
@@ -124,5 +141,11 @@ export class GamesService {
     } else {
       return GAME_DOCUMENT.update({ 'session.votes': firebase.firestore.FieldValue.arrayRemove(vote) });
     }
+  }
+
+  public updateGameSessionVotesList(gameId: string, votes: GameVoteInterface[]) {
+    const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
+
+    return GAME_DOCUMENT.update({ 'session.votes': votes });
   }
 }

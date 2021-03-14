@@ -3,10 +3,6 @@
 .content-width {
   width: calc(100% - #{$sidenav-width});
 
-  @include belowLarge {
-    width: calc(100% - #{$sidenav-width-below-large});
-  }
-
   @include belowMediumLarge {
     width: 100%;
   }
@@ -27,6 +23,90 @@
 
 .content-container {
   padding: 2rem;
+}
+
+.content-buttons-container {
+  margin-bottom: 8px;
+
+  &.small-medium-flex {
+    @include fromSmallMedium {
+      display: flex;
+    }
+  }
+
+  &.large-flex {
+    @include fromLarge {
+      display: flex;
+    }
+  }
+
+  &.justify-content {
+    @include fromMediumLarge {
+      justify-content: space-between;
+    }
+  }
+}
+
+.button-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-text {
+  margin-left: 4px;
+}
+
+.buttons-container {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.votes-container {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-column-gap: 1rem;
+  margin-top: 2rem;
+}
+
+.vote {
+  width: $card-small-width;
+  margin-bottom: 1rem;
+}
+
+.story {
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
+  grid-column-gap: 8px;
+  padding: 8px 1rem;
+  font-weight: 500;
+
+  &.header {
+    color: white;
+    background-color: #707070;
+  }
+
+  &.active {
+    color: white;
+    background-color: #673ab7;
+  }
+
+  &.interactive {
+    cursor: pointer;
+  }
+}
+
+.player-name {
+  text-align: center;
+  margin-top: 8px;
+}
+
+.text {
+  font-size: 1.5rem;
+}
+
+.story-name {
+  margin-bottom: 1rem;
 }
 
 .loading-container {
@@ -81,4 +161,20 @@
 .button {
   color: white;
   min-width: 0;
+
+  &.margin {
+    margin-right: 1rem;
+  }
+
+  &.full-width {
+    width: 100%;
+
+    &.full-width-margin {
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+.sidenav-buttons {
+  padding: 1rem;
 }

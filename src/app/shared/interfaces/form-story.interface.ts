@@ -1,4 +1,4 @@
 export interface FormStoryInterface {
-  id: string;
   name: string;
+  score?: number;
 }

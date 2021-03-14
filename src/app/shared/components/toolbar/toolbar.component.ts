@@ -16,7 +16,7 @@ export class ToolbarComponent {
   constructor(public authService: AuthService, private router: Router) {}
 
   public navigateTo(route: string) {
-    return this.router.navigate([`/${route}`]);
+    this.router.navigate([`/${route}`]);
   }
 
   public openGitHubRepository() {

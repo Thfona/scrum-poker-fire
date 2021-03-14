@@ -1,0 +1,30 @@
+.action-button {
+  &:hover:enabled {
+    background-color: whitesmoke;
+  }
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+::ng-deep .mat-form-field-infix {
+  width: 100% !important;
+}
+
+.text {
+  margin-bottom: 8px;
+}
+
+.input-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.copy-button {
+  padding: 4px 8px;
+  min-width: 0;
+  line-height: normal;
+  margin-left: 4px;
+  border-top: 0.84375em solid transparent;
+}

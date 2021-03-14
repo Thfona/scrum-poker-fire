@@ -1,0 +1,14 @@
+.action-button {
+  &:hover:enabled {
+    background-color: whitesmoke;
+  }
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.content {
+  margin-right: 0 !important;
+}

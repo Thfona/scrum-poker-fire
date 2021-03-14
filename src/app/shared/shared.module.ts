@@ -30,9 +30,13 @@ import { ErrorComponent } from './components/error/error.component';
 import { GameCardComponent } from './components/game-card/game-card.component';
 import { GameDialogComponent } from './components/game-dialog/game-dialog.component';
 import { GameDialogContentComponent } from './components/game-dialog/game-dialog-content/game-dialog-content.component';
+import { InviteDialogComponent } from './components/invite-dialog/invite-dialog.component';
+import { InviteDialogContentComponent } from './components/invite-dialog/invite-dialog-content/invite-dialog-content.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SignInCardComponent } from './components/sign-in-card/sign-in-card.component';
+import { StoryDialogComponent } from './components/story-dialog/story-dialog.component';
+import { StoryDialogContentComponent } from './components/story-dialog/story-dialog-content/story-dialog-content.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
 const COMPONENTS = [
@@ -43,9 +47,13 @@ const COMPONENTS = [
   GameCardComponent,
   GameDialogComponent,
   GameDialogContentComponent,
+  InviteDialogComponent,
+  InviteDialogContentComponent,
   LoadingComponent,
   SidenavComponent,
   SignInCardComponent,
+  StoryDialogComponent,
+  StoryDialogContentComponent,
   ToolbarComponent
 ];
 

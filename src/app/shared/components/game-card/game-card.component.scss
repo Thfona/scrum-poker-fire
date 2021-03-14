@@ -29,8 +29,8 @@
   }
 
   &.small {
-    height: 70px;
-    width: 50px;
+    width: $card-small-width;
+    height: 105px;
   }
 
   &.interactive {
@@ -48,9 +48,17 @@
   left: 5px;
   font-size: 18px;
   font-weight: 500;
+
+  &.small {
+    font-size: 13px;
+  }
 }
 
 .center-value {
   font-size: 35px;
   font-weight: 700;
+
+  &.small {
+    font-size: 26px;
+  }
 }

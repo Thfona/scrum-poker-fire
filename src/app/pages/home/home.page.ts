@@ -125,17 +125,19 @@ export class HomePage implements OnInit, OnDestroy {
     let total = 0;
 
     stories.map((story) => {
-      total += story.score;
+      if (story.score) {
+        total += story.score;
+      }
     });
 
     return total;
   }
 
-  public async handleRowClick(event: Event, game: GameInterface) {
+  public handleTableRowClick(event: Event, game: GameInterface) {
     const ELEMENT_TAG = (event.target as HTMLElement).tagName;
 
     if (ELEMENT_TAG !== 'BUTTON' && ELEMENT_TAG !== 'MAT-ICON') {
-      await this.router.navigate([`/play-game/${game.id}`]);
+      this.router.navigate([`/play-game/${game.id}`]);
     }
   }
 
@@ -162,7 +164,7 @@ export class HomePage implements OnInit, OnDestroy {
     this.gameDialog.openDialog();
   }
 
-  public handleRowEditClick(game: GameInterface) {
+  public handleTableRowEditClick(game: GameInterface) {
     this.gameDialogOperation = 'edit';
     this.gameToEditId = game.id;
 
@@ -256,7 +258,7 @@ export class HomePage implements OnInit, OnDestroy {
     }
   }
 
-  public handleRowDeleteClick(game: GameInterface) {
+  public handleTableRowDeleteClick(game: GameInterface) {
     this.gameToDeleteId = game.id;
 
     const DELETE_GAME_DIALOG_DATA: DialogDataInterface = {
@@ -271,7 +273,7 @@ export class HomePage implements OnInit, OnDestroy {
     this.deleteGameDialog.openDialog();
   }
 
-  public async handleDeleteConfirmation() {
+  public async handleDeleteGameDialogConfirmation() {
     this.isLoading = true;
 
     try {

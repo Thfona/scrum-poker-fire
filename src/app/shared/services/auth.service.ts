@@ -52,11 +52,11 @@ export class AuthService {
 
     this.isWaitingPopUp = false;
 
-    await this.router.navigate([this.routeAfterSignIn]);
+    await this.updateUserData(credential.user);
 
     this.isSigningIn = false;
 
-    return this.updateUserData(credential.user);
+    return this.router.navigate([this.routeAfterSignIn]);
   }
 
   public async signOut() {

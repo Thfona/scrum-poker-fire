@@ -6,32 +6,38 @@
   width: $sidenav-width;
   position: fixed;
   right: 0%;
-  z-index: 99;
+  z-index: 98;
   background-color: white;
   border-left: 1px solid lightgrey;
-
-  @include belowLarge {
-    width: $sidenav-width-below-large;
-  }
 
   @include belowSmallMedium {
     height: calc(100% - #{$toolbar-height-below-small-medium});
     top: calc(0% + #{$toolbar-height-below-small-medium});
-  }
-
-  @include belowSmall {
     width: 100%;
   }
 }
 
-.sidenav-menu {
+.sidenav-button {
   position: fixed;
-  top: calc(2rem + #{$toolbar-height});
-  right: 2rem;
-  z-index: 98;
 
-  @include belowSmallMedium {
-    top: calc(2rem + #{$toolbar-height-below-small-medium});
+  &.open {
+    z-index: 97;
+    top: calc(2rem + #{$toolbar-height});
+    right: 2rem;
+
+    @include belowSmallMedium {
+      top: calc(2rem + #{$toolbar-height-below-small-medium});
+    }
+  }
+
+  &.close {
+    z-index: 99;
+    top: 8px;
+    right: 8px;
+
+    @include fromSmallMedium {
+      display: none;
+    }
   }
 }
 
@@ -40,7 +46,7 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.32);
-  z-index: 97;
+  z-index: 96;
   top: 0;
   left: 0;
   right: 0;

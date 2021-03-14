@@ -1,24 +1,33 @@
-import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoService } from '@ngneat/transloco';
 import { EMPTY, Subscription } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { DialogDataInterface } from 'src/app/shared/interfaces/dialog-data.interface';
 import { GameCardInterface } from 'src/app/shared/interfaces/game-card.interface';
 import { GameDialogDataInterface } from 'src/app/shared/interfaces/game-dialog-data.interface';
 import { GameDialogResultInterface } from 'src/app/shared/interfaces/game-dialog-result.interface';
+import { GameInterface } from 'src/app/shared/interfaces/game.interface';
 import { GameSettingsInterface } from 'src/app/shared/interfaces/game-settings.interface';
 import { GameVoteInterface } from 'src/app/shared/interfaces/game-vote.interface';
-import { GameInterface } from 'src/app/shared/interfaces/game.interface';
+import { PlayerWithVoteInterface } from 'src/app/shared/interfaces/player-with-vote.interface';
+import { StoryDialogDataInterface } from 'src/app/shared/interfaces/story-dialog-data.interface';
+import { StoryDialogResultInterface } from 'src/app/shared/interfaces/story-dialog-result.interface';
+import { StoryInterface } from 'src/app/shared/interfaces/story.interface';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { DomainService } from 'src/app/shared/services/domain.service';
 import { GamesService } from 'src/app/shared/services/games.service';
 import { SidenavService } from 'src/app/shared/services/sidenav.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { ViewportService } from 'src/app/shared/services/viewport.service';
+import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
 import { GameDialogComponent } from 'src/app/shared/components/game-dialog/game-dialog.component';
+import { InviteDialogComponent } from 'src/app/shared/components/invite-dialog/invite-dialog.component';
+import { StoryDialogComponent } from 'src/app/shared/components/story-dialog/story-dialog.component';
 import { SNACKBAR_ACTION } from 'src/app/shared/constants/snackbar-action.constant';
 import { SNACKBAR_CONFIGURATION } from 'src/app/shared/constants/snackbar-configuration.constant';
+import { generateUniqueIdUtil } from 'src/app/shared/utils/generateUniqueId.util';
 
 @Component({
   selector: 'app-play-page',
@@ -28,34 +37,40 @@ import { SNACKBAR_CONFIGURATION } from 'src/app/shared/constants/snackbar-config
 })
 export class PlayGamePage implements OnInit, OnDestroy {
   @ViewChild('editGameDialog') editGameDialog: GameDialogComponent;
+  @ViewChild('exitGameDialog') exitGameDialog: DialogComponent;
+  @ViewChild('inviteDialog') inviteDialog: InviteDialogComponent;
+  @ViewChild('storyDialog') storyDialog: StoryDialogComponent;
   private isDesktopSubscription: Subscription;
   private gameSubscription: Subscription;
   private hasInitializedSession: boolean;
   private userName: string;
   private cardMargin = '10px';
-  private hasRevealedVotes: boolean;
   private userCurrentVote: GameVoteInterface;
+  private storyDialogOperation: 'create' | 'edit';
+  private storyToEditId: string;
+  private currentStoryId: string;
   public userId: string;
   public gameId: string;
   public game: GameInterface;
   public cards: GameCardInterface[];
+  public playersWithVotes: PlayerWithVoteInterface[];
+  public currentStoryIndex: number;
+  public currentStoryName: string;
+  public hasFlippedCards: boolean;
   public isLoading: boolean;
   public hasError: boolean;
-  public errorMessageCode = 'PLAY_GAME_ERROR_MESSAGE';
   public isHost: boolean;
   public isPlayer: boolean;
   public isDesktop: boolean;
-
-  @HostListener('window:beforeunload')
-  beforeunloadHandler() {
-    this.updateSession('leave');
-  }
+  public passVoteValue = 'PASS_CARD';
+  public errorMessageCode = 'PLAY_GAME_ERROR_MESSAGE';
 
   constructor(
     private authService: AuthService,
     private domainService: DomainService,
     private gamesService: GamesService,
     private route: ActivatedRoute,
+    private router: Router,
     public sidenavService: SidenavService,
     private snackBar: MatSnackBar,
     private translocoService: TranslocoService,
@@ -99,6 +114,34 @@ export class PlayGamePage implements OnInit, OnDestroy {
             throw new Error();
           }
 
+          this.currentStoryId = this.game.session.currentStoryId;
+
+          const CURRENT_STORY = this.game.stories.find((story) => story.id === this.currentStoryId);
+
+          if (CURRENT_STORY) {
+            this.currentStoryIndex = CURRENT_STORY.index;
+            this.currentStoryName = CURRENT_STORY.name;
+            this.hasFlippedCards = CURRENT_STORY.hasFlippedCards;
+          }
+
+          this.userCurrentVote = this.game.session.votes.find(
+            (vote) => vote.userId === this.userId && vote.storyId === this.currentStoryId
+          );
+
+          this.game.stories = this.game.stories.sort((a, b) => a.index - b.index);
+
+          const PLAYERS = this.game.session.users.filter((user) => user.isPlayer);
+          this.playersWithVotes = PLAYERS.map((player) => {
+            const PLAYER_VOTE = this.game.session.votes.find(
+              (vote) => vote.userId === player.id && vote.storyId === this.currentStoryId
+            );
+
+            return {
+              ...player,
+              vote: PLAYER_VOTE
+            };
+          });
+
           const DOMAIN = this.domainService.getDomain();
           const cards = DOMAIN.cardSetOptions.values.find((cardSet) => {
             return cardSet.name === this.game.cardSet;
@@ -112,7 +155,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
               this.isHost = true;
             }
 
-            this.updateSession('enter');
+            this.updateSession();
 
             this.hasInitializedSession = true;
           }
@@ -134,48 +177,6 @@ export class PlayGamePage implements OnInit, OnDestroy {
     if (this.gameSubscription) {
       this.gameSubscription.unsubscribe();
     }
-
-    this.updateSession('leave');
-  }
-
-  private async updateSession(action: 'enter' | 'leave') {
-    if (action === 'enter') {
-      try {
-        if (this.isHost) {
-          await this.gamesService.updateGameSessionIsActive(this.gameId, true);
-        }
-
-        const SESSION_USER = this.game.session.users.find((user) => user.id === this.userId);
-
-        if (SESSION_USER) {
-          this.isPlayer = SESSION_USER.isPlayer;
-        } else {
-          this.isPlayer = true;
-
-          const NEW_SESSION_USER = {
-            id: this.userId,
-            name: this.userName,
-            isPlayer: this.isPlayer
-          };
-
-          await this.gamesService.updateGameSessionUsers(this.gameId, NEW_SESSION_USER, 'add');
-        }
-
-        this.userCurrentVote = this.game.session.votes.find(
-          (vote) => vote.userId === this.userId && vote.storyId === this.game.session.currentStoryId
-        );
-
-        this.isLoading = false;
-      } catch {
-        this.handlePromiseError();
-      }
-    }
-
-    if (action === 'leave') {
-      if (this.isHost) {
-        this.gamesService.updateGameSessionIsActive(this.gameId, false);
-      }
-    }
   }
 
   private handlePromiseError() {
@@ -185,6 +186,34 @@ export class PlayGamePage implements OnInit, OnDestroy {
 
     this.hasError = true;
     this.isLoading = false;
+  }
+
+  private async updateSession() {
+    try {
+      if (this.isHost) {
+        await this.gamesService.updateGameSessionIsActive(this.gameId, true);
+      }
+
+      const SESSION_USER = this.game.session.users.find((user) => user.id === this.userId);
+
+      if (SESSION_USER) {
+        this.isPlayer = SESSION_USER.isPlayer;
+      } else {
+        this.isPlayer = true;
+
+        const NEW_SESSION_USER = {
+          id: this.userId,
+          name: this.userName,
+          isPlayer: this.isPlayer
+        };
+
+        await this.gamesService.updateGameSessionUsers(this.gameId, NEW_SESSION_USER, 'add');
+      }
+
+      this.isLoading = false;
+    } catch {
+      this.handlePromiseError();
+    }
   }
 
   public async swapUserRole(userId: string) {
@@ -204,7 +233,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
   }
 
   public async handleCardClick(card: GameCardInterface) {
-    if (!this.hasRevealedVotes || this.game.allowVoteChangeAfterReveal) {
+    if (!this.hasFlippedCards || this.game.allowVoteChangeAfterReveal) {
       try {
         if (this.userCurrentVote && this.userCurrentVote.displayValue === card.displayValue) {
           await this.gamesService.updateGameSessionVotes(this.gameId, this.userCurrentVote, 'remove');
@@ -245,30 +274,287 @@ export class PlayGamePage implements OnInit, OnDestroy {
     return this.userCurrentVote && this.userCurrentVote.displayValue === card.displayValue;
   }
 
-  // TODO: Finish implementation
   public handleInviteButtonClick() {
-    console.log('invite');
+    this.inviteDialog.openDialog();
+  }
+
+  public async handleStartGameButtonClick() {
+    await this.gamesService.updateGameSessionCurrentStory(
+      this.gameId,
+      this.game.stories.find((story) => story.index === 0).id
+    );
+    await this.gamesService.updateGameSessionHasStarted(this.gameId, true);
+  }
+
+  public handleExitGameButtonClick() {
+    const EXIT_GAME_DIALOG_DATA: DialogDataInterface = {
+      title: this.translocoService.translate('EXIT_GAME'),
+      content: this.translocoService.translate('EXIT_GAME_CONTENT'),
+      confirmButtonText: this.translocoService.translate('EXIT'),
+      confirmButtonColor: 'warn'
+    };
+
+    this.exitGameDialog.data = EXIT_GAME_DIALOG_DATA;
+
+    this.exitGameDialog.openDialog();
+  }
+
+  public handleExitGameDialogConfirmation() {
+    this.router.navigate(['home']);
+  }
+
+  public handleAddStoriesButtonClick() {
+    this.storyDialogOperation = 'create';
+
+    const CREATE_STORY_DIALOG_DATA: StoryDialogDataInterface = {
+      title: this.translocoService.translate('CREATE_STORY_TITLE'),
+      formData: {
+        name: ''
+      },
+      isEditOperation: false
+    };
+
+    this.storyDialog.data = CREATE_STORY_DIALOG_DATA;
+
+    this.storyDialog.openDialog();
+  }
+
+  public handleStoriesRowClick(story: StoryInterface) {
+    if (this.isHost) {
+      this.storyDialogOperation = 'edit';
+      this.storyToEditId = story.id;
+
+      const EDIT_STORY_DIALOG_DATA: StoryDialogDataInterface = {
+        title: this.translocoService.translate('EDIT_STORY_TITLE', { storyName: story.name }),
+        formData: {
+          name: story.name,
+          score: story.score
+        },
+        isEditOperation: true
+      };
+
+      this.storyDialog.data = EDIT_STORY_DIALOG_DATA;
+
+      this.storyDialog.openDialog();
+    }
+  }
+
+  public async handleStoryDialogConfirmation(storyDialogResult: StoryDialogResultInterface) {
+    if (this.storyDialogOperation === 'create') {
+      try {
+        const NEW_STORY_INDEX: number = this.game.stories.length
+          ? Math.max.apply(
+              Math,
+              this.game.stories.map((story) => story.index)
+            ) + 1
+          : 0;
+
+        await this.gamesService.updateStories(
+          this.gameId,
+          {
+            id: generateUniqueIdUtil(),
+            index: NEW_STORY_INDEX,
+            name: storyDialogResult.formValue.name,
+            hasFlippedCards: false
+          },
+          'add'
+        );
+      } catch {
+        this.snackBar.open(
+          this.translocoService.translate('CREATE_STORY_ERROR'),
+          this.translocoService.translate(SNACKBAR_ACTION),
+          SNACKBAR_CONFIGURATION
+        );
+      }
+    }
+
+    if (this.storyDialogOperation === 'edit') {
+      const STORY = this.game.stories.find((story) => story.id === this.storyToEditId);
+
+      if (storyDialogResult.delete) {
+        try {
+          await this.gamesService.updateStories(this.gameId, STORY, 'remove');
+
+          if (!this.game.stories.length) {
+            if (this.game.session.hasStarted) {
+              await this.gamesService.updateGameSessionHasStarted(this.gameId, false);
+            }
+
+            if (this.game.session.currentStoryId) {
+              await this.gamesService.updateGameSessionCurrentStory(this.gameId, '');
+            }
+          } else {
+            if (this.game.session.currentStoryId && this.game.session.currentStoryId === STORY.id) {
+              const NEXT_STORY = this.game.stories.find((story) => story.index === STORY.index + 1);
+              const PREVIOUS_STORY = this.game.stories.find((story) => story.index === STORY.index - 1);
+              const NEW_CURRENT_STORY_ID = NEXT_STORY ? NEXT_STORY.id : PREVIOUS_STORY.id;
+
+              await this.gamesService.updateGameSessionCurrentStory(this.gameId, NEW_CURRENT_STORY_ID);
+            }
+
+            const NEW_STORIES_LIST = this.game.stories.map((story) => {
+              if (story.index > STORY.index) {
+                return {
+                  ...story,
+                  index: story.index - 1
+                };
+              } else {
+                return story;
+              }
+            });
+
+            await this.gamesService.updateStoriesList(this.gameId, NEW_STORIES_LIST);
+          }
+        } catch {
+          this.snackBar.open(
+            this.translocoService.translate('DELETE_STORY_ERROR'),
+            this.translocoService.translate(SNACKBAR_ACTION),
+            SNACKBAR_CONFIGURATION
+          );
+        }
+      } else {
+        try {
+          const NEW_STORY: StoryInterface = {
+            id: STORY.id,
+            index: STORY.index,
+            name: storyDialogResult.formValue.name,
+            hasFlippedCards: STORY.hasFlippedCards
+          };
+
+          if (storyDialogResult.formValue.score) {
+            NEW_STORY.score = storyDialogResult.formValue.score;
+          }
+
+          const NEW_STORIES_LIST = this.game.stories.map((story) => {
+            if (story.id === STORY.id) {
+              return NEW_STORY;
+            }
+
+            return story;
+          });
+
+          await this.gamesService.updateStoriesList(this.gameId, NEW_STORIES_LIST);
+        } catch {
+          this.snackBar.open(
+            this.translocoService.translate('EDIT_STORY_ERROR'),
+            this.translocoService.translate(SNACKBAR_ACTION),
+            SNACKBAR_CONFIGURATION
+          );
+        }
+      }
+    }
   }
 
   // TODO: Finish implementation
-  public handleStartGameButtonClick() {
-    console.log('startgame');
+  public handleUsersButtonClick() {
+    console.log('Not yet implemented');
   }
 
-  public handleEditGameClick(game: GameInterface) {
+  public async handleResetCardsButtonClick() {
+    try {
+      const STORY = this.game.stories.find((story) => story.id === this.currentStoryId);
+
+      const NEW_STORY: StoryInterface = {
+        ...STORY,
+        hasFlippedCards: false
+      };
+
+      const NEW_STORIES_LIST = this.game.stories.map((story) => {
+        if (story.id === STORY.id) {
+          return NEW_STORY;
+        }
+
+        return story;
+      });
+
+      const NEW_VOTES_LIST = this.game.session.votes.filter((vote) => vote.storyId !== this.currentStoryId);
+
+      await this.gamesService.updateStoriesList(this.gameId, NEW_STORIES_LIST);
+      await this.gamesService.updateGameSessionVotesList(this.gameId, NEW_VOTES_LIST);
+    } catch {
+      this.handlePromiseError();
+    }
+  }
+
+  public async handleFlipCardsButtonClick() {
+    if (!this.hasFlippedCards) {
+      try {
+        const STORY = this.game.stories.find((story) => story.id === this.currentStoryId);
+
+        const NEW_STORY: StoryInterface = {
+          ...STORY,
+          hasFlippedCards: true
+        };
+
+        const NEW_STORIES_LIST = this.game.stories.map((story) => {
+          if (story.id === STORY.id) {
+            return NEW_STORY;
+          }
+
+          return story;
+        });
+
+        await this.gamesService.updateStoriesList(this.gameId, NEW_STORIES_LIST);
+      } catch {
+        this.handlePromiseError();
+      }
+    }
+  }
+
+  public async handleFirstStoryButtonClick() {
+    try {
+      const NEW_CURRENT_STORY_ID = this.game.stories.find((story) => story.index === 0).id;
+
+      await this.gamesService.updateGameSessionCurrentStory(this.gameId, NEW_CURRENT_STORY_ID);
+    } catch {
+      this.handlePromiseError();
+    }
+  }
+
+  public async handleLastStoryButtonClick() {
+    try {
+      const NEW_CURRENT_STORY_ID = this.game.stories.find((story) => story.index === this.game.stories.length - 1).id;
+
+      await this.gamesService.updateGameSessionCurrentStory(this.gameId, NEW_CURRENT_STORY_ID);
+    } catch {
+      this.handlePromiseError();
+    }
+  }
+
+  public async handlePreviousStoryButtonClick() {
+    try {
+      const NEW_CURRENT_STORY_ID = this.game.stories.find((story) => story.index === this.currentStoryIndex - 1).id;
+
+      await this.gamesService.updateGameSessionCurrentStory(this.gameId, NEW_CURRENT_STORY_ID);
+    } catch {
+      this.handlePromiseError();
+    }
+  }
+
+  public async handleNextStoryButtonClick() {
+    try {
+      const NEW_CURRENT_STORY_ID = this.game.stories.find((story) => story.index === this.currentStoryIndex + 1).id;
+
+      await this.gamesService.updateGameSessionCurrentStory(this.gameId, NEW_CURRENT_STORY_ID);
+    } catch {
+      this.handlePromiseError();
+    }
+  }
+
+  public handleEditGameButtonClick() {
     const EDIT_GAME_DIALOG_DATA: GameDialogDataInterface = {
-      title: this.translocoService.translate('EDIT_GAME_TITLE', { gameName: game.name }),
+      title: this.translocoService.translate('EDIT_GAME_TITLE', { gameName: this.game.name }),
       formData: {
-        name: game.name,
-        description: game.description,
-        teamVelocity: game.teamVelocity,
-        shareVelocity: game.shareVelocity,
-        cardSet: game.cardSet,
-        autoFlip: game.autoFlip,
-        allowVoteChangeAfterReveal: game.allowVoteChangeAfterReveal,
-        calculateScore: game.calculateScore,
-        storyTimer: game.storyTimer,
-        storyTimerMinutes: game.storyTimerMinutes
+        name: this.game.name,
+        description: this.game.description,
+        teamVelocity: this.game.teamVelocity,
+        shareVelocity: this.game.shareVelocity,
+        cardSet: this.game.cardSet,
+        autoFlip: this.game.autoFlip,
+        allowVoteChangeAfterReveal: this.game.allowVoteChangeAfterReveal,
+        calculateScore: this.game.calculateScore,
+        storyTimer: this.game.storyTimer,
+        storyTimerMinutes: this.game.storyTimerMinutes
       },
       shouldDisplaySaveAndStart: true
     };
@@ -279,8 +565,6 @@ export class PlayGamePage implements OnInit, OnDestroy {
   }
 
   public async handleEditGameDialogConfirmation(gameDialogResult: GameDialogResultInterface) {
-    this.isLoading = true;
-
     try {
       await this.gamesService.updateGame(this.gameId, gameDialogResult.formValue);
     } catch {
@@ -313,7 +597,5 @@ export class PlayGamePage implements OnInit, OnDestroy {
         );
       }
     }
-
-    this.isLoading = false;
   }
 }

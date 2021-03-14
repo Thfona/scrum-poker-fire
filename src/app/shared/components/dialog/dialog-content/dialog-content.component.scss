@@ -1,5 +1,5 @@
 .action-button {
-  &:hover {
+  &:hover:enabled {
     background-color: whitesmoke;
   }
 }

@@ -1,0 +1,20 @@
+<ng-container *transloco="let transloco">
+  <h2 mat-dialog-title>{{ transloco('INVITE') }}</h2>
+  <mat-dialog-content class="mat-typography">
+    <p class="text">{{ transloco('COPY_LINK_TEXT') }}</p>
+    <div class="input-container">
+      <mat-form-field>
+        <input #linkInput matInput [readonly]="true" [value]="getGameUrl()" (click)="$event.target.select()">
+      </mat-form-field>
+      <button mat-flat-button class="copy-button" [matTooltip]="transloco('COPY')" matTooltipPosition="above"
+        (click)="copyLinkToClipboard()">
+        <mat-icon>content_copy</mat-icon>
+      </button>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close class="action-button">
+      {{ transloco('CLOSE') }}
+    </button>
+  </mat-dialog-actions>
+</ng-container>
