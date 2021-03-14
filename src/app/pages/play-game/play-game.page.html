@@ -31,7 +31,7 @@
                   <span class="button-text">{{ transloco(isPlayer ? 'PLAYING_TEXT' : 'SPECTATING_TEXT') }}</span>
                 </div>
               </button>
-              <button mat-raised-button *ngIf="game.stories.length && !game.session.hasStarted" color="accent"
+              <button mat-raised-button *ngIf="isHost && game.stories.length && !game.session.hasStarted" color="accent"
                 class="button" (click)="handleStartGameButtonClick()">
                 <div class="button-content">
                   <mat-icon>play_arrow</mat-icon>
