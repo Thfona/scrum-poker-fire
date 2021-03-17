@@ -1,7 +1,7 @@
 <ng-container *transloco="let transloco">
   <h2 mat-dialog-title>{{ data.title }}</h2>
   <mat-dialog-content class="mat-typography" *ngIf="data.content">
-    <p>{{ data.content }}</p>
+    <p class="content-text">{{ data.content }}</p>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button [mat-dialog-close]="false" class="action-button">

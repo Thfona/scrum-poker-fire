@@ -21,21 +21,27 @@
       </button>
     </mat-toolbar>
     <mat-menu #menu="matMenu">
-      <ng-container *ngIf="user.displayName">
-        <div class="user-info">
-          <img *ngIf="user.photoURL" class="avatar info" [src]="user.photoURL">
-          <span class="display-name">{{ user.displayName }}</span>
-        </div>
-        <mat-divider class="menu-divider"></mat-divider>
-      </ng-container>
-      <button mat-menu-item (click)="openGitHubRepository()" class="github-menu-item">
-        <mat-icon>code</mat-icon>
-        <span>GitHub</span>
-      </button>
-      <button mat-menu-item (click)="authService.signOut()">
-        <mat-icon>logout</mat-icon>
-        <span>{{ transloco('SIGN_OUT') }}</span>
-      </button>
+      <div class="menu-content-container">
+        <ng-container *ngIf="user.displayName">
+          <div class="user-info">
+            <img *ngIf="user.photoURL" class="avatar info" [src]="user.photoURL">
+            <span class="display-name">{{ user.displayName }}</span>
+          </div>
+          <mat-divider class="menu-divider"></mat-divider>
+        </ng-container>
+        <button mat-menu-item (click)="openGitHubRepository()" class="github-menu-item">
+          <div class="menu-item-content">
+            <mat-icon>code</mat-icon>
+            <span>GitHub</span>
+          </div>
+        </button>
+        <button mat-menu-item (click)="authService.signOut()">
+          <div class="menu-item-content">
+            <mat-icon>logout</mat-icon>
+            <span>{{ transloco('SIGN_OUT') }}</span>
+          </div>
+        </button>
+      </div>
     </mat-menu>
   </ng-container>
 </ng-container>

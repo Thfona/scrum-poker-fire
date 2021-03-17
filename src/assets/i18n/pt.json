@@ -46,6 +46,8 @@
   "ADD_STORIES": "Adicionar Estórias",
   "CREATE_STORY_TITLE": "Adicionar estória",
   "EDIT_STORY_TITLE": "Editar \"{{ storyName }}\"",
+  "DELETE_STORY_TITLE": "Excluir \"{{ storyName }}\"?",
+  "DELETE_STORY_CONTENT": "Você tem certeza que deseja excluir a estória \"{{ storyName }}\"?",
   "EXIT_GAME": "Sair do Jogo",
   "EXIT_GAME_CONTENT": "Você tem certeza que deseja sair do jogo?",
   "EXIT": "Sair",

@@ -209,6 +209,8 @@
     <app-story-dialog-component #storyDialog (confirmEvent)="handleStoryDialogConfirmation($event)">
     </app-story-dialog-component>
 
+    <app-dialog-component #deleteStoryDialog (confirmEvent)="handleDeleteStoryDialogConfirmation()"></app-dialog-component>
+
     <app-dialog-component #exitGameDialog (confirmEvent)="handleExitGameDialogConfirmation()"></app-dialog-component>
   </ng-container>
 </ng-container>

@@ -25,7 +25,8 @@ export class StoryDialogComponent implements OnDestroy {
   public openDialog() {
     const DIALOG_REFERENCE = this.matDialog.open(StoryDialogContentComponent, {
       data: this.data,
-      autoFocus: false
+      autoFocus: false,
+      minWidth: '430px'
     });
 
     this.dialogSubscription = DIALOG_REFERENCE.afterClosed().subscribe((result: StoryDialogResultInterface) => {

@@ -46,6 +46,8 @@
   "ADD_STORIES": "Add Stories",
   "CREATE_STORY_TITLE": "Add story",
   "EDIT_STORY_TITLE": "Edit \"{{ storyName }}\"",
+  "DELETE_STORY_TITLE": "Delete \"{{ storyName }}\"?",
+  "DELETE_STORY_CONTENT": "Are you sure you want to delete the story \"{{ storyName }}\"?",
   "EXIT_GAME": "Exit Game",
   "EXIT_GAME_CONTENT": "Are you sure you want to exit the game?",
   "EXIT": "Exit",

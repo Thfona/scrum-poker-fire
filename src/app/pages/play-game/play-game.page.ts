@@ -37,6 +37,7 @@ import { generateUniqueIdUtil } from 'src/app/shared/utils/generateUniqueId.util
 })
 export class PlayGamePage implements OnInit, OnDestroy {
   @ViewChild('editGameDialog') editGameDialog: GameDialogComponent;
+  @ViewChild('deleteStoryDialog') deleteStoryDialog: DialogComponent;
   @ViewChild('exitGameDialog') exitGameDialog: DialogComponent;
   @ViewChild('inviteDialog') inviteDialog: InviteDialogComponent;
   @ViewChild('storyDialog') storyDialog: StoryDialogComponent;
@@ -375,46 +376,16 @@ export class PlayGamePage implements OnInit, OnDestroy {
       const STORY = this.game.stories.find((story) => story.id === this.storyToEditId);
 
       if (storyDialogResult.delete) {
-        try {
-          await this.gamesService.updateStories(this.gameId, STORY, 'remove');
+        const DELETE_STORY_DIALOG_DATA: DialogDataInterface = {
+          title: this.translocoService.translate('DELETE_STORY_TITLE', { storyName: STORY.name }),
+          content: this.translocoService.translate('DELETE_STORY_CONTENT', { storyName: STORY.name }),
+          confirmButtonText: this.translocoService.translate('DELETE'),
+          confirmButtonColor: 'warn'
+        };
 
-          if (!this.game.stories.length) {
-            if (this.game.session.hasStarted) {
-              await this.gamesService.updateGameSessionHasStarted(this.gameId, false);
-            }
+        this.deleteStoryDialog.data = DELETE_STORY_DIALOG_DATA;
 
-            if (this.game.session.currentStoryId) {
-              await this.gamesService.updateGameSessionCurrentStory(this.gameId, '');
-            }
-          } else {
-            if (this.game.session.currentStoryId && this.game.session.currentStoryId === STORY.id) {
-              const NEXT_STORY = this.game.stories.find((story) => story.index === STORY.index + 1);
-              const PREVIOUS_STORY = this.game.stories.find((story) => story.index === STORY.index - 1);
-              const NEW_CURRENT_STORY_ID = NEXT_STORY ? NEXT_STORY.id : PREVIOUS_STORY.id;
-
-              await this.gamesService.updateGameSessionCurrentStory(this.gameId, NEW_CURRENT_STORY_ID);
-            }
-
-            const NEW_STORIES_LIST = this.game.stories.map((story) => {
-              if (story.index > STORY.index) {
-                return {
-                  ...story,
-                  index: story.index - 1
-                };
-              } else {
-                return story;
-              }
-            });
-
-            await this.gamesService.updateStoriesList(this.gameId, NEW_STORIES_LIST);
-          }
-        } catch {
-          this.snackBar.open(
-            this.translocoService.translate('DELETE_STORY_ERROR'),
-            this.translocoService.translate(SNACKBAR_ACTION),
-            SNACKBAR_CONFIGURATION
-          );
-        }
+        this.deleteStoryDialog.openDialog();
       } else {
         try {
           const NEW_STORY: StoryInterface = {
@@ -445,6 +416,51 @@ export class PlayGamePage implements OnInit, OnDestroy {
           );
         }
       }
+    }
+  }
+
+  public async handleDeleteStoryDialogConfirmation() {
+    const STORY = this.game.stories.find((story) => story.id === this.storyToEditId);
+
+    try {
+      await this.gamesService.updateStories(this.gameId, STORY, 'remove');
+
+      if (!this.game.stories.length) {
+        if (this.game.session.hasStarted) {
+          await this.gamesService.updateGameSessionHasStarted(this.gameId, false);
+        }
+
+        if (this.game.session.currentStoryId) {
+          await this.gamesService.updateGameSessionCurrentStory(this.gameId, '');
+        }
+      } else {
+        if (this.game.session.currentStoryId && this.game.session.currentStoryId === STORY.id) {
+          const NEXT_STORY = this.game.stories.find((story) => story.index === STORY.index + 1);
+          const PREVIOUS_STORY = this.game.stories.find((story) => story.index === STORY.index - 1);
+          const NEW_CURRENT_STORY_ID = NEXT_STORY ? NEXT_STORY.id : PREVIOUS_STORY.id;
+
+          await this.gamesService.updateGameSessionCurrentStory(this.gameId, NEW_CURRENT_STORY_ID);
+        }
+
+        const NEW_STORIES_LIST = this.game.stories.map((story) => {
+          if (story.index > STORY.index) {
+            return {
+              ...story,
+              index: story.index - 1
+            };
+          } else {
+            return story;
+          }
+        });
+
+        await this.gamesService.updateStoriesList(this.gameId, NEW_STORIES_LIST);
+      }
+    } catch {
+      this.snackBar.open(
+        this.translocoService.translate('DELETE_STORY_ERROR'),
+        this.translocoService.translate(SNACKBAR_ACTION),
+        SNACKBAR_CONFIGURATION
+      );
     }
   }
 
