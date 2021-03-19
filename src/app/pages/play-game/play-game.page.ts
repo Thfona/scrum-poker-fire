@@ -48,7 +48,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
   private gameSubscription: Subscription;
   private hasInitializedSession: boolean;
   private userName: string;
-  private cardMargin = '10px';
+  private cardMargin = '12px';
   private userCurrentVote: GameVoteInterface;
   private userToEditId: string;
   private storyDialogOperation: 'create' | 'edit';
