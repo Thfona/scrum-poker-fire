@@ -176,6 +176,7 @@ export class HomePage implements OnInit, OnDestroy {
         description: game.description,
         teamVelocity: game.teamVelocity,
         shareVelocity: game.shareVelocity,
+        isPrivate: game.isPrivate,
         cardSet: game.cardSet,
         autoFlip: game.autoFlip,
         allowVoteChangeAfterReveal: game.allowVoteChangeAfterReveal,
@@ -233,6 +234,7 @@ export class HomePage implements OnInit, OnDestroy {
       const GAME_SETTINGS: GameSettingsInterface = {
         teamVelocity: gameDialogResult.formValue.teamVelocity,
         shareVelocity: gameDialogResult.formValue.shareVelocity,
+        isPrivate: gameDialogResult.formValue.isPrivate,
         cardSet: gameDialogResult.formValue.cardSet,
         autoFlip: gameDialogResult.formValue.autoFlip,
         allowVoteChangeAfterReveal: gameDialogResult.formValue.allowVoteChangeAfterReveal,

@@ -34,6 +34,7 @@ export class GameDialogContentComponent implements OnInit {
       description: new FormControl(this.data.formData.description),
       teamVelocity: new FormControl(this.data.formData.teamVelocity, Validators.required),
       shareVelocity: new FormControl(this.data.formData.shareVelocity, Validators.required),
+      isPrivate: new FormControl(this.data.formData.isPrivate, Validators.required),
       cardSet: new FormControl(this.data.formData.cardSet, Validators.required),
       autoFlip: new FormControl(this.data.formData.autoFlip, Validators.required),
       allowVoteChangeAfterReveal: new FormControl(this.data.formData.allowVoteChangeAfterReveal, Validators.required),

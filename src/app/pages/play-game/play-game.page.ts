@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoService } from '@ngneat/transloco';
@@ -41,12 +42,15 @@ export class PlayGamePage implements OnInit, OnDestroy {
   @ViewChild('exitGameDialog') exitGameDialog: DialogComponent;
   @ViewChild('inviteDialog') inviteDialog: InviteDialogComponent;
   @ViewChild('storyDialog') storyDialog: StoryDialogComponent;
+  @ViewChild(MatMenuTrigger) usersMenu: MatMenuTrigger;
   private isDesktopSubscription: Subscription;
+  private isLargeScreenSubscription: Subscription;
   private gameSubscription: Subscription;
   private hasInitializedSession: boolean;
   private userName: string;
   private cardMargin = '10px';
   private userCurrentVote: GameVoteInterface;
+  private userToEditId: string;
   private storyDialogOperation: 'create' | 'edit';
   private storyToEditId: string;
   private currentStoryId: string;
@@ -63,6 +67,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
   public isHost: boolean;
   public isPlayer: boolean;
   public isDesktop: boolean;
+  public isLargeScreen: boolean;
   public passVoteValue = 'PASS_CARD';
   public errorMessageCode = 'PLAY_GAME_ERROR_MESSAGE';
 
@@ -100,6 +105,14 @@ export class PlayGamePage implements OnInit, OnDestroy {
       this.isDesktop = isDesktop;
     });
 
+    this.isLargeScreenSubscription = this.viewportService.isLargeScreen.subscribe((isLargeScreen) => {
+      if (this.isLargeScreen !== isLargeScreen && this.usersMenu) {
+        this.usersMenu.closeMenu();
+      }
+
+      this.isLargeScreen = isLargeScreen;
+    });
+
     this.gameSubscription = this.gamesService
       .getGame(this.gameId)
       .pipe(
@@ -109,7 +122,9 @@ export class PlayGamePage implements OnInit, OnDestroy {
 
           if (
             !this.game ||
-            (this.game.ownerId !== this.userId && !this.game.session.isActive) ||
+            (this.game.ownerId !== this.userId &&
+              (!this.game.session.isActive ||
+                (this.game.isPrivate && !this.game.authorizedUsers.includes(this.userId)))) ||
             this.game.bannedUsers.includes(this.userId)
           ) {
             throw new Error();
@@ -180,6 +195,10 @@ export class PlayGamePage implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.isDesktopSubscription) {
       this.isDesktopSubscription.unsubscribe();
+    }
+
+    if (this.isLargeScreenSubscription) {
+      this.isLargeScreenSubscription.unsubscribe();
     }
 
     if (this.gameSubscription) {
@@ -465,8 +484,8 @@ export class PlayGamePage implements OnInit, OnDestroy {
   }
 
   // TODO: Finish implementation
-  public handleUsersButtonClick() {
-    console.log('Not yet implemented');
+  public handleUserMenuRowClick(userId: string) {
+    this.userToEditId = userId;
   }
 
   public async handleResetCardsButtonClick() {
@@ -568,6 +587,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
         description: this.game.description,
         teamVelocity: this.game.teamVelocity,
         shareVelocity: this.game.shareVelocity,
+        isPrivate: this.game.isPrivate,
         cardSet: this.game.cardSet,
         autoFlip: this.game.autoFlip,
         allowVoteChangeAfterReveal: this.game.allowVoteChangeAfterReveal,
@@ -575,7 +595,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
         storyTimer: this.game.storyTimer,
         storyTimerMinutes: this.game.storyTimerMinutes
       },
-      shouldDisplaySaveAndStart: true
+      shouldDisplaySaveAndStart: false
     };
 
     this.editGameDialog.data = EDIT_GAME_DIALOG_DATA;
@@ -598,6 +618,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
       const GAME_SETTINGS: GameSettingsInterface = {
         teamVelocity: gameDialogResult.formValue.teamVelocity,
         shareVelocity: gameDialogResult.formValue.shareVelocity,
+        isPrivate: gameDialogResult.formValue.isPrivate,
         cardSet: gameDialogResult.formValue.cardSet,
         autoFlip: gameDialogResult.formValue.autoFlip,
         allowVoteChangeAfterReveal: gameDialogResult.formValue.allowVoteChangeAfterReveal,

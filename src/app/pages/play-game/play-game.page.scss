@@ -68,8 +68,22 @@
   margin-bottom: 1rem;
 }
 
-.no-stories-container {
-  display: flex;
+.stories-container {
+  background-color: whitesmoke;
+  overflow: auto;
+
+  height: 100%;
+
+  &.is-host {
+    height: calc(100% - #{$cards-container-height} - 37px);
+
+    @include belowSmallMedium {
+      height: calc(100% - 200px);
+    }
+  }
+}
+
+.story-padding {
   padding: 8px 1rem;
 }
 
@@ -77,8 +91,10 @@
   display: grid;
   grid-template-columns: 1fr 8fr 3fr;
   grid-column-gap: 8px;
-  padding: 8px 1rem;
   font-weight: 500;
+  background-color: #fdfdfd;
+
+  @extend .story-padding;
 
   &.header {
     color: white;
@@ -140,11 +156,10 @@
 .cards-container {
   height: $cards-container-height;
   position: fixed;
-  bottom: 0%;
-  background-color: whitesmoke;
-  border-top: 1px solid lightgrey;
+  bottom: 0;
   overflow-x: auto;
   overflow-y: hidden;
+  border-top: 1px solid lightgrey;
 }
 
 .card {
@@ -161,7 +176,7 @@
     transform: scale(1.2);
   }
 
-  &.first {
+  &:first-child {
     margin-left: $card-margin !important;
   }
 }
@@ -187,6 +202,25 @@
   }
 }
 
+.sidenav-content {
+  height: 100%;
+}
+
 .sidenav-buttons {
   padding: 1rem;
+  background-color: #505050;
+  height: 100%;
+}
+
+.users-arrived-container {
+  margin-top: 2rem;
+}
+
+.user-arrived-text {
+  font-size: 1rem;
+}
+
+.users-menu-item-content {
+  display: flex;
+  align-items: center;
 }

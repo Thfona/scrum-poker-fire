@@ -59,6 +59,7 @@ export class GamesService {
         users: [],
         votes: []
       },
+      authorizedUsers: [],
       bannedUsers: []
     };
 
@@ -77,6 +78,16 @@ export class GamesService {
     const GAME_DOCUMENT: AngularFirestoreDocument<GameInterface> = this.angularFirestore.doc(`/games/${gameId}`);
 
     return GAME_DOCUMENT.delete();
+  }
+
+  public updateAuthorizedUsers(gameId: string, userId: string, operation: 'add' | 'remove') {
+    const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
+
+    if (operation === 'add') {
+      return GAME_DOCUMENT.update({ authorizedUsers: firebase.firestore.FieldValue.arrayUnion(userId) });
+    } else {
+      return GAME_DOCUMENT.update({ authorizedUsers: firebase.firestore.FieldValue.arrayRemove(userId) });
+    }
   }
 
   public updateBannedUsers(gameId: string, userId: string, operation: 'add' | 'remove') {

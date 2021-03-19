@@ -8,7 +8,6 @@
   right: 0%;
   z-index: 98;
   background-color: white;
-  border-left: 1px solid lightgrey;
 
   @include belowSmallMedium {
     height: calc(100% - #{$toolbar-height-below-small-medium});
@@ -33,7 +32,8 @@
   &.close {
     z-index: 99;
     bottom: 8px;
-    right: 8px;
+    left: 8px;
+    color: white;
 
     @include fromSmallMedium {
       display: none;

@@ -8,5 +8,6 @@ export interface GameInterface extends FormGameInterface {
   creationDate: string;
   stories: StoryInterface[];
   session: GameSessionInterface;
+  authorizedUsers: string[];
   bannedUsers: string[];
 }
