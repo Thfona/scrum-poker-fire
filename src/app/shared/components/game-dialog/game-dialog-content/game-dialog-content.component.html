@@ -26,13 +26,14 @@
         </mat-radio-group>
       </div>
 
-      <div class="radio-container">
+      <!-- TODO: Enable once private rooms are implemented -->
+      <!-- <div class="radio-container">
         <label class="radio-label">{{ transloco('GAME_PRIVACY') }}: </label>
         <mat-radio-group [formControl]="formGroup.controls.isPrivate">
           <mat-radio-button [value]="true" class="radio-button">{{ transloco('PRIVATE') }}</mat-radio-button>
           <mat-radio-button [value]="false" class="radio-button">{{ transloco('PUBLIC') }}</mat-radio-button>
         </mat-radio-group>
-      </div>
+      </div> -->
 
       <div class="radio-container">
         <label class="radio-label">{{ transloco('CARD_SET') }}: </label>
