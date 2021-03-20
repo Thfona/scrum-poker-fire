@@ -78,7 +78,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     public sidenavService: SidenavService,
-    private snackBar: MatSnackBar,
+    private snackBarService: MatSnackBar,
     private translocoService: TranslocoService,
     private userService: UserService,
     private viewportService: ViewportService
@@ -383,7 +383,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
           'add'
         );
       } catch {
-        this.snackBar.open(
+        this.snackBarService.open(
           this.translocoService.translate('CREATE_STORY_ERROR'),
           this.translocoService.translate(SNACKBAR_ACTION),
           SNACKBAR_CONFIGURATION
@@ -428,7 +428,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
 
           await this.gamesService.updateStoriesList(this.gameId, NEW_STORIES_LIST);
         } catch {
-          this.snackBar.open(
+          this.snackBarService.open(
             this.translocoService.translate('EDIT_STORY_ERROR'),
             this.translocoService.translate(SNACKBAR_ACTION),
             SNACKBAR_CONFIGURATION
@@ -475,7 +475,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
         await this.gamesService.updateStoriesList(this.gameId, NEW_STORIES_LIST);
       }
     } catch {
-      this.snackBar.open(
+      this.snackBarService.open(
         this.translocoService.translate('DELETE_STORY_ERROR'),
         this.translocoService.translate(SNACKBAR_ACTION),
         SNACKBAR_CONFIGURATION
@@ -607,7 +607,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
     try {
       await this.gamesService.updateGame(this.gameId, gameDialogResult.formValue);
     } catch {
-      this.snackBar.open(
+      this.snackBarService.open(
         this.translocoService.translate('EDIT_GAME_ERROR'),
         this.translocoService.translate(SNACKBAR_ACTION),
         SNACKBAR_CONFIGURATION
@@ -630,7 +630,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
       try {
         await this.userService.updateUserDefaultGameSettings(GAME_SETTINGS);
       } catch {
-        this.snackBar.open(
+        this.snackBarService.open(
           this.translocoService.translate('UPDATE_USER_DEFAULT_GAME_SETTINGS_ERROR'),
           this.translocoService.translate(SNACKBAR_ACTION),
           SNACKBAR_CONFIGURATION

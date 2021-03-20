@@ -15,4 +15,12 @@ export class UserService {
 
     return USER_DOCUMENT.update({ defaultGameSettings: gameSettings });
   }
+
+  public deleteUserAccount() {
+    const USER_ID = this.authService.user.uid;
+
+    const USER_DOCUMENT: AngularFirestoreDocument<UserInterface> = this.angularFirestore.doc(`/users/${USER_ID}`);
+
+    return USER_DOCUMENT.delete();
+  }
 }

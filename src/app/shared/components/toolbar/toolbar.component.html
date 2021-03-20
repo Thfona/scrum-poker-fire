@@ -36,6 +36,12 @@
             <span>GitHub</span>
           </div>
         </button>
+        <button mat-menu-item (click)="handleDeleteAccountClick()">
+          <div class="menu-item-content">
+            <mat-icon>person_remove</mat-icon>
+            <span>{{ transloco('DELETE_ACCOUNT') }}</span>
+          </div>
+        </button>
         <button mat-menu-item (click)="authService.signOut()">
           <div class="menu-item-content">
             <mat-icon>logout</mat-icon>
@@ -44,5 +50,8 @@
         </button>
       </div>
     </mat-menu>
+
+    <app-dialog-component #deleteAccountDialog (confirmEvent)="handleDeleteAccountDialogConfirmation()">
+    </app-dialog-component>
   </ng-container>
 </ng-container>

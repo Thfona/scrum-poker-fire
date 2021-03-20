@@ -60,7 +60,7 @@ export class HomePage implements OnInit, OnDestroy {
     private domainService: DomainService,
     private gamesService: GamesService,
     private router: Router,
-    private snackBar: MatSnackBar,
+    private snackBarService: MatSnackBar,
     private translocoService: TranslocoService,
     private userService: UserService
   ) {}
@@ -204,7 +204,7 @@ export class HomePage implements OnInit, OnDestroy {
       } catch {
         hasError = true;
 
-        this.snackBar.open(
+        this.snackBarService.open(
           this.translocoService.translate('CREATE_GAME_ERROR'),
           this.translocoService.translate(SNACKBAR_ACTION),
           SNACKBAR_CONFIGURATION
@@ -222,7 +222,7 @@ export class HomePage implements OnInit, OnDestroy {
       } catch {
         hasError = true;
 
-        this.snackBar.open(
+        this.snackBarService.open(
           this.translocoService.translate('EDIT_GAME_ERROR'),
           this.translocoService.translate(SNACKBAR_ACTION),
           SNACKBAR_CONFIGURATION
@@ -246,7 +246,7 @@ export class HomePage implements OnInit, OnDestroy {
       try {
         await this.userService.updateUserDefaultGameSettings(GAME_SETTINGS);
       } catch {
-        this.snackBar.open(
+        this.snackBarService.open(
           this.translocoService.translate('UPDATE_USER_DEFAULT_GAME_SETTINGS_ERROR'),
           this.translocoService.translate(SNACKBAR_ACTION),
           SNACKBAR_CONFIGURATION
@@ -282,7 +282,7 @@ export class HomePage implements OnInit, OnDestroy {
     try {
       await this.gamesService.deleteGame(this.gameToDeleteId);
     } catch {
-      this.snackBar.open(
+      this.snackBarService.open(
         this.translocoService.translate('DELETE_GAME_ERROR'),
         this.translocoService.translate(SNACKBAR_ACTION),
         SNACKBAR_CONFIGURATION

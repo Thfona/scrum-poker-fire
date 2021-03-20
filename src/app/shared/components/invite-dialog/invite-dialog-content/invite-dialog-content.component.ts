@@ -12,7 +12,7 @@ import { SNACKBAR_CONFIGURATION } from 'src/app/shared/constants/snackbar-config
 export class InviteDialogContentComponent {
   @ViewChild('linkInput') linkInput: ElementRef;
 
-  constructor(private snackBar: MatSnackBar, private translocoService: TranslocoService) {}
+  constructor(private snackBarService: MatSnackBar, private translocoService: TranslocoService) {}
 
   public getGameUrl() {
     return window.location.href;
@@ -25,7 +25,7 @@ export class InviteDialogContentComponent {
     document.execCommand('copy');
     INPUT.setSelectionRange(0, 0);
 
-    this.snackBar.open(
+    this.snackBarService.open(
       this.translocoService.translate('LINK_COPIED_MESSAGE'),
       this.translocoService.translate(SNACKBAR_ACTION),
       SNACKBAR_CONFIGURATION

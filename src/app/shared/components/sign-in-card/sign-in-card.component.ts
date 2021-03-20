@@ -13,7 +13,7 @@ import { SNACKBAR_CONFIGURATION } from '../../constants/snackbar-configuration.c
 export class SignInCardComponent {
   constructor(
     public authService: AuthService,
-    private snackBar: MatSnackBar,
+    private snackBarService: MatSnackBar,
     private translocoService: TranslocoService
   ) {}
 
@@ -21,7 +21,7 @@ export class SignInCardComponent {
     try {
       await this.authService.signIn();
     } catch {
-      this.snackBar.open(
+      this.snackBarService.open(
         this.translocoService.translate('SIGN_IN_ERROR'),
         this.translocoService.translate(SNACKBAR_ACTION),
         SNACKBAR_CONFIGURATION
