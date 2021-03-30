@@ -178,7 +178,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
               this.isHost = true;
             }
 
-            this.updateSession();
+            this.initializeSession();
 
             this.hasInitializedSession = true;
           }
@@ -215,7 +215,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
     this.isLoading = false;
   }
 
-  private async updateSession() {
+  private async initializeSession() {
     try {
       if (this.isHost && !this.game.session.isActive) {
         await this.gamesService.updateGameSessionIsActive(this.gameId, true);

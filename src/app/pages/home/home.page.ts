@@ -127,7 +127,7 @@ export class HomePage implements OnInit, OnDestroy {
 
     stories.map((story) => {
       if (story.score) {
-        total += story.score;
+        total += +story.score;
       }
     });
 
