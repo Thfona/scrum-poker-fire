@@ -4,7 +4,7 @@
     <form [formGroup]="formGroup">
       <mat-form-field>
         <mat-label>{{ transloco('NAME') }}</mat-label>
-        <input matInput formControlName="name" name="name">
+        <input #gameName matInput formControlName="name" name="name">
       </mat-form-field>
 
       <mat-form-field>

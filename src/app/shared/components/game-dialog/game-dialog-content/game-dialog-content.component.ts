@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslocoService } from '@ngneat/transloco';
@@ -12,7 +12,8 @@ import { DomainService } from 'src/app/shared/services/domain.service';
   templateUrl: './game-dialog-content.component.html',
   styleUrls: ['./game-dialog-content.component.scss']
 })
-export class GameDialogContentComponent implements OnInit {
+export class GameDialogContentComponent implements OnInit, AfterViewInit {
+  @ViewChild('gameName') gameName: ElementRef;
   private voteSkipOptions: GameCardInterface[];
   public cardSets: CardSetInterface[];
   public formGroup: FormGroup;
@@ -20,6 +21,7 @@ export class GameDialogContentComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: GameDialogDataInterface,
+    private changeDetector: ChangeDetectorRef,
     private domainService: DomainService,
     private translocoService: TranslocoService
   ) {}
@@ -43,6 +45,11 @@ export class GameDialogContentComponent implements OnInit {
       storyTimer: new FormControl(this.data.formData.storyTimer, Validators.required),
       storyTimerMinutes: new FormControl(this.data.formData.storyTimerMinutes)
     });
+  }
+
+  ngAfterViewInit() {
+    this.gameName.nativeElement.focus();
+    this.changeDetector.detectChanges();
   }
 
   public setSaveAsDefaultSettings() {

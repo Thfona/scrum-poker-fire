@@ -215,6 +215,22 @@ export class PlayGamePage implements OnInit, OnDestroy {
     this.isLoading = false;
   }
 
+  private calculateScore(voteValues: number[]) {
+    const sum = voteValues.reduce((a, b) => a + b, 0);
+
+    const average = sum / voteValues.length;
+
+    const possibleValues = this.cards.map((card) => {
+      if (card.value) {
+        return card.value;
+      }
+    });
+
+    const averageScore = possibleValues.find((value) => value >= average);
+
+    return averageScore;
+  }
+
   private async initializeSession() {
     try {
       if (this.isHost && !this.game.session.isActive) {
@@ -492,6 +508,8 @@ export class PlayGamePage implements OnInit, OnDestroy {
     try {
       const STORY = this.game.stories.find((story) => story.id === this.currentStoryId);
 
+      delete STORY.score;
+
       const NEW_STORY: StoryInterface = {
         ...STORY,
         hasFlippedCards: false
@@ -519,8 +537,17 @@ export class PlayGamePage implements OnInit, OnDestroy {
       try {
         const STORY = this.game.stories.find((story) => story.id === this.currentStoryId);
 
+        const voteValues = this.playersWithVotes.map((player) => {
+          if (player.vote.value) {
+            return player.vote.value;
+          }
+        });
+
+        const newScore = this.calculateScore(voteValues);
+
         const NEW_STORY: StoryInterface = {
           ...STORY,
+          score: newScore,
           hasFlippedCards: true
         };
 
