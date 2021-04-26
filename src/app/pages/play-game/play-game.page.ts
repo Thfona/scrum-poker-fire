@@ -160,12 +160,12 @@ export class PlayGamePage implements OnInit, OnDestroy {
           });
 
           const DOMAIN = this.domainService.getDomain();
-          const cards = DOMAIN.cardSetOptions.values.find((cardSet) => {
+          const CARDS = DOMAIN.cardSetOptions.values.find((cardSet) => {
             return cardSet.name === this.game.cardSet;
           }).cards;
-          const voteSkipOptions = DOMAIN.voteSkipOptions.values;
+          const VOTE_SKIP_OPTIONS = DOMAIN.voteSkipOptions.values;
 
-          this.cards = [...cards, ...voteSkipOptions];
+          this.cards = [...CARDS, ...VOTE_SKIP_OPTIONS];
 
           const SESSION_USER = this.game.session.users.find((user) => user.id === this.userId);
 
@@ -216,19 +216,19 @@ export class PlayGamePage implements OnInit, OnDestroy {
   }
 
   private calculateScore(voteValues: number[]) {
-    const sum = voteValues.reduce((a, b) => a + b, 0);
+    const SUM = voteValues.reduce((a, b) => a + b, 0);
 
-    const average = sum / voteValues.length;
+    const AVERAGE = SUM / voteValues.length;
 
-    const possibleValues = this.cards.map((card) => {
+    const POSSIBLE_VALUES = this.cards.map((card) => {
       if (card.value) {
         return card.value;
       }
     });
 
-    const averageScore = possibleValues.find((value) => value >= average);
+    const AVERAGE_SCORE = POSSIBLE_VALUES.find((value) => value >= AVERAGE);
 
-    return averageScore;
+    return AVERAGE_SCORE;
   }
 
   private async initializeSession() {
@@ -537,19 +537,24 @@ export class PlayGamePage implements OnInit, OnDestroy {
       try {
         const STORY = this.game.stories.find((story) => story.id === this.currentStoryId);
 
-        const voteValues = this.playersWithVotes.map((player) => {
-          if (player.vote.value) {
-            return player.vote.value;
-          }
-        });
+        const VALID_PLAYERS_WITH_VOTES = this.playersWithVotes.filter((player) => player.vote && player.vote.value);
 
-        const newScore = this.calculateScore(voteValues);
+        const VOTE_VALUES = VALID_PLAYERS_WITH_VOTES.map((player) => player.vote.value);
+
+        let newScore: number;
+
+        if (this.game.calculateScore) {
+          newScore = this.calculateScore(VOTE_VALUES);
+        }
 
         const NEW_STORY: StoryInterface = {
           ...STORY,
-          score: newScore,
           hasFlippedCards: true
         };
+
+        if (newScore) {
+          NEW_STORY.score = newScore;
+        }
 
         const NEW_STORIES_LIST = this.game.stories.map((story) => {
           if (story.id === STORY.id) {

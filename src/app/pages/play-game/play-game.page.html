@@ -155,7 +155,6 @@
       </div>
     </div>
 
-    <!-- TODO: Finish implementation -->
     <mat-menu #usersMenu="matMenu" [xPosition]="isLargeScreen ? 'before' : 'after'">
       <ng-container *ngFor="let user of game.session.users">
         <button mat-menu-item (click)="handleUserMenuRowClick(user.id)">
