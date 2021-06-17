@@ -203,7 +203,7 @@
             <div *ngFor="let story of game.stories" class="story"
               [ngClass]="{'active': currentStoryIndex === story.index, 'interactive': isHost}"
               (click)="handleStoriesRowClick(story)">
-              <span class="story-column">{{ story.index }}</span>
+              <span class="story-column">{{ story.index + 1 }}</span>
               <span class="story-column">{{ story.name }}</span>
               <span class="story-column right">{{ story.score || '-' }}</span>
             </div>
