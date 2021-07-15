@@ -1,10 +1,20 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostListener,
+  Inject,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslocoService } from '@ngneat/transloco';
 import { CardSetInterface } from 'src/app/shared/interfaces/card-set.interface';
 import { GameCardInterface } from 'src/app/shared/interfaces/game-card.interface';
 import { GameDialogDataInterface } from 'src/app/shared/interfaces/game-dialog-data.interface';
+import { DialogService } from 'src/app/shared/services/dialog.service';
 import { DomainService } from 'src/app/shared/services/domain.service';
 
 @Component({
@@ -19,9 +29,35 @@ export class GameDialogContentComponent implements OnInit, AfterViewInit {
   public formGroup: FormGroup;
   public saveAsDefaultSettings = false;
 
+  get cancelResult() {
+    return {
+      save: false,
+      start: false,
+      formValue: null,
+      saveAsDefaultSettings: false
+    };
+  }
+
+  get saveResult() {
+    return {
+      save: true,
+      start: false,
+      formValue: this.formGroup.value,
+      saveAsDefaultSettings: this.saveAsDefaultSettings
+    };
+  }
+
+  get saveAndStartResult() {
+    return {
+      ...this.saveResult,
+      start: true
+    };
+  }
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: GameDialogDataInterface,
     private changeDetector: ChangeDetectorRef,
+    private dialogService: DialogService,
     private domainService: DomainService,
     private translocoService: TranslocoService
   ) {}
@@ -50,6 +86,13 @@ export class GameDialogContentComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.gameName.nativeElement.focus();
     this.changeDetector.detectChanges();
+  }
+
+  @HostListener('window:keyup.enter')
+  onEnter() {
+    if (this.formGroup.valid) {
+      this.dialogService.currentDialogReference.close(this.saveResult);
+    }
   }
 
   public setSaveAsDefaultSettings() {

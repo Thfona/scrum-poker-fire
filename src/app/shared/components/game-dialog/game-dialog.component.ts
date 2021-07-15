@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { GameDialogDataInterface } from '../../interfaces/game-dialog-data.interface';
 import { GameDialogResultInterface } from '../../interfaces/game-dialog-result.interface';
+import { DialogService } from '../../services/dialog.service';
 import { DomainService } from '../../services/domain.service';
 import { GameDialogContentComponent } from './game-dialog-content/game-dialog-content.component';
 
@@ -15,7 +16,11 @@ export class GameDialogComponent implements OnDestroy {
   @Output() confirmEvent = new EventEmitter();
   private dialogSubscription: Subscription;
 
-  constructor(private matDialog: MatDialog, private domainService: DomainService) {}
+  constructor(
+    private matDialog: MatDialog,
+    private dialogService: DialogService,
+    private domainService: DomainService
+  ) {}
 
   ngOnDestroy() {
     if (this.dialogSubscription) {
@@ -29,7 +34,11 @@ export class GameDialogComponent implements OnDestroy {
       autoFocus: false
     });
 
+    this.dialogService.currentDialogReference = DIALOG_REFERENCE;
+
     this.dialogSubscription = DIALOG_REFERENCE.afterClosed().subscribe((result: GameDialogResultInterface) => {
+      this.dialogService.currentDialogReference = undefined;
+
       if (result && result.save) {
         if (!result.formValue.storyTimerMinutes) {
           result.formValue.storyTimerMinutes = this.domainService.getDomain().defaultGameSettings.values.storyTimerMinutes;

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { StoryDialogDataInterface } from '../../interfaces/story-dialog-data.interface';
 import { StoryDialogResultInterface } from '../../interfaces/story-dialog-result.interface';
+import { DialogService } from '../../services/dialog.service';
 import { StoryDialogContentComponent } from './story-dialog-content/story-dialog-content.component';
 
 @Component({
@@ -14,7 +15,7 @@ export class StoryDialogComponent implements OnDestroy {
   @Output() confirmEvent = new EventEmitter();
   private dialogSubscription: Subscription;
 
-  constructor(private matDialog: MatDialog) {}
+  constructor(private matDialog: MatDialog, private dialogService: DialogService) {}
 
   ngOnDestroy() {
     if (this.dialogSubscription) {
@@ -29,7 +30,11 @@ export class StoryDialogComponent implements OnDestroy {
       minWidth: '430px'
     });
 
+    this.dialogService.currentDialogReference = DIALOG_REFERENCE;
+
     this.dialogSubscription = DIALOG_REFERENCE.afterClosed().subscribe((result: StoryDialogResultInterface) => {
+      this.dialogService.currentDialogReference = undefined;
+
       if (result && result.save) {
         this.confirmEvent.emit(result);
       }

@@ -14,12 +14,12 @@
     </form>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]="{ save: false, formValue: null, delete: false }" class="action-button">
+    <button mat-button [mat-dialog-close]="cancelResult" class="action-button">
       {{ transloco('CANCEL') }}</button>
     <button mat-button *ngIf="data.isEditOperation"
-      [mat-dialog-close]="{ save: true, formValue: formGroup.value, delete: true }" color="warn"
+      [mat-dialog-close]="deleteResult" color="warn"
       class="action-button">{{ transloco('DELETE') }}</button>
-    <button mat-button [mat-dialog-close]="{ save: true, formValue: formGroup.value, delete: false }"
+    <button mat-button [mat-dialog-close]="saveResult"
       [disabled]="formGroup.invalid" color="accent" class="action-button">
       {{ transloco('SAVE') }}
     </button>

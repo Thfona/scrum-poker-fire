@@ -6,7 +6,7 @@
       <mat-form-field>
         <input #linkInput matInput [readonly]="true" [value]="getGameUrl()" (click)="$event.target.select()">
       </mat-form-field>
-      <button mat-flat-button class="copy-button" [matTooltip]="transloco('COPY')" matTooltipPosition="above"
+      <button mat-flat-button mat-dialog-close class="copy-button" [matTooltip]="transloco('COPY')" matTooltipPosition="above"
         (click)="copyLinkToClipboard()">
         <mat-icon>content_copy</mat-icon>
       </button>

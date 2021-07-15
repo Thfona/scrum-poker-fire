@@ -72,14 +72,10 @@
   background-color: #f1f1f1;
   overflow: auto;
 
-  height: calc(100% - 36px);
+  height: calc(100% - #{$cards-container-height} - 37px);
 
-  &.is-host {
-    height: calc(100% - #{$cards-container-height} - 37px);
-
-    @include belowSmallMedium {
-      height: calc(100% - 200px);
-    }
+  @include belowSmallMedium {
+    height: calc(100% - 200px);
   }
 }
 
@@ -192,6 +188,7 @@
 .button {
   color: white;
   min-width: 0;
+  height: 36px;
 
   &.margin {
     margin-right: 1rem;
@@ -213,7 +210,23 @@
 .sidenav-buttons {
   padding: 1rem;
   background-color: #505050;
-  height: 100%;
+  height: calc(#{$cards-container-height} - 31px);
+
+  @include belowSmallMedium {
+    height: 132px;
+  }
+
+  &.flex {
+    @include fromSmallMedium {
+      display: flex;
+      align-items: center;
+    }
+
+    @include belowSmallMedium {
+      padding-top: 40px;
+      height: 108px;
+    }
+  }
 }
 
 .users-arrived-container {

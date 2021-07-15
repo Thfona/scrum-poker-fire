@@ -210,9 +210,9 @@
           </ng-container>
         </div>
 
-        <ng-container *ngIf="isHost">
-          <div class="sidenav-buttons border-left">
-            <button mat-raised-button color="accent" class="button full-width full-width-margin"
+        <ng-container>
+          <div class="sidenav-buttons" [class.flex]="!isHost">
+            <button *ngIf="isHost" mat-raised-button color="accent" class="button full-width full-width-margin"
               (click)="handleAddStoriesButtonClick()">
               <div class="button-content">
                 <mat-icon>add_circle_outline</mat-icon>
