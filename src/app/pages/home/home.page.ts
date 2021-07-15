@@ -13,11 +13,11 @@ import { GameInterface } from 'src/app/shared/interfaces/game.interface';
 import { GameSettingsInterface } from 'src/app/shared/interfaces/game-settings.interface';
 import { StoryInterface } from 'src/app/shared/interfaces/story.interface';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { DomainService } from 'src/app/shared/services/domain.service';
 import { GamesService } from 'src/app/shared/services/games.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
 import { GameDialogComponent } from 'src/app/shared/components/game-dialog/game-dialog.component';
+import { DOMAIN } from 'src/app/shared/constants/domain.constant';
 import { SNACKBAR_ACTION } from 'src/app/shared/constants/snackbar-action.constant';
 import { SNACKBAR_CONFIGURATION } from 'src/app/shared/constants/snackbar-configuration.constant';
 
@@ -57,7 +57,6 @@ export class HomePage implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private domainService: DomainService,
     private gamesService: GamesService,
     private router: Router,
     private snackBarService: MatSnackBar,
@@ -145,10 +144,8 @@ export class HomePage implements OnInit, OnDestroy {
   public handleCreateNewGameButtonClick() {
     this.gameDialogOperation = 'create';
     const USER = this.authService.user;
-    const DOMAIN_DEFAULT_GAME_SETTINGS = this.domainService.getDomain().defaultGameSettings
-      .values as GameSettingsInterface;
 
-    const DEFAULT_GAME_SETTINGS = USER.defaultGameSettings ? USER.defaultGameSettings : DOMAIN_DEFAULT_GAME_SETTINGS;
+    const DEFAULT_GAME_SETTINGS = USER.defaultGameSettings ? USER.defaultGameSettings : DOMAIN.defaultGameSettings;
 
     const CREATE_GAME_DIALOG_DATA: GameDialogDataInterface = {
       title: this.translocoService.translate('CREATE_GAME_TITLE'),

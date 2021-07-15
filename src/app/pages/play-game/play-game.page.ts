@@ -17,7 +17,6 @@ import { StoryDialogDataInterface } from 'src/app/shared/interfaces/story-dialog
 import { StoryDialogResultInterface } from 'src/app/shared/interfaces/story-dialog-result.interface';
 import { StoryInterface } from 'src/app/shared/interfaces/story.interface';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { DomainService } from 'src/app/shared/services/domain.service';
 import { GamesService } from 'src/app/shared/services/games.service';
 import { SidenavService } from 'src/app/shared/services/sidenav.service';
 import { UserService } from 'src/app/shared/services/user.service';
@@ -29,6 +28,7 @@ import { StoryDialogComponent } from 'src/app/shared/components/story-dialog/sto
 import { SNACKBAR_ACTION } from 'src/app/shared/constants/snackbar-action.constant';
 import { SNACKBAR_CONFIGURATION } from 'src/app/shared/constants/snackbar-configuration.constant';
 import { generateUniqueIdUtil } from 'src/app/shared/utils/generateUniqueId.util';
+import { DOMAIN } from 'src/app/shared/constants/domain.constant';
 
 @Component({
   selector: 'app-play-page',
@@ -73,7 +73,6 @@ export class PlayGamePage implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private domainService: DomainService,
     private gamesService: GamesService,
     private route: ActivatedRoute,
     private router: Router,
@@ -159,11 +158,10 @@ export class PlayGamePage implements OnInit, OnDestroy {
             };
           });
 
-          const DOMAIN = this.domainService.getDomain();
-          const CARDS = DOMAIN.cardSetOptions.values.find((cardSet) => {
+          const CARDS = DOMAIN.cardSetOptions.find((cardSet) => {
             return cardSet.name === this.game.cardSet;
           }).cards;
-          const VOTE_SKIP_OPTIONS = DOMAIN.voteSkipOptions.values;
+          const VOTE_SKIP_OPTIONS = DOMAIN.voteSkipOptions;
 
           this.cards = [...CARDS, ...VOTE_SKIP_OPTIONS];
 

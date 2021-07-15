@@ -15,7 +15,7 @@ import { CardSetInterface } from 'src/app/shared/interfaces/card-set.interface';
 import { GameCardInterface } from 'src/app/shared/interfaces/game-card.interface';
 import { GameDialogDataInterface } from 'src/app/shared/interfaces/game-dialog-data.interface';
 import { DialogService } from 'src/app/shared/services/dialog.service';
-import { DomainService } from 'src/app/shared/services/domain.service';
+import { DOMAIN } from 'src/app/shared/constants/domain.constant';
 
 @Component({
   selector: 'app-game-dialog-content-component',
@@ -58,14 +58,12 @@ export class GameDialogContentComponent implements OnInit, AfterViewInit {
     @Inject(MAT_DIALOG_DATA) public data: GameDialogDataInterface,
     private changeDetector: ChangeDetectorRef,
     private dialogService: DialogService,
-    private domainService: DomainService,
     private translocoService: TranslocoService
   ) {}
 
   ngOnInit() {
-    const DOMAIN = this.domainService.getDomain();
-    this.voteSkipOptions = DOMAIN.voteSkipOptions.values;
-    this.cardSets = DOMAIN.cardSetOptions.values;
+    this.voteSkipOptions = DOMAIN.voteSkipOptions;
+    this.cardSets = DOMAIN.cardSetOptions;
 
     this.formGroup = new FormGroup({
       name: new FormControl(this.data.formData.name, Validators.required),

@@ -4,8 +4,8 @@ import { Subscription } from 'rxjs';
 import { GameDialogDataInterface } from '../../interfaces/game-dialog-data.interface';
 import { GameDialogResultInterface } from '../../interfaces/game-dialog-result.interface';
 import { DialogService } from '../../services/dialog.service';
-import { DomainService } from '../../services/domain.service';
 import { GameDialogContentComponent } from './game-dialog-content/game-dialog-content.component';
+import { DOMAIN } from '../../constants/domain.constant';
 
 @Component({
   selector: 'app-game-dialog-component',
@@ -16,11 +16,7 @@ export class GameDialogComponent implements OnDestroy {
   @Output() confirmEvent = new EventEmitter();
   private dialogSubscription: Subscription;
 
-  constructor(
-    private matDialog: MatDialog,
-    private dialogService: DialogService,
-    private domainService: DomainService
-  ) {}
+  constructor(private matDialog: MatDialog, private dialogService: DialogService) {}
 
   ngOnDestroy() {
     if (this.dialogSubscription) {
@@ -41,7 +37,7 @@ export class GameDialogComponent implements OnDestroy {
 
       if (result && result.save) {
         if (!result.formValue.storyTimerMinutes) {
-          result.formValue.storyTimerMinutes = this.domainService.getDomain().defaultGameSettings.values.storyTimerMinutes;
+          result.formValue.storyTimerMinutes = DOMAIN.defaultGameSettings.storyTimerMinutes;
         }
 
         this.confirmEvent.emit(result);

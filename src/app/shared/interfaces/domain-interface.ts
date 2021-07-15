@@ -1,9 +1,9 @@
-import { CardSetOptionsInterface } from './card-set-options.interface';
-import { DefaultGameSettingsInterface } from './default-game-settings.interface';
-import { VoteSkipOptionsInterface } from './vote-skip-options.interface';
+import { CardSetInterface } from './card-set.interface';
+import { GameCardInterface } from './game-card.interface';
+import { GameSettingsInterface } from './game-settings.interface';
 
 export interface DomainInterface {
-  cardSetOptions: CardSetOptionsInterface;
-  defaultGameSettings: DefaultGameSettingsInterface;
-  voteSkipOptions: VoteSkipOptionsInterface;
+  cardSetOptions: CardSetInterface[];
+  defaultGameSettings: GameSettingsInterface;
+  voteSkipOptions: GameCardInterface[];
 }
