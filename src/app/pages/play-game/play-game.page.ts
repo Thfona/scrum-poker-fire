@@ -25,9 +25,9 @@ import { DialogComponent } from 'src/app/shared/components/dialog/dialog.compone
 import { GameDialogComponent } from 'src/app/shared/components/game-dialog/game-dialog.component';
 import { InviteDialogComponent } from 'src/app/shared/components/invite-dialog/invite-dialog.component';
 import { StoryDialogComponent } from 'src/app/shared/components/story-dialog/story-dialog.component';
+import { generateUniqueIdUtil } from 'src/app/shared/utils/generateUniqueId.util';
 import { SNACKBAR_ACTION } from 'src/app/shared/constants/snackbar-action.constant';
 import { SNACKBAR_CONFIGURATION } from 'src/app/shared/constants/snackbar-configuration.constant';
-import { generateUniqueIdUtil } from 'src/app/shared/utils/generateUniqueId.util';
 import { DOMAIN } from 'src/app/shared/constants/domain.constant';
 
 @Component({
