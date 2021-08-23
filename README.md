@@ -9,7 +9,7 @@ Front-End for the ScrumPokerFire application.
 $ npm install
 
 # Start application in development mode
-$ npm run dev
+$ npm start
 
 # Testing
 $ npm run test
