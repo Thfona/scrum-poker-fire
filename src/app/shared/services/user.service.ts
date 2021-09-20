@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { GameSettingsInterface } from '../interfaces/game-settings.interface';
 import { UserInterface } from '../interfaces/user.interface';
 import { AuthService } from './auth.service';

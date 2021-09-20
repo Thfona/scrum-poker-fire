@@ -380,10 +380,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
     if (this.storyDialogOperation === 'create') {
       try {
         const NEW_STORY_INDEX: number = this.game.stories.length
-          ? Math.max.apply(
-              Math,
-              this.game.stories.map((story) => story.index)
-            ) + 1
+          ? Math.max(...this.game.stories.map((story) => story.index)) + 1
           : 0;
 
         await this.gamesService.updateStories(

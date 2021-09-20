@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
-import firebase from 'firebase/app';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import firebase from 'firebase/compat/app';
 import { FormGameInterface } from '../interfaces/form-game.interface';
 import { GameInterface } from '../interfaces/game.interface';
 import { GameSessionUserInterface } from '../interfaces/game-session-user.interface';

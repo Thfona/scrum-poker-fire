@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import firebase from 'firebase/app';
+import firebase from 'firebase/compat/app';
 import { UserInterface } from '../interfaces/user.interface';
 
 @Injectable({
@@ -26,9 +26,11 @@ export class AuthService {
       switchMap((user) => {
         if (user) {
           this.user = user;
+
           return this.angularFirestore.doc<UserInterface>(`users/${user.uid}`).valueChanges();
         } else {
           this.user = null;
+
           return of(null);
         }
       })
@@ -47,6 +49,7 @@ export class AuthService {
     } catch {
       this.isSigningIn = false;
       this.isWaitingPopUp = false;
+
       return;
     }
 

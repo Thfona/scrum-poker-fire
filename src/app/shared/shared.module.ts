@@ -20,7 +20,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { TranslocoRootModule } from '../transloco-root.module';
 import { CardComponent } from './components/card/card.component';
@@ -85,7 +85,7 @@ const MODULES = [
   TranslocoRootModule
 ];
 
-const SERVICES = [];
+const SERVICES: [] = [];
 
 @NgModule({
   declarations: [...COMPONENTS],
