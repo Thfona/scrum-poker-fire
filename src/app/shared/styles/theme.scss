@@ -1,12 +1,12 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as ng-material;
 
-@include mat-core();
+@include ng-material.core();
 
-$app-primary: mat-palette($mat-deep-purple);
-$app-accent: mat-palette($mat-green);
-$app-warn: mat-palette($mat-red);
+$app-primary: ng-material.define-palette(ng-material.$deep-purple-palette);
+$app-accent: ng-material.define-palette(ng-material.$green-palette);
+$app-warn: ng-material.define-palette(ng-material.$red-palette);
 
-$app-theme: mat-light-theme(
+$app-theme: ng-material.define-light-theme(
   (
     color: (
       primary: $app-primary,
@@ -16,8 +16,8 @@ $app-theme: mat-light-theme(
   )
 );
 
-$primary: mat-color($app-primary);
-$accent: mat-color($app-accent);
-$warn: mat-color($app-warn);
+$primary: ng-material.get-color-from-palette($app-primary);
+$accent: ng-material.get-color-from-palette($app-accent);
+$warn: ng-material.get-color-from-palette($app-warn);
 
-@include angular-material-theme($app-theme);
+@include ng-material.all-component-themes($app-theme);
