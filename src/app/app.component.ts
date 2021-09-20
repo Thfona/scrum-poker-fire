@@ -13,7 +13,7 @@ import { AuthService } from './shared/services/auth.service';
 export class AppComponent implements OnInit, OnDestroy {
   private routerEventsSubscription: Subscription;
   private userSubscription: Subscription;
-  private contentLoadingWhitelist = ['/auth'];
+  private contentLoadingSafelist = ['/auth'];
   public user: UserInterface;
   public isLoading: boolean;
   public isLoadingContent: boolean;
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.routerEventsSubscription = this.router.events.subscribe((event) => {
       if (
         (event instanceof NavigationStart || event instanceof NavigationEnd) &&
-        !this.contentLoadingWhitelist.includes(event.url)
+        !this.contentLoadingSafelist.includes(event.url)
       ) {
         if (event instanceof NavigationStart) {
           this.isLoadingContent = true;
