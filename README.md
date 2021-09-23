@@ -13,7 +13,6 @@ $ npm start
 
 # Testing
 $ npm run test
-$ npm run e2e
 
 # Linting
 $ npm run lint
