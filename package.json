@@ -31,7 +31,6 @@
     "@angular/platform-browser": "12.2.6",
     "@angular/platform-browser-dynamic": "12.2.6",
     "@angular/router": "12.2.6",
-    "@auth0/angular-jwt": "5.0.2",
     "@ngneat/transloco": "2.23.3",
     "@ngneat/transloco-locale": "1.4.0",
     "@uiowa/digit-only": "3.2.0",
