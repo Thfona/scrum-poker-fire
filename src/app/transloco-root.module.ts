@@ -23,7 +23,7 @@ export class TranslocoHttpLoader implements TranslocoLoader {
 
 @NgModule({
   imports: [
-    TranslocoLocaleModule.init({
+    TranslocoLocaleModule.forRoot({
       langToLocaleMapping: {
         en: 'en-US',
         pt: 'pt-BR'

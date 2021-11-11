@@ -27,7 +27,7 @@ const SERVICES = [WINDOW_PROVIDERS];
 @NgModule({
   declarations: [AppComponent],
   imports: [...MODULES],
-  bootstrap: [AppComponent],
-  providers: [...SERVICES]
+  providers: [...SERVICES],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
