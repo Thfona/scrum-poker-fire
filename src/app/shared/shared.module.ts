@@ -85,7 +85,7 @@ const MODULES = [
   TranslocoRootModule
 ];
 
-const SERVICES: [] = [];
+const SERVICES = [];
 
 @NgModule({
   declarations: [...COMPONENTS],
