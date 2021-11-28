@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -20,7 +18,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { TranslocoRootModule } from '../transloco-root.module';
 import { CardComponent } from './components/card/card.component';
@@ -58,12 +55,9 @@ const COMPONENTS = [
 ];
 
 const MODULES = [
-  AngularFirestoreModule,
-  BrowserAnimationsModule,
   CommonModule,
   DigitOnlyModule,
   FormsModule,
-  ReactiveFormsModule,
   MatButtonModule,
   MatCardModule,
   MatCheckboxModule,
@@ -81,7 +75,7 @@ const MODULES = [
   MatTableModule,
   MatToolbarModule,
   MatTooltipModule,
-  RouterModule,
+  ReactiveFormsModule,
   TranslocoRootModule
 ];
 
