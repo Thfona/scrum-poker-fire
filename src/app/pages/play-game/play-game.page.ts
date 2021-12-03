@@ -90,9 +90,9 @@ export class PlayGamePage implements OnInit, OnDestroy {
     this.userName = this.authService.user.displayName || this.authService.user.email;
     this.gameId = this.route.snapshot.paramMap.get('gameId');
 
-    this.isDesktopSubscription = this.viewportService.isDesktop.subscribe((isDesktop) => {
-      if (this.isDesktop !== isDesktop) {
-        if (isDesktop) {
+    this.isDesktopSubscription = this.viewportService.isDesktopObservable.subscribe((value) => {
+      if (this.isDesktop !== value) {
+        if (value) {
           this.sidenavService.isSidenavOpen = true;
           this.sidenavService.sidenavState = 'on';
         } else {
@@ -101,15 +101,15 @@ export class PlayGamePage implements OnInit, OnDestroy {
         }
       }
 
-      this.isDesktop = isDesktop;
+      this.isDesktop = value;
     });
 
-    this.isLargeScreenSubscription = this.viewportService.isLargeScreen.subscribe((isLargeScreen) => {
-      if (this.isLargeScreen !== isLargeScreen && this.usersMenu) {
+    this.isLargeScreenSubscription = this.viewportService.isLargeScreenObservable.subscribe((value) => {
+      if (this.isLargeScreen !== value && this.usersMenu) {
         this.usersMenu.closeMenu();
       }
 
-      this.isLargeScreen = isLargeScreen;
+      this.isLargeScreen = value;
     });
 
     this.gameSubscription = this.gamesService

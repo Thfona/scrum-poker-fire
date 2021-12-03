@@ -1,16 +1,22 @@
 import { Inject, Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { VIEWPORTS } from '../constants/viewports.constant';
 import { WINDOW } from './window.service';
 
 @Injectable()
 export class ViewportService {
-  public isDesktop: BehaviorSubject<boolean>;
-  public isLargeScreen: BehaviorSubject<boolean>;
+  private isDesktopSubject: BehaviorSubject<boolean>;
+  private isLargeScreenSubject: BehaviorSubject<boolean>;
+  public isDesktopObservable: Observable<boolean>;
+  public isLargeScreenObservable: Observable<boolean>;
 
   constructor(@Inject(WINDOW) private window: Window) {
-    this.isDesktop = new BehaviorSubject(this.setIsDesktop());
-    this.isLargeScreen = new BehaviorSubject(this.setIsLargeScreen());
+    this.isDesktopSubject = new BehaviorSubject(this.setIsDesktop());
+    this.isLargeScreenSubject = new BehaviorSubject(this.setIsLargeScreen());
+
+    this.isDesktopObservable = this.isDesktopSubject.asObservable();
+    this.isLargeScreenObservable = this.isLargeScreenSubject.asObservable();
+
     this.window.addEventListener('resize', this.onResize.bind(this));
   }
 
@@ -23,7 +29,8 @@ export class ViewportService {
   }
 
   private onResize() {
-    this.isDesktop.next(this.setIsDesktop());
-    this.isLargeScreen.next(this.setIsLargeScreen());
+    this.isDesktopSubject.next(this.setIsDesktop());
+
+    this.isLargeScreenSubject.next(this.setIsLargeScreen());
   }
 }

@@ -1,9 +1,10 @@
 export const VIEWPORTS = {
-  verySmall: 240,
-  small: 370,
-  smallMedium: 600,
+  verySmall: 356,
+  small: 376,
+  smallMedium: 576,
   medium: 768,
   mediumLarge: 992,
-  large: 1260,
+  large: 1200,
+  veryLarge: 1400,
   heightMediumLarge: 800
 };
