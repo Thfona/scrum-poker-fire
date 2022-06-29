@@ -8,7 +8,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { StoryDialogDataInterface } from 'src/app/shared/interfaces/story-dialog-data.interface';
 import { DialogService } from 'src/app/shared/services/dialog.service';
@@ -21,7 +21,10 @@ import { DialogService } from 'src/app/shared/services/dialog.service';
 export class StoryDialogContentComponent implements OnInit, AfterViewInit {
   @ViewChild('storyName') storyName: ElementRef;
   @ViewChild('storyScore') storyScore: ElementRef;
-  public formGroup: UntypedFormGroup;
+  public formGroup: FormGroup<{
+    name: FormControl<string>;
+    score: FormControl<number>;
+  }>;
 
   get cancelResult() {
     return {
@@ -54,9 +57,9 @@ export class StoryDialogContentComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.formGroup = new UntypedFormGroup({
-      name: new UntypedFormControl(this.data.formData.name, Validators.required),
-      score: new UntypedFormControl(this.data.formData.score)
+    this.formGroup = new FormGroup({
+      name: new FormControl(this.data.formData.name, Validators.required),
+      score: new FormControl(this.data.formData.score)
     });
   }
 

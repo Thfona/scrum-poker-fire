@@ -8,13 +8,14 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslocoService } from '@ngneat/transloco';
+import { DialogService } from 'src/app/shared/services/dialog.service';
 import { CardSetInterface } from 'src/app/shared/interfaces/card-set.interface';
 import { GameCardInterface } from 'src/app/shared/interfaces/game-card.interface';
 import { GameDialogDataInterface } from 'src/app/shared/interfaces/game-dialog-data.interface';
-import { DialogService } from 'src/app/shared/services/dialog.service';
+import { CardSetOption } from 'src/app/shared/types/card-set-option.type';
 import { DOMAIN } from 'src/app/shared/constants/domain.constant';
 
 @Component({
@@ -26,7 +27,19 @@ export class GameDialogContentComponent implements OnInit, AfterViewInit {
   @ViewChild('gameName') gameName: ElementRef;
   private voteSkipOptions: GameCardInterface[];
   public cardSets: CardSetInterface[];
-  public formGroup: UntypedFormGroup;
+  public formGroup: FormGroup<{
+    name: FormControl<string>;
+    description: FormControl<string>;
+    teamVelocity: FormControl<number>;
+    shareVelocity: FormControl<boolean>;
+    isPrivate: FormControl<boolean>;
+    cardSet: FormControl<CardSetOption>;
+    autoFlip: FormControl<boolean>;
+    allowVoteChangeAfterReveal: FormControl;
+    calculateScore: FormControl<boolean>;
+    storyTimer: FormControl<boolean>;
+    storyTimerMinutes: FormControl<number>;
+  }>;
   public saveAsDefaultSettings = false;
 
   get cancelResult() {
@@ -65,22 +78,19 @@ export class GameDialogContentComponent implements OnInit, AfterViewInit {
     this.voteSkipOptions = DOMAIN.voteSkipOptions;
     this.cardSets = DOMAIN.cardSetOptions;
 
-    this.formGroup = new UntypedFormGroup({
-      name: new UntypedFormControl(this.data.formData.name, Validators.required),
-      description: new UntypedFormControl(this.data.formData.description),
-      teamVelocity: new UntypedFormControl(this.data.formData.teamVelocity, Validators.required),
-      shareVelocity: new UntypedFormControl(this.data.formData.shareVelocity, Validators.required),
+    this.formGroup = new FormGroup({
+      name: new FormControl(this.data.formData.name, Validators.required),
+      description: new FormControl(this.data.formData.description),
+      teamVelocity: new FormControl(this.data.formData.teamVelocity, Validators.required),
+      shareVelocity: new FormControl(this.data.formData.shareVelocity, Validators.required),
       // TODO: Enable once private rooms are implemented
-      isPrivate: new UntypedFormControl(false, Validators.required),
-      cardSet: new UntypedFormControl(this.data.formData.cardSet, Validators.required),
-      autoFlip: new UntypedFormControl(this.data.formData.autoFlip, Validators.required),
-      allowVoteChangeAfterReveal: new UntypedFormControl(
-        this.data.formData.allowVoteChangeAfterReveal,
-        Validators.required
-      ),
-      calculateScore: new UntypedFormControl(this.data.formData.calculateScore, Validators.required),
-      storyTimer: new UntypedFormControl(this.data.formData.storyTimer, Validators.required),
-      storyTimerMinutes: new UntypedFormControl(this.data.formData.storyTimerMinutes)
+      isPrivate: new FormControl(false, Validators.required),
+      cardSet: new FormControl(this.data.formData.cardSet, Validators.required),
+      autoFlip: new FormControl(this.data.formData.autoFlip, Validators.required),
+      allowVoteChangeAfterReveal: new FormControl(this.data.formData.allowVoteChangeAfterReveal, Validators.required),
+      calculateScore: new FormControl(this.data.formData.calculateScore, Validators.required),
+      storyTimer: new FormControl(this.data.formData.storyTimer, Validators.required),
+      storyTimerMinutes: new FormControl(this.data.formData.storyTimerMinutes)
     });
   }
 
