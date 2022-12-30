@@ -1,6 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslocoService } from '@ngneat/transloco';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { DialogDataInterface } from '../../interfaces/dialog-data.interface';
 import { UserInterface } from '../../interfaces/user.interface';
 import { AuthService } from '../../services/auth.service';
@@ -8,7 +9,6 @@ import { UserService } from '../../services/user.service';
 import { DialogComponent } from '../dialog/dialog.component';
 import { SNACKBAR_ACTION } from '../../constants/snackbar-action.constant';
 import { SNACKBAR_CONFIGURATION } from '../../constants/snackbar-configuration.constant';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-toolbar-component',

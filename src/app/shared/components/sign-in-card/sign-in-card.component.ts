@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { TranslocoService } from '@ngneat/transloco';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { SNACKBAR_ACTION } from '../../constants/snackbar-action.constant';
