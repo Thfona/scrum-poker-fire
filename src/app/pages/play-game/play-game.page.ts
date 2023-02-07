@@ -34,7 +34,7 @@ import { DOMAIN } from 'src/app/shared/constants/domain.constant';
   selector: 'app-play-page',
   templateUrl: './play-game.page.html',
   styleUrls: ['./play-game.page.scss'],
-  providers: [GamesService, SidenavService, UserService, ViewportService]
+  providers: [GamesService, SidenavService, ViewportService]
 })
 export class PlayGamePage implements OnInit, OnDestroy {
   @ViewChild('editGameDialog') editGameDialog: GameDialogComponent;

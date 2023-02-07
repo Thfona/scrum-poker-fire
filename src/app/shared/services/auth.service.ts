@@ -6,12 +6,13 @@ import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import firebase from 'firebase/compat/app';
 import { UserInterface } from '../interfaces/user.interface';
+import { UserAuthDataInterface } from '../interfaces/user-auth-data.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  public user: UserInterface;
+  public user: UserAuthDataInterface;
   public userDocument: Observable<UserInterface>;
   public isSigningIn: boolean;
   public isWaitingPopUp: boolean;

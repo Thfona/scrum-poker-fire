@@ -1,9 +1,6 @@
 import { GameSettingsInterface } from './game-settings.interface';
+import { UserAuthDataInterface } from './user-auth-data.interface';
 
-export interface UserInterface {
-  uid: string;
-  email: string;
-  photoURL?: string;
-  displayName?: string;
+export interface UserInterface extends UserAuthDataInterface {
   defaultGameSettings?: GameSettingsInterface;
 }

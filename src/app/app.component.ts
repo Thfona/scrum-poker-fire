@@ -4,6 +4,7 @@ import { EMPTY, Subscription } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { UserInterface } from './shared/interfaces/user.interface';
 import { AuthService } from './shared/services/auth.service';
+import { UserService } from './shared/services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public isLoadingContent: boolean;
   public hasError: boolean;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, private userService: UserService) {
     this.routerEventsSubscription = this.router.events.subscribe((event) => {
       if (
         (event instanceof NavigationStart || event instanceof NavigationEnd) &&
@@ -44,6 +45,7 @@ export class AppComponent implements OnInit, OnDestroy {
         tap((user) => {
           this.hasError = false;
           this.user = user;
+          this.userService.defaultGameSettingsState = user.defaultGameSettings;
           this.endLoading();
         }),
         catchError(() => {

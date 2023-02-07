@@ -12,7 +12,6 @@ import { GameDialogResultInterface } from 'src/app/shared/interfaces/game-dialog
 import { GameInterface } from 'src/app/shared/interfaces/game.interface';
 import { GameSettingsInterface } from 'src/app/shared/interfaces/game-settings.interface';
 import { StoryInterface } from 'src/app/shared/interfaces/story.interface';
-import { AuthService } from 'src/app/shared/services/auth.service';
 import { GamesService } from 'src/app/shared/services/games.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
@@ -25,7 +24,7 @@ import { SNACKBAR_CONFIGURATION } from 'src/app/shared/constants/snackbar-config
   selector: 'app-home-page',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
-  providers: [GamesService, UserService]
+  providers: [GamesService]
 })
 export class HomePage implements OnInit, OnDestroy {
   @ViewChild('tablePaginator') paginator: MatPaginator;
@@ -56,7 +55,6 @@ export class HomePage implements OnInit, OnDestroy {
   public errorMessageCode = 'GAMES_ERROR_MESSAGE';
 
   constructor(
-    private authService: AuthService,
     private gamesService: GamesService,
     private router: Router,
     private snackBarService: MatSnackBar,
@@ -143,9 +141,10 @@ export class HomePage implements OnInit, OnDestroy {
 
   public handleCreateNewGameButtonClick() {
     this.gameDialogOperation = 'create';
-    const USER = this.authService.user;
 
-    const DEFAULT_GAME_SETTINGS = USER.defaultGameSettings ? USER.defaultGameSettings : DOMAIN.defaultGameSettings;
+    const DEFAULT_GAME_SETTINGS = this.userService.defaultGameSettingsState
+      ? this.userService.defaultGameSettingsState
+      : DOMAIN.defaultGameSettings;
 
     const CREATE_GAME_DIALOG_DATA: GameDialogDataInterface = {
       title: this.translocoService.translate('CREATE_GAME_TITLE'),
