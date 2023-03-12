@@ -82,9 +82,13 @@ export class HomePage implements OnInit, OnDestroy {
             this.dataSource.paginator = this.paginator;
           }, 0);
         }),
-        catchError(() => {
+        catchError((error) => {
           this.hasError = true;
+
           this.isLoading = false;
+
+          console.error(error);
+
           return EMPTY;
         })
       )
@@ -197,7 +201,7 @@ export class HomePage implements OnInit, OnDestroy {
     if (this.gameDialogOperation === 'create') {
       try {
         await this.gamesService.createGame(gameDialogResult.formValue);
-      } catch {
+      } catch (error) {
         hasError = true;
 
         this.snackBarService.open(
@@ -205,6 +209,8 @@ export class HomePage implements OnInit, OnDestroy {
           this.translocoService.translate(SNACKBAR_ACTION),
           SNACKBAR_CONFIGURATION
         );
+
+        console.error(error);
       }
 
       gameId = this.gamesService.latestCreatedGameId;
@@ -215,7 +221,7 @@ export class HomePage implements OnInit, OnDestroy {
 
       try {
         await this.gamesService.updateGame(gameId, gameDialogResult.formValue);
-      } catch {
+      } catch (error) {
         hasError = true;
 
         this.snackBarService.open(
@@ -223,6 +229,8 @@ export class HomePage implements OnInit, OnDestroy {
           this.translocoService.translate(SNACKBAR_ACTION),
           SNACKBAR_CONFIGURATION
         );
+
+        console.error(error);
       }
     }
 
@@ -241,12 +249,14 @@ export class HomePage implements OnInit, OnDestroy {
 
       try {
         await this.userService.updateUserDefaultGameSettings(GAME_SETTINGS);
-      } catch {
+      } catch (error) {
         this.snackBarService.open(
           this.translocoService.translate('UPDATE_USER_DEFAULT_GAME_SETTINGS_ERROR'),
           this.translocoService.translate(SNACKBAR_ACTION),
           SNACKBAR_CONFIGURATION
         );
+
+        console.error(error);
       }
     }
 
@@ -277,12 +287,14 @@ export class HomePage implements OnInit, OnDestroy {
 
     try {
       await this.gamesService.deleteGame(this.gameToDeleteId);
-    } catch {
+    } catch (error) {
       this.snackBarService.open(
         this.translocoService.translate('DELETE_GAME_ERROR'),
         this.translocoService.translate(SNACKBAR_ACTION),
         SNACKBAR_CONFIGURATION
       );
+
+      console.error(error);
     }
 
     this.endLoading();

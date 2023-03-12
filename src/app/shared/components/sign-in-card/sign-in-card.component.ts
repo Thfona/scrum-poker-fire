@@ -20,12 +20,14 @@ export class SignInCardComponent {
   public async signIn() {
     try {
       await this.authService.signIn();
-    } catch {
+    } catch (error) {
       this.snackBarService.open(
         this.translocoService.translate('SIGN_IN_ERROR'),
         this.translocoService.translate(SNACKBAR_ACTION),
         SNACKBAR_CONFIGURATION
       );
+
+      console.error(error);
     }
   }
 }

@@ -47,9 +47,11 @@ export class AuthService {
 
     try {
       credential = await this.angularFireAuth.signInWithPopup(PROVIDER);
-    } catch {
+    } catch (error) {
       this.isSigningIn = false;
       this.isWaitingPopUp = false;
+
+      console.error(error);
 
       return;
     }

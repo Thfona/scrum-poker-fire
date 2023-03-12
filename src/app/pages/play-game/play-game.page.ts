@@ -181,9 +181,13 @@ export class PlayGamePage implements OnInit, OnDestroy {
             this.hasInitializedSession = true;
           }
         }),
-        catchError(() => {
+        catchError((error) => {
           this.hasError = true;
+
           this.isLoading = false;
+
+          console.error(error);
+
           return EMPTY;
         })
       )
@@ -250,8 +254,10 @@ export class PlayGamePage implements OnInit, OnDestroy {
       }
 
       this.isLoading = false;
-    } catch {
+    } catch (error) {
       this.handlePromiseError();
+
+      console.error(error);
     }
   }
 
@@ -264,8 +270,10 @@ export class PlayGamePage implements OnInit, OnDestroy {
       SESSION_USER.isPlayer = !SESSION_USER.isPlayer;
 
       await this.gamesService.updateGameSessionUsers(this.gameId, SESSION_USER, 'add');
-    } catch {
+    } catch (error) {
       this.handlePromiseError();
+
+      console.error(error);
     }
   }
 
@@ -293,8 +301,10 @@ export class PlayGamePage implements OnInit, OnDestroy {
         await this.gamesService.updateGameSessionVotes(this.gameId, USER_NEW_VOTE, 'add');
 
         this.userCurrentVote = USER_NEW_VOTE;
-      } catch {
+      } catch (error) {
         this.handlePromiseError();
+
+        console.error(error);
       }
     }
   }
@@ -393,12 +403,14 @@ export class PlayGamePage implements OnInit, OnDestroy {
           },
           'add'
         );
-      } catch {
+      } catch (error) {
         this.snackBarService.open(
           this.translocoService.translate('CREATE_STORY_ERROR'),
           this.translocoService.translate(SNACKBAR_ACTION),
           SNACKBAR_CONFIGURATION
         );
+
+        console.error(error);
       }
     }
 
@@ -438,12 +450,14 @@ export class PlayGamePage implements OnInit, OnDestroy {
           });
 
           await this.gamesService.updateStoriesList(this.gameId, NEW_STORIES_LIST);
-        } catch {
+        } catch (error) {
           this.snackBarService.open(
             this.translocoService.translate('EDIT_STORY_ERROR'),
             this.translocoService.translate(SNACKBAR_ACTION),
             SNACKBAR_CONFIGURATION
           );
+
+          console.error(error);
         }
       }
     }
@@ -485,12 +499,14 @@ export class PlayGamePage implements OnInit, OnDestroy {
 
         await this.gamesService.updateStoriesList(this.gameId, NEW_STORIES_LIST);
       }
-    } catch {
+    } catch (error) {
       this.snackBarService.open(
         this.translocoService.translate('DELETE_STORY_ERROR'),
         this.translocoService.translate(SNACKBAR_ACTION),
         SNACKBAR_CONFIGURATION
       );
+
+      console.error(error);
     }
   }
 
@@ -522,8 +538,10 @@ export class PlayGamePage implements OnInit, OnDestroy {
 
       await this.gamesService.updateStoriesList(this.gameId, NEW_STORIES_LIST);
       await this.gamesService.updateGameSessionVotesList(this.gameId, NEW_VOTES_LIST);
-    } catch {
+    } catch (error) {
       this.handlePromiseError();
+
+      console.error(error);
     }
   }
 
@@ -560,8 +578,10 @@ export class PlayGamePage implements OnInit, OnDestroy {
         });
 
         await this.gamesService.updateStoriesList(this.gameId, NEW_STORIES_LIST);
-      } catch {
+      } catch (error) {
         this.handlePromiseError();
+
+        console.error(error);
       }
     }
   }
@@ -571,8 +591,10 @@ export class PlayGamePage implements OnInit, OnDestroy {
       const NEW_CURRENT_STORY_ID = this.game.stories.find((story) => story.index === 0).id;
 
       await this.gamesService.updateGameSessionCurrentStory(this.gameId, NEW_CURRENT_STORY_ID);
-    } catch {
+    } catch (error) {
       this.handlePromiseError();
+
+      console.error(error);
     }
   }
 
@@ -581,8 +603,10 @@ export class PlayGamePage implements OnInit, OnDestroy {
       const NEW_CURRENT_STORY_ID = this.game.stories.find((story) => story.index === this.game.stories.length - 1).id;
 
       await this.gamesService.updateGameSessionCurrentStory(this.gameId, NEW_CURRENT_STORY_ID);
-    } catch {
+    } catch (error) {
       this.handlePromiseError();
+
+      console.error(error);
     }
   }
 
@@ -591,8 +615,10 @@ export class PlayGamePage implements OnInit, OnDestroy {
       const NEW_CURRENT_STORY_ID = this.game.stories.find((story) => story.index === this.currentStoryIndex - 1).id;
 
       await this.gamesService.updateGameSessionCurrentStory(this.gameId, NEW_CURRENT_STORY_ID);
-    } catch {
+    } catch (error) {
       this.handlePromiseError();
+
+      console.error(error);
     }
   }
 
@@ -601,8 +627,10 @@ export class PlayGamePage implements OnInit, OnDestroy {
       const NEW_CURRENT_STORY_ID = this.game.stories.find((story) => story.index === this.currentStoryIndex + 1).id;
 
       await this.gamesService.updateGameSessionCurrentStory(this.gameId, NEW_CURRENT_STORY_ID);
-    } catch {
+    } catch (error) {
       this.handlePromiseError();
+
+      console.error(error);
     }
   }
 
@@ -633,12 +661,14 @@ export class PlayGamePage implements OnInit, OnDestroy {
   public async handleEditGameDialogConfirmation(gameDialogResult: GameDialogResultInterface) {
     try {
       await this.gamesService.updateGame(this.gameId, gameDialogResult.formValue);
-    } catch {
+    } catch (error) {
       this.snackBarService.open(
         this.translocoService.translate('EDIT_GAME_ERROR'),
         this.translocoService.translate(SNACKBAR_ACTION),
         SNACKBAR_CONFIGURATION
       );
+
+      console.error(error);
     }
 
     if (gameDialogResult.saveAsDefaultSettings) {
@@ -656,12 +686,14 @@ export class PlayGamePage implements OnInit, OnDestroy {
 
       try {
         await this.userService.updateUserDefaultGameSettings(GAME_SETTINGS);
-      } catch {
+      } catch (error) {
         this.snackBarService.open(
           this.translocoService.translate('UPDATE_USER_DEFAULT_GAME_SETTINGS_ERROR'),
           this.translocoService.translate(SNACKBAR_ACTION),
           SNACKBAR_CONFIGURATION
         );
+
+        console.error(error);
       }
     }
   }

@@ -55,12 +55,14 @@ export class ToolbarComponent {
       this.userService.deleteUserAccount();
 
       this.authService.signOut();
-    } catch {
+    } catch (error) {
       this.snackBarService.open(
         this.translocoService.translate('DELETE_ACCOUNT_ERROR'),
         this.translocoService.translate(SNACKBAR_ACTION),
         SNACKBAR_CONFIGURATION
       );
+
+      console.error(error);
 
       return;
     }

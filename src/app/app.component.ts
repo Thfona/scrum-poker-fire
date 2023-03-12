@@ -48,9 +48,13 @@ export class AppComponent implements OnInit, OnDestroy {
           this.userService.defaultGameSettingsState = user.defaultGameSettings;
           this.endLoading();
         }),
-        catchError(() => {
+        catchError((error) => {
           this.hasError = true;
+
           this.endLoading();
+
+          console.error(error);
+
           return EMPTY;
         })
       )
