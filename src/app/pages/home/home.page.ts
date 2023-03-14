@@ -146,9 +146,7 @@ export class HomePage implements OnInit, OnDestroy {
   public handleCreateNewGameButtonClick() {
     this.gameDialogOperation = 'create';
 
-    const DEFAULT_GAME_SETTINGS = this.userService.defaultGameSettingsState
-      ? this.userService.defaultGameSettingsState
-      : DOMAIN.defaultGameSettings;
+    const DEFAULT_GAME_SETTINGS = this.userService.defaultGameSettingsState || DOMAIN.defaultGameSettings;
 
     const CREATE_GAME_DIALOG_DATA: GameDialogDataInterface = {
       title: this.translocoService.translate('CREATE_GAME_TITLE'),

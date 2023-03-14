@@ -45,7 +45,7 @@ export class AppComponent implements OnInit, OnDestroy {
         tap((user) => {
           this.hasError = false;
           this.user = user;
-          this.userService.defaultGameSettingsState = user.defaultGameSettings;
+          this.userService.defaultGameSettingsState = user?.defaultGameSettings;
           this.endLoading();
         }),
         catchError((error) => {
