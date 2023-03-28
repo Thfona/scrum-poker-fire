@@ -180,6 +180,12 @@ export class PlayGamePage implements OnInit, OnDestroy {
 
             this.hasInitializedSession = true;
           }
+
+          const VALID_PLAYERS_WITH_VOTES = this.playersWithVotes.filter((player) => player.vote && player.vote.value);
+
+          if (VALID_PLAYERS_WITH_VOTES.length === this.playersWithVotes.length && this.game.autoFlip) {
+            this.handleFlipCards();
+          }
         }),
         catchError((error) => {
           this.hasError = true;
@@ -536,8 +542,8 @@ export class PlayGamePage implements OnInit, OnDestroy {
 
       const NEW_VOTES_LIST = this.game.session.votes.filter((vote) => vote.storyId !== this.currentStoryId);
 
-      await this.gamesService.updateStoriesList(this.gameId, NEW_STORIES_LIST);
       await this.gamesService.updateGameSessionVotesList(this.gameId, NEW_VOTES_LIST);
+      await this.gamesService.updateStoriesList(this.gameId, NEW_STORIES_LIST);
     } catch (error) {
       this.handlePromiseError();
 
@@ -545,7 +551,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
     }
   }
 
-  public async handleFlipCardsButtonClick() {
+  public async handleFlipCards() {
     if (!this.hasFlippedCards) {
       try {
         const STORY = this.game.stories.find((story) => story.id === this.currentStoryId);
