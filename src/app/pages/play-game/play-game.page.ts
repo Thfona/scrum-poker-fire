@@ -71,6 +71,13 @@ export class PlayGamePage implements OnInit, OnDestroy {
   public passVoteValue = 'PASS_CARD';
   public errorMessageCode = 'PLAY_GAME_ERROR_MESSAGE';
 
+  get isPrivateAccess() {
+    return (
+      this.game.ownerId !== this.userId &&
+      (!this.game.session.isActive || (this.game.isPrivate && !this.game.authorizedUsers.includes(this.userId)))
+    );
+  }
+
   constructor(
     private authService: AuthService,
     private gamesService: GamesService,
@@ -119,14 +126,8 @@ export class PlayGamePage implements OnInit, OnDestroy {
           this.hasError = false;
           this.game = game;
 
-          if (
-            !this.game ||
-            (this.game.ownerId !== this.userId &&
-              (!this.game.session.isActive ||
-                (this.game.isPrivate && !this.game.authorizedUsers.includes(this.userId)))) ||
-            this.game.bannedUsers.includes(this.userId)
-          ) {
-            throw new Error();
+          if (!this.game || this.isPrivateAccess || this.game.bannedUsers.includes(this.userId)) {
+            throw new Error('Game not found or access forbidden.');
           }
 
           this.currentStoryId = this.game.session.currentStoryId;
