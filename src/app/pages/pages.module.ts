@@ -10,6 +10,6 @@ const PAGES = [AuthPage, HomePage, PlayGamePage];
 
 @NgModule({
   declarations: [...PAGES],
-  imports: [...MODULES]
+  imports: [...MODULES],
 })
 export class PagesModule {}

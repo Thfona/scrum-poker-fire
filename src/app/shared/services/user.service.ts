@@ -5,7 +5,7 @@ import { UserInterface } from '../interfaces/user.interface';
 import { AuthService } from './auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
   private defaultGameSettings: GameSettingsInterface;

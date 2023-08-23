@@ -6,7 +6,7 @@ import { DialogContentComponent } from './dialog-content/dialog-content.componen
 
 @Component({
   selector: 'app-dialog-component',
-  template: ''
+  template: '',
 })
 export class DialogComponent implements OnDestroy {
   @Input() data: DialogDataInterface;
@@ -24,7 +24,7 @@ export class DialogComponent implements OnDestroy {
   public openDialog() {
     const DIALOG_REFERENCE = this.matDialog.open(DialogContentComponent, {
       data: this.data,
-      autoFocus: false
+      autoFocus: false,
     });
 
     this.dialogSubscription = DIALOG_REFERENCE.afterClosed().subscribe((result) => {

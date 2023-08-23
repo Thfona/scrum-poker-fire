@@ -24,7 +24,7 @@ import { SNACKBAR_CONFIGURATION } from 'src/app/shared/constants/snackbar-config
   selector: 'app-home-page',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
-  providers: [GamesService]
+  providers: [GamesService],
 })
 export class HomePage implements OnInit, OnDestroy {
   @ViewChild('tablePaginator') paginator: MatPaginator;
@@ -43,7 +43,7 @@ export class HomePage implements OnInit, OnDestroy {
     'numberOfStories',
     'totalEffort',
     'creationDate',
-    'options'
+    'options',
   ];
   public games: GameInterface[] = [];
   public dataSource: MatTableDataSource<GameInterface>;
@@ -59,7 +59,7 @@ export class HomePage implements OnInit, OnDestroy {
     private router: Router,
     private snackBarService: MatSnackBar,
     private translocoService: TranslocoService,
-    private userService: UserService
+    private userService: UserService,
   ) {}
 
   ngOnInit() {
@@ -90,7 +90,7 @@ export class HomePage implements OnInit, OnDestroy {
           console.error(error);
 
           return EMPTY;
-        })
+        }),
       )
       .subscribe();
   }
@@ -153,9 +153,9 @@ export class HomePage implements OnInit, OnDestroy {
       formData: {
         name: '',
         description: '',
-        ...DEFAULT_GAME_SETTINGS
+        ...DEFAULT_GAME_SETTINGS,
       },
-      shouldDisplaySaveAndStart: true
+      shouldDisplaySaveAndStart: true,
     };
 
     this.gameDialog.data = CREATE_GAME_DIALOG_DATA;
@@ -180,9 +180,9 @@ export class HomePage implements OnInit, OnDestroy {
         allowVoteChangeAfterReveal: game.allowVoteChangeAfterReveal,
         calculateScore: game.calculateScore,
         storyTimer: game.storyTimer,
-        storyTimerMinutes: game.storyTimerMinutes
+        storyTimerMinutes: game.storyTimerMinutes,
       },
-      shouldDisplaySaveAndStart: true
+      shouldDisplaySaveAndStart: true,
     };
 
     this.gameDialog.data = EDIT_GAME_DIALOG_DATA;
@@ -205,7 +205,7 @@ export class HomePage implements OnInit, OnDestroy {
         this.snackBarService.open(
           this.translocoService.translate('CREATE_GAME_ERROR'),
           this.translocoService.translate(SNACKBAR_ACTION),
-          SNACKBAR_CONFIGURATION
+          SNACKBAR_CONFIGURATION,
         );
 
         console.error(error);
@@ -225,7 +225,7 @@ export class HomePage implements OnInit, OnDestroy {
         this.snackBarService.open(
           this.translocoService.translate('EDIT_GAME_ERROR'),
           this.translocoService.translate(SNACKBAR_ACTION),
-          SNACKBAR_CONFIGURATION
+          SNACKBAR_CONFIGURATION,
         );
 
         console.error(error);
@@ -242,7 +242,7 @@ export class HomePage implements OnInit, OnDestroy {
         allowVoteChangeAfterReveal: gameDialogResult.formValue.allowVoteChangeAfterReveal,
         calculateScore: gameDialogResult.formValue.calculateScore,
         storyTimer: gameDialogResult.formValue.storyTimer,
-        storyTimerMinutes: gameDialogResult.formValue.storyTimerMinutes
+        storyTimerMinutes: gameDialogResult.formValue.storyTimerMinutes,
       };
 
       try {
@@ -251,7 +251,7 @@ export class HomePage implements OnInit, OnDestroy {
         this.snackBarService.open(
           this.translocoService.translate('UPDATE_USER_DEFAULT_GAME_SETTINGS_ERROR'),
           this.translocoService.translate(SNACKBAR_ACTION),
-          SNACKBAR_CONFIGURATION
+          SNACKBAR_CONFIGURATION,
         );
 
         console.error(error);
@@ -272,7 +272,7 @@ export class HomePage implements OnInit, OnDestroy {
       title: this.translocoService.translate('DELETE_GAME_TITLE', { gameName: game.name }),
       content: this.translocoService.translate('DELETE_GAME_CONTENT', { gameName: game.name }),
       confirmButtonText: this.translocoService.translate('DELETE'),
-      confirmButtonColor: 'warn'
+      confirmButtonColor: 'warn',
     };
 
     this.deleteGameDialog.data = DELETE_GAME_DIALOG_DATA;
@@ -289,7 +289,7 @@ export class HomePage implements OnInit, OnDestroy {
       this.snackBarService.open(
         this.translocoService.translate('DELETE_GAME_ERROR'),
         this.translocoService.translate(SNACKBAR_ACTION),
-        SNACKBAR_CONFIGURATION
+        SNACKBAR_CONFIGURATION,
       );
 
       console.error(error);

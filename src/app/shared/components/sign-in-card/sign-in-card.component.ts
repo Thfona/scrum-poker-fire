@@ -8,13 +8,13 @@ import { SNACKBAR_CONFIGURATION } from '../../constants/snackbar-configuration.c
 @Component({
   selector: 'app-sign-in-card-component',
   templateUrl: './sign-in-card.component.html',
-  styleUrls: ['./sign-in-card.component.scss']
+  styleUrls: ['./sign-in-card.component.scss'],
 })
 export class SignInCardComponent {
   constructor(
     public authService: AuthService,
     private snackBarService: MatSnackBar,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
   ) {}
 
   public async signIn() {
@@ -24,7 +24,7 @@ export class SignInCardComponent {
       this.snackBarService.open(
         this.translocoService.translate('SIGN_IN_ERROR'),
         this.translocoService.translate(SNACKBAR_ACTION),
-        SNACKBAR_CONFIGURATION
+        SNACKBAR_CONFIGURATION,
       );
 
       console.error(error);

@@ -9,7 +9,7 @@ import { DOMAIN } from '../../constants/domain.constant';
 
 @Component({
   selector: 'app-game-dialog-component',
-  template: ''
+  template: '',
 })
 export class GameDialogComponent implements OnDestroy {
   @Input() data: GameDialogDataInterface;
@@ -27,7 +27,7 @@ export class GameDialogComponent implements OnDestroy {
   public openDialog() {
     const DIALOG_REFERENCE = this.matDialog.open(GameDialogContentComponent, {
       data: this.data,
-      autoFocus: false
+      autoFocus: false,
     });
 
     this.dialogService.currentDialogReference = DIALOG_REFERENCE;

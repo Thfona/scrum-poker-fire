@@ -6,5 +6,5 @@ export const VIEWPORTS = {
   mediumLarge: 992,
   large: 1200,
   veryLarge: 1400,
-  heightMediumLarge: 800
+  heightMediumLarge: 800,
 };

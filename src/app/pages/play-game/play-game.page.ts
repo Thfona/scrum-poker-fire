@@ -34,7 +34,7 @@ import { DOMAIN } from 'src/app/shared/constants/domain.constant';
   selector: 'app-play-page',
   templateUrl: './play-game.page.html',
   styleUrls: ['./play-game.page.scss'],
-  providers: [GamesService, SidenavService, ViewportService]
+  providers: [GamesService, SidenavService, ViewportService],
 })
 export class PlayGamePage implements OnInit, OnDestroy {
   @ViewChild('editGameDialog') editGameDialog: GameDialogComponent;
@@ -87,7 +87,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
     private snackBarService: MatSnackBar,
     private translocoService: TranslocoService,
     private userService: UserService,
-    private viewportService: ViewportService
+    private viewportService: ViewportService,
   ) {}
 
   ngOnInit() {
@@ -142,7 +142,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
           }
 
           this.userCurrentVote = this.game.session.votes.find(
-            (vote) => vote.userId === this.userId && vote.storyId === this.currentStoryId
+            (vote) => vote.userId === this.userId && vote.storyId === this.currentStoryId,
           );
 
           this.game.stories = this.game.stories.sort((a, b) => a.index - b.index);
@@ -150,12 +150,12 @@ export class PlayGamePage implements OnInit, OnDestroy {
           const PLAYERS = this.game.session.users.filter((user) => user.isPlayer);
           this.playersWithVotes = PLAYERS.map((player) => {
             const PLAYER_VOTE = this.game.session.votes.find(
-              (vote) => vote.userId === player.id && vote.storyId === this.currentStoryId
+              (vote) => vote.userId === player.id && vote.storyId === this.currentStoryId,
             );
 
             return {
               ...player,
-              vote: PLAYER_VOTE
+              vote: PLAYER_VOTE,
             };
           });
 
@@ -196,7 +196,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
           console.error(error);
 
           return EMPTY;
-        })
+        }),
       )
       .subscribe();
   }
@@ -254,7 +254,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
         const NEW_SESSION_USER = {
           id: this.userId,
           name: this.userName,
-          isPlayer: this.isPlayer
+          isPlayer: this.isPlayer,
         };
 
         await this.gamesService.updateGameSessionUsers(this.gameId, NEW_SESSION_USER, 'add');
@@ -302,7 +302,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
         const USER_NEW_VOTE: GameVoteInterface = {
           userId: this.userId,
           storyId: this.game.session.currentStoryId,
-          ...card
+          ...card,
         };
 
         await this.gamesService.updateGameSessionVotes(this.gameId, USER_NEW_VOTE, 'add');
@@ -335,7 +335,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
   public async handleStartGameButtonClick() {
     await this.gamesService.updateGameSessionCurrentStory(
       this.gameId,
-      this.game.stories.find((story) => story.index === 0).id
+      this.game.stories.find((story) => story.index === 0).id,
     );
     await this.gamesService.updateGameSessionHasStarted(this.gameId, true);
   }
@@ -345,7 +345,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
       title: this.translocoService.translate('EXIT_GAME'),
       content: this.translocoService.translate('EXIT_GAME_CONTENT'),
       confirmButtonText: this.translocoService.translate('EXIT'),
-      confirmButtonColor: 'warn'
+      confirmButtonColor: 'warn',
     };
 
     this.exitGameDialog.data = EXIT_GAME_DIALOG_DATA;
@@ -363,9 +363,9 @@ export class PlayGamePage implements OnInit, OnDestroy {
     const CREATE_STORY_DIALOG_DATA: StoryDialogDataInterface = {
       title: this.translocoService.translate('CREATE_STORY_TITLE'),
       formData: {
-        name: ''
+        name: '',
       },
-      isEditOperation: false
+      isEditOperation: false,
     };
 
     this.storyDialog.data = CREATE_STORY_DIALOG_DATA;
@@ -382,9 +382,9 @@ export class PlayGamePage implements OnInit, OnDestroy {
         title: this.translocoService.translate('EDIT_STORY_TITLE', { storyName: story.name }),
         formData: {
           name: story.name,
-          score: story.score
+          score: story.score,
         },
-        isEditOperation: true
+        isEditOperation: true,
       };
 
       this.storyDialog.data = EDIT_STORY_DIALOG_DATA;
@@ -406,15 +406,15 @@ export class PlayGamePage implements OnInit, OnDestroy {
             id: generateUniqueIdUtil(),
             index: NEW_STORY_INDEX,
             name: storyDialogResult.formValue.name,
-            hasFlippedCards: false
+            hasFlippedCards: false,
           },
-          'add'
+          'add',
         );
       } catch (error) {
         this.snackBarService.open(
           this.translocoService.translate('CREATE_STORY_ERROR'),
           this.translocoService.translate(SNACKBAR_ACTION),
-          SNACKBAR_CONFIGURATION
+          SNACKBAR_CONFIGURATION,
         );
 
         console.error(error);
@@ -429,7 +429,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
           title: this.translocoService.translate('DELETE_STORY_TITLE', { storyName: STORY.name }),
           content: this.translocoService.translate('DELETE_STORY_CONTENT', { storyName: STORY.name }),
           confirmButtonText: this.translocoService.translate('DELETE'),
-          confirmButtonColor: 'warn'
+          confirmButtonColor: 'warn',
         };
 
         this.deleteStoryDialog.data = DELETE_STORY_DIALOG_DATA;
@@ -441,7 +441,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
             id: STORY.id,
             index: STORY.index,
             name: storyDialogResult.formValue.name,
-            hasFlippedCards: STORY.hasFlippedCards
+            hasFlippedCards: STORY.hasFlippedCards,
           };
 
           if (storyDialogResult.formValue.score) {
@@ -461,7 +461,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
           this.snackBarService.open(
             this.translocoService.translate('EDIT_STORY_ERROR'),
             this.translocoService.translate(SNACKBAR_ACTION),
-            SNACKBAR_CONFIGURATION
+            SNACKBAR_CONFIGURATION,
           );
 
           console.error(error);
@@ -497,7 +497,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
           if (story.index > STORY.index) {
             return {
               ...story,
-              index: story.index - 1
+              index: story.index - 1,
             };
           } else {
             return story;
@@ -510,7 +510,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
       this.snackBarService.open(
         this.translocoService.translate('DELETE_STORY_ERROR'),
         this.translocoService.translate(SNACKBAR_ACTION),
-        SNACKBAR_CONFIGURATION
+        SNACKBAR_CONFIGURATION,
       );
 
       console.error(error);
@@ -530,7 +530,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
 
       const NEW_STORY: StoryInterface = {
         ...STORY,
-        hasFlippedCards: false
+        hasFlippedCards: false,
       };
 
       const NEW_STORIES_LIST = this.game.stories.map((story) => {
@@ -569,7 +569,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
 
         const NEW_STORY: StoryInterface = {
           ...STORY,
-          hasFlippedCards: true
+          hasFlippedCards: true,
         };
 
         if (newScore) {
@@ -655,9 +655,9 @@ export class PlayGamePage implements OnInit, OnDestroy {
         allowVoteChangeAfterReveal: this.game.allowVoteChangeAfterReveal,
         calculateScore: this.game.calculateScore,
         storyTimer: this.game.storyTimer,
-        storyTimerMinutes: this.game.storyTimerMinutes
+        storyTimerMinutes: this.game.storyTimerMinutes,
       },
-      shouldDisplaySaveAndStart: false
+      shouldDisplaySaveAndStart: false,
     };
 
     this.editGameDialog.data = EDIT_GAME_DIALOG_DATA;
@@ -672,7 +672,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
       this.snackBarService.open(
         this.translocoService.translate('EDIT_GAME_ERROR'),
         this.translocoService.translate(SNACKBAR_ACTION),
-        SNACKBAR_CONFIGURATION
+        SNACKBAR_CONFIGURATION,
       );
 
       console.error(error);
@@ -688,7 +688,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
         allowVoteChangeAfterReveal: gameDialogResult.formValue.allowVoteChangeAfterReveal,
         calculateScore: gameDialogResult.formValue.calculateScore,
         storyTimer: gameDialogResult.formValue.storyTimer,
-        storyTimerMinutes: gameDialogResult.formValue.storyTimerMinutes
+        storyTimerMinutes: gameDialogResult.formValue.storyTimerMinutes,
       };
 
       try {
@@ -697,7 +697,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
         this.snackBarService.open(
           this.translocoService.translate('UPDATE_USER_DEFAULT_GAME_SETTINGS_ERROR'),
           this.translocoService.translate(SNACKBAR_ACTION),
-          SNACKBAR_CONFIGURATION
+          SNACKBAR_CONFIGURATION,
         );
 
         console.error(error);

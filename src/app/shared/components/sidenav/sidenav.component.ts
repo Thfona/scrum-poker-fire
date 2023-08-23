@@ -6,7 +6,7 @@ import { SLIDE_ANIMATION } from 'src/app/shared/animations/slide.animation';
   selector: 'app-sidenav-component',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
-  animations: [SLIDE_ANIMATION]
+  animations: [SLIDE_ANIMATION],
 })
 export class SidenavComponent {
   @Input() shouldDisplayOverlay: boolean;

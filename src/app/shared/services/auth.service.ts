@@ -9,7 +9,7 @@ import { UserInterface } from '../interfaces/user.interface';
 import { UserAuthDataInterface } from '../interfaces/user-auth-data.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   public user: UserAuthDataInterface;
@@ -21,7 +21,7 @@ export class AuthService {
   constructor(
     private angularFireAuth: AngularFireAuth,
     private angularFirestore: AngularFirestore,
-    private router: Router
+    private router: Router,
   ) {
     this.userDocument = this.angularFireAuth.authState.pipe(
       switchMap((user) => {
@@ -34,7 +34,7 @@ export class AuthService {
 
           return of(null);
         }
-      })
+      }),
     );
   }
 
@@ -80,7 +80,7 @@ export class AuthService {
       uid,
       email,
       displayName,
-      photoURL
+      photoURL,
     };
 
     return USER_DOCUMENT.set(DATA, { merge: true });

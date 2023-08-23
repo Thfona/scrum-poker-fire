@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'app-game-card-component',
   templateUrl: 'game-card.component.html',
-  styleUrls: ['game-card.component.scss']
+  styleUrls: ['game-card.component.scss'],
 })
 export class GameCardComponent {
   @Input() color: 'primary' | 'accent' | 'white' | 'grey';

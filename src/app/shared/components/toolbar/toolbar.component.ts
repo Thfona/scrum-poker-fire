@@ -13,7 +13,7 @@ import { SNACKBAR_CONFIGURATION } from '../../constants/snackbar-configuration.c
 @Component({
   selector: 'app-toolbar-component',
   templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss']
+  styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent {
   @ViewChild('deleteAccountDialog') deleteAccountDialog: DialogComponent;
@@ -26,7 +26,7 @@ export class ToolbarComponent {
     private userService: UserService,
     private router: Router,
     private snackBarService: MatSnackBar,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
   ) {}
 
   public navigateTo(route: string) {
@@ -42,7 +42,7 @@ export class ToolbarComponent {
       title: this.translocoService.translate('DELETE_ACCOUNT'),
       content: this.translocoService.translate('DELETE_ACCOUNT_CONTENT'),
       confirmButtonText: this.translocoService.translate('DELETE_ACCOUNT_BUTTON_TEXT'),
-      confirmButtonColor: 'warn'
+      confirmButtonColor: 'warn',
     };
 
     this.deleteAccountDialog.data = DELETE_ACCOUNT_DIALOG_DATA;
@@ -59,7 +59,7 @@ export class ToolbarComponent {
       this.snackBarService.open(
         this.translocoService.translate('DELETE_ACCOUNT_ERROR'),
         this.translocoService.translate(SNACKBAR_ACTION),
-        SNACKBAR_CONFIGURATION
+        SNACKBAR_CONFIGURATION,
       );
 
       console.error(error);
@@ -70,7 +70,7 @@ export class ToolbarComponent {
     this.snackBarService.open(
       this.translocoService.translate('DELETE_ACCOUNT_SUCCESS'),
       this.translocoService.translate(SNACKBAR_ACTION),
-      SNACKBAR_CONFIGURATION
+      SNACKBAR_CONFIGURATION,
     );
   }
 }

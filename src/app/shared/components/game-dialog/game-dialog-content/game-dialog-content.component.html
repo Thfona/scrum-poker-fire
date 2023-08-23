@@ -68,7 +68,8 @@
         </mat-radio-group>
       </div>
 
-      <div class="radio-container">
+      <!-- TODO: Enable once story timers are implemented -->
+      <!-- <div class="radio-container">
         <label class="radio-label">{{ transloco('STORY_TIMER') }}: </label>
         <mat-radio-group [formControl]="formGroup.controls.storyTimer">
           <mat-radio-button [value]="true" class="radio-button">{{ transloco('YES') }}</mat-radio-button>
@@ -80,20 +81,25 @@
         <mat-label>{{ transloco('STORY_TIMER_MINUTES') }}</mat-label>
         <input matInput formControlName="storyTimerMinutes" name="storyTimerMinutes" inputmode="numeric"
           pattern="[0-9]*" digitOnly>
-      </mat-form-field>
+      </mat-form-field> -->
     </form>
 
     <mat-checkbox class="example-margin" [checked]="saveAsDefaultSettings" (change)="setSaveAsDefaultSettings()">
       {{ transloco('SAVE_AS_DEFAULT_CONFIGURATION_TEXT') }}
     </mat-checkbox>
   </mat-dialog-content>
+
   <mat-dialog-actions align="end">
     <button mat-button
       [mat-dialog-close]="cancelResult"
-      class="action-button">{{ transloco('CANCEL') }}</button>
+      class="action-button">{{ transloco('CANCEL') }}
+    </button>
+
     <button mat-button
       [mat-dialog-close]="saveResult"
-      [disabled]="formGroup.invalid" color="primary" class="action-button">{{ transloco('SAVE') }}</button>
+      [disabled]="formGroup.invalid" color="primary" class="action-button">{{ transloco('SAVE') }}
+    </button>
+
     <button mat-button *ngIf="data.shouldDisplaySaveAndStart"
       [mat-dialog-close]="saveAndStartResult"
       [disabled]="formGroup.invalid" color="accent" class="action-button">

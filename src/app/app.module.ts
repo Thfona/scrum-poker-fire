@@ -23,7 +23,7 @@ const MODULES = [
   NgProgressModule,
   NgProgressRouterModule,
   PagesModule,
-  SharedModule
+  SharedModule,
 ];
 
 const SERVICES = [WINDOW_PROVIDERS];
@@ -32,6 +32,6 @@ const SERVICES = [WINDOW_PROVIDERS];
   declarations: [AppComponent],
   imports: [...MODULES],
   providers: [...SERVICES],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

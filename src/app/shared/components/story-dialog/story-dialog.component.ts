@@ -8,7 +8,7 @@ import { StoryDialogContentComponent } from './story-dialog-content/story-dialog
 
 @Component({
   selector: 'app-story-dialog-component',
-  template: ''
+  template: '',
 })
 export class StoryDialogComponent implements OnDestroy {
   @Input() data: StoryDialogDataInterface;
@@ -27,7 +27,7 @@ export class StoryDialogComponent implements OnDestroy {
     const DIALOG_REFERENCE = this.matDialog.open(StoryDialogContentComponent, {
       data: this.data,
       autoFocus: false,
-      minWidth: '430px'
+      minWidth: '430px',
     });
 
     this.dialogService.currentDialogReference = DIALOG_REFERENCE;

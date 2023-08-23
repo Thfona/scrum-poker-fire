@@ -5,7 +5,7 @@ import { DialogDataInterface } from 'src/app/shared/interfaces/dialog-data.inter
 @Component({
   selector: 'app-dialog-content-component',
   templateUrl: './dialog-content.component.html',
-  styleUrls: ['./dialog-content.component.scss']
+  styleUrls: ['./dialog-content.component.scss'],
 })
 export class DialogContentComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogDataInterface) {}

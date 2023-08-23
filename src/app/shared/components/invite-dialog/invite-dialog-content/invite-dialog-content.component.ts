@@ -7,7 +7,7 @@ import { SNACKBAR_CONFIGURATION } from 'src/app/shared/constants/snackbar-config
 @Component({
   selector: 'app-invite-dialog-content-component',
   templateUrl: './invite-dialog-content.component.html',
-  styleUrls: ['./invite-dialog-content.component.scss']
+  styleUrls: ['./invite-dialog-content.component.scss'],
 })
 export class InviteDialogContentComponent {
   @ViewChild('linkInput') linkInput: ElementRef;
@@ -28,7 +28,7 @@ export class InviteDialogContentComponent {
     this.snackBarService.open(
       this.translocoService.translate('LINK_COPIED_MESSAGE'),
       this.translocoService.translate(SNACKBAR_ACTION),
-      SNACKBAR_CONFIGURATION
+      SNACKBAR_CONFIGURATION,
     );
   }
 }

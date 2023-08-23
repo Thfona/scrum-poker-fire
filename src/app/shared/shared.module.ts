@@ -51,7 +51,7 @@ const COMPONENTS = [
   SignInCardComponent,
   StoryDialogComponent,
   StoryDialogContentComponent,
-  ToolbarComponent
+  ToolbarComponent,
 ];
 
 const MODULES = [
@@ -76,7 +76,7 @@ const MODULES = [
   MatToolbarModule,
   MatTooltipModule,
   ReactiveFormsModule,
-  TranslocoRootModule
+  TranslocoRootModule,
 ];
 
 const SERVICES = [];
@@ -85,6 +85,6 @@ const SERVICES = [];
   declarations: [...COMPONENTS],
   imports: [...MODULES],
   exports: [...COMPONENTS, ...MODULES],
-  providers: [...SERVICES]
+  providers: [...SERVICES],
 })
 export class SharedModule {}

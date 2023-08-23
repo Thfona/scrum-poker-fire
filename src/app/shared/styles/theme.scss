@@ -20,8 +20,8 @@ $app-theme: ng-material.define-light-theme(
     color: (
       primary: $app-primary,
       accent: $app-accent,
-      warn: $app-warn
-    )
+      warn: $app-warn,
+    ),
   )
 );
 

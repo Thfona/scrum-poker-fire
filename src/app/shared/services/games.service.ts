@@ -31,7 +31,7 @@ export class GamesService {
       'games',
       (ref) => {
         return ref.where('ownerId', '==', USER_ID).orderBy('creationDate', 'desc');
-      }
+      },
     );
 
     const GAMES = GAMES_COLLECTION.valueChanges();
@@ -57,10 +57,10 @@ export class GamesService {
         hasStarted: false,
         currentStoryId: '',
         users: [],
-        votes: []
+        votes: [],
       },
       authorizedUsers: [],
-      bannedUsers: []
+      bannedUsers: [],
     };
 
     const GAMES_COLLECTION: AngularFirestoreCollection<GameInterface> = this.angularFirestore.collection('games');

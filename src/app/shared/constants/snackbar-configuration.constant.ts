@@ -3,5 +3,5 @@ import { MatLegacySnackBarConfig as MatSnackBarConfig } from '@angular/material/
 export const SNACKBAR_CONFIGURATION: MatSnackBarConfig<any> = {
   duration: 5000,
   horizontalPosition: 'center',
-  verticalPosition: 'top'
+  verticalPosition: 'top',
 };

@@ -9,7 +9,7 @@ import { UserService } from './shared/services/user.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
   private routerEventsSubscription: Subscription;
@@ -56,7 +56,7 @@ export class AppComponent implements OnInit, OnDestroy {
           console.error(error);
 
           return EMPTY;
-        })
+        }),
       )
       .subscribe();
   }

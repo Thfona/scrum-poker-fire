@@ -29,13 +29,13 @@ export function windowFactory(browserWindowRef: BrowserWindowRef, platformId: Ob
 
 const BROWSER_WINDOW_PROVIDER: ClassProvider = {
   provide: WindowRef,
-  useClass: BrowserWindowRef
+  useClass: BrowserWindowRef,
 };
 
 const WINDOW_PROVIDER: FactoryProvider = {
   provide: WINDOW,
   useFactory: windowFactory,
-  deps: [WindowRef, PLATFORM_ID]
+  deps: [WindowRef, PLATFORM_ID],
 };
 
 export const WINDOW_PROVIDERS = [BROWSER_WINDOW_PROVIDER, WINDOW_PROVIDER];

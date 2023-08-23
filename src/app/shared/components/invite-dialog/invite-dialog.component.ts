@@ -5,7 +5,7 @@ import { InviteDialogContentComponent } from './invite-dialog-content/invite-dia
 
 @Component({
   selector: 'app-invite-dialog-component',
-  template: ''
+  template: '',
 })
 export class InviteDialogComponent implements OnDestroy {
   private dialogSubscription: Subscription;
@@ -20,7 +20,7 @@ export class InviteDialogComponent implements OnDestroy {
 
   public openDialog() {
     const DIALOG_REFERENCE = this.matDialog.open(InviteDialogContentComponent, {
-      autoFocus: false
+      autoFocus: false,
     });
 
     this.dialogSubscription = DIALOG_REFERENCE.afterClosed().subscribe();

@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 @Component({
   selector: 'app-loading-component',
   templateUrl: './loading.component.html',
-  styleUrls: ['./loading.component.scss']
+  styleUrls: ['./loading.component.scss'],
 })
 export class LoadingComponent implements OnInit {
   @Input() center = true;
@@ -11,7 +11,7 @@ export class LoadingComponent implements OnInit {
   private diameterMap = {
     small: 40,
     medium: 70,
-    large: 100
+    large: 100,
   };
   public diameter: number;
 

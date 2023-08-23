@@ -6,7 +6,7 @@ import {
   HostListener,
   Inject,
   OnInit,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
@@ -21,7 +21,7 @@ import { DOMAIN } from 'src/app/shared/constants/domain.constant';
 @Component({
   selector: 'app-game-dialog-content-component',
   templateUrl: './game-dialog-content.component.html',
-  styleUrls: ['./game-dialog-content.component.scss']
+  styleUrls: ['./game-dialog-content.component.scss'],
 })
 export class GameDialogContentComponent implements OnInit, AfterViewInit {
   @ViewChild('gameName') gameName: ElementRef;
@@ -47,7 +47,7 @@ export class GameDialogContentComponent implements OnInit, AfterViewInit {
       save: false,
       start: false,
       formValue: null,
-      saveAsDefaultSettings: false
+      saveAsDefaultSettings: false,
     };
   }
 
@@ -56,14 +56,14 @@ export class GameDialogContentComponent implements OnInit, AfterViewInit {
       save: true,
       start: false,
       formValue: this.formGroup.value,
-      saveAsDefaultSettings: this.saveAsDefaultSettings
+      saveAsDefaultSettings: this.saveAsDefaultSettings,
     };
   }
 
   get saveAndStartResult() {
     return {
       ...this.saveResult,
-      start: true
+      start: true,
     };
   }
 
@@ -71,7 +71,7 @@ export class GameDialogContentComponent implements OnInit, AfterViewInit {
     @Inject(MAT_DIALOG_DATA) public data: GameDialogDataInterface,
     private changeDetector: ChangeDetectorRef,
     private dialogService: DialogService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
   ) {}
 
   ngOnInit() {
@@ -83,14 +83,13 @@ export class GameDialogContentComponent implements OnInit, AfterViewInit {
       description: new FormControl(this.data.formData.description),
       teamVelocity: new FormControl(this.data.formData.teamVelocity, Validators.required),
       shareVelocity: new FormControl(this.data.formData.shareVelocity, Validators.required),
-      // TODO: Enable once private rooms are implemented
-      isPrivate: new FormControl(false, Validators.required),
+      isPrivate: new FormControl(DOMAIN.defaultGameSettings.isPrivate, Validators.required), // TODO: Enable once private rooms are implemented
       cardSet: new FormControl(this.data.formData.cardSet, Validators.required),
       autoFlip: new FormControl(this.data.formData.autoFlip, Validators.required),
       allowVoteChangeAfterReveal: new FormControl(this.data.formData.allowVoteChangeAfterReveal, Validators.required),
       calculateScore: new FormControl(this.data.formData.calculateScore, Validators.required),
-      storyTimer: new FormControl(this.data.formData.storyTimer, Validators.required),
-      storyTimerMinutes: new FormControl(this.data.formData.storyTimerMinutes)
+      storyTimer: new FormControl(DOMAIN.defaultGameSettings.storyTimer, Validators.required), // TODO: Enable once story timers are implemented
+      storyTimerMinutes: new FormControl(DOMAIN.defaultGameSettings.storyTimerMinutes), // TODO: Enable once story timers are implemented
     });
   }
 

@@ -5,7 +5,7 @@ import { map, take, tap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
@@ -22,7 +22,7 @@ export class LoginGuard implements CanActivate {
 
           this.router.navigate(['/auth']);
         }
-      })
+      }),
     );
   }
 }

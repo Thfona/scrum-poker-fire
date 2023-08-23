@@ -6,7 +6,7 @@ import {
   HostListener,
   Inject,
   OnInit,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
@@ -16,7 +16,7 @@ import { DialogService } from 'src/app/shared/services/dialog.service';
 @Component({
   selector: 'app-story-dialog-content-component',
   templateUrl: './story-dialog-content.component.html',
-  styleUrls: ['./story-dialog-content.component.scss']
+  styleUrls: ['./story-dialog-content.component.scss'],
 })
 export class StoryDialogContentComponent implements OnInit, AfterViewInit {
   @ViewChild('storyName') storyName: ElementRef;
@@ -30,7 +30,7 @@ export class StoryDialogContentComponent implements OnInit, AfterViewInit {
     return {
       save: false,
       formValue: null,
-      delete: false
+      delete: false,
     };
   }
 
@@ -38,7 +38,7 @@ export class StoryDialogContentComponent implements OnInit, AfterViewInit {
     return {
       save: true,
       formValue: null,
-      delete: true
+      delete: true,
     };
   }
 
@@ -46,20 +46,20 @@ export class StoryDialogContentComponent implements OnInit, AfterViewInit {
     return {
       save: true,
       formValue: this.formGroup.value,
-      delete: false
+      delete: false,
     };
   }
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: StoryDialogDataInterface,
     private changeDetector: ChangeDetectorRef,
-    private dialogService: DialogService
+    private dialogService: DialogService,
   ) {}
 
   ngOnInit() {
     this.formGroup = new FormGroup({
       name: new FormControl(this.data.formData.name, Validators.required),
-      score: new FormControl(this.data.formData.score)
+      score: new FormControl(this.data.formData.score),
     });
   }
 
