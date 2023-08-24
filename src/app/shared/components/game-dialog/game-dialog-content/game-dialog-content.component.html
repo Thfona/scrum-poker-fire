@@ -1,42 +1,50 @@
 <ng-container *transloco="let transloco">
   <h2 mat-dialog-title>{{ data.title }}</h2>
+
   <mat-dialog-content class="mat-typography content">
     <form [formGroup]="formGroup">
       <mat-form-field>
         <mat-label>{{ transloco('NAME') }}</mat-label>
+
         <input #gameName matInput formControlName="name" name="name">
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>{{ transloco('DESCRIPTION') }}</mat-label>
+
         <input matInput formControlName="description" name="description">
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>{{ transloco('TEAM_VELOCITY') }}</mat-label>
-        <input matInput formControlName="teamVelocity" name="teamVelocity" inputmode="numeric" pattern="[0-9]*"
-          digitOnly>
+
+        <input matInput formControlName="teamVelocity" name="teamVelocity" inputmode="numeric" pattern="[0-9]*" digitOnly>
       </mat-form-field>
 
       <div class="radio-container">
         <label class="radio-label">{{ transloco('SHARE_VELOCITY') }}: </label>
+
         <mat-radio-group [formControl]="formGroup.controls.shareVelocity">
           <mat-radio-button [value]="true" class="radio-button">{{ transloco('YES') }}</mat-radio-button>
+
           <mat-radio-button [value]="false" class="radio-button">{{ transloco('NO') }}</mat-radio-button>
         </mat-radio-group>
       </div>
 
-      <!-- TODO: Enable once private rooms are implemented -->
+      <!-- TODO(v2): Enable once private rooms are implemented -->
       <!-- <div class="radio-container">
         <label class="radio-label">{{ transloco('GAME_PRIVACY') }}: </label>
+
         <mat-radio-group [formControl]="formGroup.controls.isPrivate">
           <mat-radio-button [value]="true" class="radio-button">{{ transloco('PRIVATE') }}</mat-radio-button>
+
           <mat-radio-button [value]="false" class="radio-button">{{ transloco('PUBLIC') }}</mat-radio-button>
         </mat-radio-group>
       </div> -->
 
       <div class="radio-container">
         <label class="radio-label">{{ transloco('CARD_SET') }}: </label>
+
         <mat-radio-group [formControl]="formGroup.controls.cardSet">
           <mat-radio-button [value]="cardSet.name" class="radio-button-card-set" *ngFor="let cardSet of cardSets">
             {{ transloco(cardSet.name) }} {{ getCardSetDisplayValues(cardSet.cards) }}
@@ -46,41 +54,49 @@
 
       <div class="radio-container">
         <label class="radio-label">{{ transloco('AUTO_FLIP') }}: </label>
+
         <mat-radio-group [formControl]="formGroup.controls.autoFlip">
           <mat-radio-button [value]="true" class="radio-button">{{ transloco('YES') }}</mat-radio-button>
+
           <mat-radio-button [value]="false" class="radio-button">{{ transloco('NO') }}</mat-radio-button>
         </mat-radio-group>
       </div>
 
       <div class="radio-container">
         <label class="radio-label">{{ transloco('ALLOW_VOTE_CHANGE_AFTER_REVEAL') }}: </label>
+
         <mat-radio-group [formControl]="formGroup.controls.allowVoteChangeAfterReveal">
           <mat-radio-button [value]="true" class="radio-button">{{ transloco('YES') }}</mat-radio-button>
+
           <mat-radio-button [value]="false" class="radio-button">{{ transloco('NO') }}</mat-radio-button>
         </mat-radio-group>
       </div>
 
       <div class="radio-container">
         <label class="radio-label">{{ transloco('CALCULATE_SCORE') }}: </label>
+
         <mat-radio-group [formControl]="formGroup.controls.calculateScore">
           <mat-radio-button [value]="true" class="radio-button">{{ transloco('YES') }}</mat-radio-button>
+
           <mat-radio-button [value]="false" class="radio-button">{{ transloco('NO') }}</mat-radio-button>
         </mat-radio-group>
       </div>
 
-      <!-- TODO: Enable once story timers are implemented -->
+      <!-- TODO(v2): Enable once story timers are implemented -->
       <!-- <div class="radio-container">
         <label class="radio-label">{{ transloco('STORY_TIMER') }}: </label>
+
         <mat-radio-group [formControl]="formGroup.controls.storyTimer">
           <mat-radio-button [value]="true" class="radio-button">{{ transloco('YES') }}</mat-radio-button>
+
           <mat-radio-button [value]="false" class="radio-button">{{ transloco('NO') }}</mat-radio-button>
         </mat-radio-group>
       </div>
 
       <mat-form-field *ngIf="formGroup.value.storyTimer">
         <mat-label>{{ transloco('STORY_TIMER_MINUTES') }}</mat-label>
-        <input matInput formControlName="storyTimerMinutes" name="storyTimerMinutes" inputmode="numeric"
-          pattern="[0-9]*" digitOnly>
+
+        <input matInput formControlName="storyTimerMinutes" name="storyTimerMinutes" inputmode="numeric" pattern="[0-9]*" digitOnly>
       </mat-form-field> -->
     </form>
 
@@ -90,19 +106,22 @@
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <button mat-button
-      [mat-dialog-close]="cancelResult"
-      class="action-button">{{ transloco('CANCEL') }}
+    <button mat-button class="action-button" [mat-dialog-close]="cancelResult">
+      {{ transloco('CANCEL') }}
     </button>
 
-    <button mat-button
-      [mat-dialog-close]="saveResult"
-      [disabled]="formGroup.invalid" color="primary" class="action-button">{{ transloco('SAVE') }}
+    <button mat-button class="action-button" [mat-dialog-close]="saveResult" [disabled]="formGroup.invalid" color="primary">
+      {{ transloco('SAVE') }}
     </button>
 
-    <button mat-button *ngIf="data.shouldDisplaySaveAndStart"
+    <button
+      mat-button
+      *ngIf="data.shouldDisplaySaveAndStart"
+      class="action-button"
       [mat-dialog-close]="saveAndStartResult"
-      [disabled]="formGroup.invalid" color="accent" class="action-button">
+      [disabled]="formGroup.invalid"
+      color="accent"
+    >
       {{ transloco('SAVE_AND_START_BUTTON_TEXT') }}
     </button>
   </mat-dialog-actions>

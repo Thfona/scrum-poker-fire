@@ -83,13 +83,13 @@ export class GameDialogContentComponent implements OnInit, AfterViewInit {
       description: new FormControl(this.data.formData.description),
       teamVelocity: new FormControl(this.data.formData.teamVelocity, Validators.required),
       shareVelocity: new FormControl(this.data.formData.shareVelocity, Validators.required),
-      isPrivate: new FormControl(DOMAIN.defaultGameSettings.isPrivate, Validators.required), // TODO: Enable once private rooms are implemented
+      isPrivate: new FormControl(DOMAIN.defaultGameSettings.isPrivate, Validators.required), // TODO(v2): Enable once private rooms are implemented
       cardSet: new FormControl(this.data.formData.cardSet, Validators.required),
       autoFlip: new FormControl(this.data.formData.autoFlip, Validators.required),
       allowVoteChangeAfterReveal: new FormControl(this.data.formData.allowVoteChangeAfterReveal, Validators.required),
       calculateScore: new FormControl(this.data.formData.calculateScore, Validators.required),
-      storyTimer: new FormControl(DOMAIN.defaultGameSettings.storyTimer, Validators.required), // TODO: Enable once story timers are implemented
-      storyTimerMinutes: new FormControl(DOMAIN.defaultGameSettings.storyTimerMinutes), // TODO: Enable once story timers are implemented
+      storyTimer: new FormControl(DOMAIN.defaultGameSettings.storyTimer, Validators.required), // TODO(v2): Enable once story timers are implemented
+      storyTimerMinutes: new FormControl(DOMAIN.defaultGameSettings.storyTimerMinutes), // TODO(v2): Enable once story timers are implemented
     });
   }
 

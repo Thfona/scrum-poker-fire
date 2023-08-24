@@ -1,5 +1,4 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { TranslocoService } from '@ngneat/transloco';
 import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { DialogDataInterface } from '../../interfaces/dialog-data.interface';
@@ -18,20 +17,14 @@ import { SNACKBAR_CONFIGURATION } from '../../constants/snackbar-configuration.c
 export class ToolbarComponent {
   @ViewChild('deleteAccountDialog') deleteAccountDialog: DialogComponent;
   @Input() user: UserInterface;
-  public gitHubLogoSrc = 'assets/svg/github-circle-white-transparent.svg';
   public gitHubRepositoryLink = 'https://github.com/Thfona/scrum-poker-fire-frontend';
 
   constructor(
     public authService: AuthService,
     private userService: UserService,
-    private router: Router,
     private snackBarService: MatSnackBar,
     private translocoService: TranslocoService,
   ) {}
-
-  public navigateTo(route: string) {
-    this.router.navigate([`/${route}`]);
-  }
 
   public openGitHubRepository() {
     window.open(this.gitHubRepositoryLink, '_blank');

@@ -2,24 +2,30 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { LoginGuard } from './shared/guards/login.guard';
-import { AuthPage } from './pages/auth/auth.page';
-import { HomePage } from './pages/home/home.page';
-import { PlayGamePage } from './pages/play-game/play-game.page';
 
 const ROUTES: Routes = [
   {
     path: 'home',
-    component: HomePage,
+    loadChildren: () => import('./pages/home/home.module').then((m) => m.HomeModule),
+    canLoad: [LoginGuard],
     canActivate: [LoginGuard],
   },
   {
-    path: 'play-game/:gameId',
-    component: PlayGamePage,
+    path: 'poker',
+    loadChildren: () => import('./pages/poker/poker.module').then((m) => m.PokerModule),
+    canLoad: [LoginGuard],
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'retro',
+    loadChildren: () => import('./pages/retro/retro.module').then((m) => m.RetroModule),
+    canLoad: [LoginGuard],
     canActivate: [LoginGuard],
   },
   {
     path: 'auth',
-    component: AuthPage,
+    loadChildren: () => import('./pages/auth/auth.module').then((m) => m.AuthModule),
+    canLoad: [AuthGuard],
     canActivate: [AuthGuard],
   },
   {

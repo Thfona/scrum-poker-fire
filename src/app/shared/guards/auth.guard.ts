@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate, CanLoad, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
@@ -7,10 +7,10 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate, CanLoad {
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(): Observable<boolean> {
+  private canAccess(): Observable<boolean> {
     return this.authService.userDocument.pipe(
       take(1),
       map((user) => !user),
@@ -20,5 +20,13 @@ export class AuthGuard implements CanActivate {
         }
       }),
     );
+  }
+
+  canActivate(): Observable<boolean> {
+    return this.canAccess();
+  }
+
+  canLoad(): Observable<boolean> {
+    return this.canAccess();
   }
 }

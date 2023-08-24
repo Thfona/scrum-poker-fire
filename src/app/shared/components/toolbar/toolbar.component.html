@@ -1,50 +1,75 @@
 <ng-container *ngIf="user">
   <ng-container *transloco="let transloco">
     <mat-toolbar class="toolbar mat-elevation-z4" color="primary">
-      <button mat-button class="home-button" aria-label="Home button" [disableRipple]="true"
-        (click)="navigateTo('home')">
+      <a mat-button class="logo" [routerLink]="['/home']" aria-label="Home link" [disableRipple]="true">
         <mat-icon>local_fire_department</mat-icon>
+
         <!-- TODO: Remove beta annotation after 1.0 -->
-        <span class="home-button-text">ScrumPokerFire ᵇᵉᵗᵃ</span>
-      </button>
+        <span class="logo-text">ScrumPokerFire ᵇᵉᵗᵃ</span>
+      </a>
+
+      <!-- TODO: Enable once retrospectives are implemented -->
+      <!-- <a class="poker-link" mat-button [routerLink]="['/poker']" aria-label="Poker link" [disableRipple]="true">
+        <span>Poker</span>
+      </a>
+
+      <a mat-button [routerLink]="['/retro']" aria-label="Retro link" [disableRipple]="true">
+        <span>Retro ᵇᵉᵗᵃ</span>
+      </a> -->
+
       <span class="spacer"></span>
+
       <div class="github-link-container">
-        <img class="github-link" [src]="gitHubLogoSrc" (click)="openGitHubRepository()">
+        <a [href]="gitHubRepositoryLink" target="_blank">
+          <img class="github-link" src="assets/svg/github-circle-white-transparent.svg">
+        </a>
       </div>
+
       <div *ngIf="user.photoURL" class="avatar-container">
         <div matRipple class="avatar-button" [matMenuTriggerFor]="menu">
           <img class="avatar" aria-label="User menu" [src]="user.photoURL">
         </div>
       </div>
+
       <button *ngIf="!user.photoURL" mat-icon-button aria-label="User menu" [matMenuTriggerFor]="menu">
         <mat-icon>account_circle</mat-icon>
       </button>
     </mat-toolbar>
+
     <mat-menu #menu="matMenu" xPosition="before">
       <div class="menu-content-container">
         <ng-container>
           <div class="user-info">
             <img *ngIf="user.photoURL" class="avatar avatar-info" [src]="user.photoURL">
+
             <mat-icon *ngIf="!user.photoURL" class="avatar-info">account_circle</mat-icon>
+
             <span class="display-name">{{ user.displayName || user.email }}</span>
           </div>
+
           <mat-divider class="menu-divider"></mat-divider>
         </ng-container>
+
         <button mat-menu-item (click)="openGitHubRepository()" class="github-menu-item">
           <div class="menu-item-content">
             <mat-icon>code</mat-icon>
+
             <span>GitHub</span>
           </div>
         </button>
+
         <button mat-menu-item (click)="handleDeleteAccountClick()">
           <div class="menu-item-content">
             <mat-icon>person_remove</mat-icon>
+
             <span>{{ transloco('DELETE_ACCOUNT') }}</span>
           </div>
         </button>
+
         <button mat-menu-item (click)="authService.signOut()">
           <div class="menu-item-content">
             <mat-icon>logout</mat-icon>
+
             <span>{{ transloco('SIGN_OUT') }}</span>
           </div>
         </button>

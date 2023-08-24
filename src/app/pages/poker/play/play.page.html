@@ -6,7 +6,7 @@
 
 <ng-container *ngIf="!isLoading && hasError">
   <div class="content-container error-container">
-    <app-error-component [center]="false" [message]="errorMessageCode"></app-error-component>
+    <app-error-component [center]="false" message="PLAY_GAME_ERROR_MESSAGE"></app-error-component>
   </div>
 </ng-container>
 
@@ -20,37 +20,51 @@
               <button mat-raised-button color="primary" class="button margin" (click)="handleInviteButtonClick()">
                 <div class="button-content">
                   <mat-icon>person_add</mat-icon>
+
                   <span class="button-text">{{ transloco('INVITE') }}</span>
                 </div>
               </button>
             </div>
+
             <div class="buttons-container">
               <button mat-raised-button color="primary" class="button margin" (click)="swapUserRole(userId)">
                 <div class="button-content">
                   <mat-icon>{{ isPlayer ? 'sports_esports' : 'visibility'}}</mat-icon>
+
                   <span class="button-text">{{ transloco(isPlayer ? 'PLAYING_TEXT' : 'SPECTATING_TEXT') }}</span>
                 </div>
               </button>
-              <button mat-raised-button *ngIf="isHost && game.stories.length && !game.session.hasStarted" color="accent"
-                class="button" (click)="handleStartGameButtonClick()">
+
+              <button
+                mat-raised-button
+                *ngIf="isHost && game.stories.length && !game.session.hasStarted"
+                color="accent"
+                class="button"
+                (click)="handleStartGameButtonClick()"
+              >
                 <div class="button-content">
                   <mat-icon>play_arrow</mat-icon>
+
                   <span class="button-text">{{ transloco('START_GAME') }}</span>
                 </div>
               </button>
             </div>
           </div>
+
           <div *ngIf="isHost" class="content-buttons-container large-flex">
             <div class="buttons-container">
               <button mat-raised-button color="primary" class="button margin" [matMenuTriggerFor]="usersMenu">
                 <div class="button-content">
                   <mat-icon>group</mat-icon>
+
                   <span class="button-text">{{ transloco('USERS', { userCount: game.session.users.length }) }}</span>
                 </div>
               </button>
+
               <button mat-raised-button color="primary" class="button" (click)="handleEditGameButtonClick()">
                 <div class="button-content">
                   <mat-icon>edit</mat-icon>
+
                   <span class="button-text">{{ transloco('EDIT_GAME') }}</span>
                 </div>
               </button>
@@ -63,6 +77,7 @@
             <div *ngIf="!game.stories.length">
               <p class="text">{{ transloco('NO_STORIES_TEXT') }}</p>
             </div>
+
             <div *ngIf="game.stories.length">
               <p class="text">{{ transloco('ALL_SET_TEXT') }}</p>
             </div>
@@ -90,47 +105,88 @@
 
           <div *ngIf="isHost" class="content-buttons-container large-flex">
             <div class="buttons-container">
-              <button mat-raised-button *ngIf="hasFlippedCards" color="warn" class="button margin"
-                (click)="handleResetCardsButtonClick()">
+              <button
+                mat-raised-button
+                *ngIf="hasFlippedCards"
+                color="warn"
+                class="button margin"
+                (click)="handleResetCardsButtonClick()"
+              >
                 <div class="button-content">
                   <mat-icon>restart_alt</mat-icon>
+
                   <span class="button-text">{{ transloco('RESET_CARDS') }}</span>
                 </div>
               </button>
-              <button mat-raised-button *ngIf="!hasFlippedCards" color="accent" class="button margin"
-                (click)="handleFlipCards()">
+
+              <button
+                mat-raised-button
+                *ngIf="!hasFlippedCards"
+                color="accent"
+                class="button margin"
+                (click)="handleFlipCards()"
+              >
                 <div class="button-content">
                   <mat-icon>redo</mat-icon>
+
                   <span class="button-text">{{ transloco('FLIP_CARDS') }}</span>
                 </div>
               </button>
             </div>
+
             <div *ngIf="game.stories.length > 1" class="buttons-container">
-              <button mat-raised-button *ngIf="currentStoryIndex === 0" color="primary" class="button margin"
-                (click)="handleLastStoryButtonClick()">
+              <button
+                mat-raised-button
+                *ngIf="currentStoryIndex === 0"
+                color="primary"
+                class="button margin"
+                (click)="handleLastStoryButtonClick()"
+              >
                 <div class="button-content">
                   <mat-icon>south</mat-icon>
+
                   <span class="button-text">{{ transloco('LAST_STORY') }}</span>
                 </div>
               </button>
-              <button mat-raised-button *ngIf="currentStoryIndex !== 0" color="primary" class="button margin"
-                (click)="handlePreviousStoryButtonClick()">
+
+              <button
+                mat-raised-button
+                *ngIf="currentStoryIndex !== 0"
+                color="primary"
+                class="button margin"
+                (click)="handlePreviousStoryButtonClick()"
+              >
                 <div class="button-content">
                   <mat-icon>west</mat-icon>
+
                   <span class="button-text">{{ transloco('PREVIOUS_STORY') }}</span>
                 </div>
               </button>
-              <button mat-raised-button *ngIf="currentStoryIndex !== game.stories.length - 1" color="primary"
-                class="button margin" (click)="handleNextStoryButtonClick()">
+
+              <button
+                mat-raised-button
+                *ngIf="currentStoryIndex !== game.stories.length - 1"
+                color="primary"
+                class="button margin"
+                (click)="handleNextStoryButtonClick()"
+              >
                 <div class="button-content">
                   <mat-icon>east</mat-icon>
+
                   <span class="button-text">{{ transloco('NEXT_STORY') }}</span>
                 </div>
               </button>
-              <button mat-raised-button *ngIf="currentStoryIndex === game.stories.length - 1" color="primary"
-                class="button margin" (click)="handleFirstStoryButtonClick()">
+
+              <button
+                mat-raised-button
+                *ngIf="currentStoryIndex === game.stories.length - 1"
+                color="primary"
+                class="button margin"
+                (click)="handleFirstStoryButtonClick()"
+              >
                 <div class="button-content">
                   <mat-icon>north</mat-icon>
+
                   <span class="button-text">{{ transloco('FIRST_STORY') }}</span>
                 </div>
               </button>
@@ -140,13 +196,19 @@
           <div class="votes-container">
             <ng-container *ngFor="let player of playersWithVotes">
               <div class="vote">
-                <app-game-card-component [color]="!hasFlippedCards
+                <app-game-card-component
+                  [color]="!hasFlippedCards
                     ? (player.vote ? 'primary' : 'grey')
                     : (player.vote && player.vote.value && player.vote.value >= 0 ? 'accent' : 'white')"
-                  [displayValue]="player.vote && player.vote.displayValue ? player.vote.displayValue : passVoteValue"
-                  [interactive]="false" [isCardFront]="hasFlippedCards" [isSmall]="true" [marginRight]="false"
-                  [shouldDisplayCornerValue]="false">
+                  [displayValue]="player.vote && player.vote.displayValue ? player.vote.displayValue : 'PASS_CARD'"
+                  [interactive]="false"
+                  [isCardFront]="hasFlippedCards"
+                  [isSmall]="true"
+                  [marginRight]="false"
+                  [shouldDisplayCornerValue]="false"
+                >
                 </app-game-card-component>
+
                 <p class="player-name">{{ player.name }}</p>
               </div>
             </ng-container>
@@ -160,6 +222,7 @@
         <button mat-menu-item (click)="handleUserMenuRowClick(user.id)">
           <div class="users-menu-item-content">
             <mat-icon>person</mat-icon>
+
             <span>{{ user.name }}</span>
           </div>
         </button>
@@ -168,26 +231,35 @@
 
     <div class="cards-container content-width" *ngIf="isPlayer && game.session.hasStarted">
       <ng-container *ngFor="let card of cards; let i = index">
-        <div class="card" [ngClass]="{
-            'selected': getIsCardSelected(card)
-          }" [ngStyle]="{
-            'margin-left': getCardMargin(i),
-            'z-index': getCardZIndex(i)
-          }" (click)="handleCardClick(card)">
+        <div
+          class="card"
+          [ngClass]="{ 'selected': getIsCardSelected(card) }"
+          [ngStyle]="{ 'margin-left': getCardMargin(i), 'z-index': getCardZIndex(i) }"
+          (click)="handleCardClick(card)"
+        >
           <app-game-card-component
             [color]="getIsCardSelected(card) ? 'primary' : (card.value >= 0 ? 'accent' : 'white')"
-            [displayValue]="card.displayValue" [interactive]="true" [isCardFront]="true" [isSmall]="false"
-            [marginRight]="i === cards.length - 1" [shouldDisplayCornerValue]="true">
+            [displayValue]="card.displayValue"
+            [interactive]="true"
+            [isCardFront]="true"
+            [isSmall]="false"
+            [marginRight]="i === cards.length - 1"
+            [shouldDisplayCornerValue]="true"
+          >
           </app-game-card-component>
         </div>
       </ng-container>
     </div>
 
-    <app-sidenav-component [shouldDisplayOverlay]="!isDesktop && sidenavService.isSidenavOpen"
-      [shouldDisplayMenuButton]="!isDesktop">
+    <app-sidenav-component
+      [shouldDisplayOverlay]="!isDesktop && sidenavService.isSidenavOpen"
+      [shouldDisplayMenuButton]="!isDesktop"
+    >
       <div class="story header">
         <span class="story-column">#</span>
+
         <span class="story-column">{{ transloco('STORY') }}</span>
+
         <span class="story-column right">{{ transloco('SCORE') }}</span>
       </div>
 
@@ -200,11 +272,16 @@
           </ng-container>
 
           <ng-container *ngIf="game.stories.length">
-            <div *ngFor="let story of game.stories" class="story"
+            <div
+              *ngFor="let story of game.stories"
+              class="story"
               [ngClass]="{'active': currentStoryIndex === story.index, 'interactive': isHost}"
-              (click)="handleStoriesRowClick(story)">
+              (click)="handleStoriesRowClick(story)"
+            >
               <span class="story-column">{{ story.index + 1 }}</span>
+
               <span class="story-column">{{ story.name }}</span>
+
               <span class="story-column right">{{ story.score || '-' }}</span>
             </div>
           </ng-container>
@@ -212,16 +289,23 @@
 
         <ng-container>
           <div class="sidenav-buttons" [class.flex]="!isHost">
-            <button *ngIf="isHost" mat-raised-button color="accent" class="button full-width full-width-margin"
-              (click)="handleAddStoriesButtonClick()">
+            <button
+              *ngIf="isHost"
+              mat-raised-button color="accent"
+              class="button full-width full-width-margin"
+              (click)="handleAddStoriesButtonClick()"
+            >
               <div class="button-content">
                 <mat-icon>add_circle_outline</mat-icon>
+
                 <span class="button-text">{{ transloco('ADD_STORIES') }}</span>
               </div>
             </button>
+
             <button mat-raised-button color="warn" class="button full-width" (click)="handleExitGameButtonClick()">
               <div class="button-content">
                 <mat-icon>highlight_off</mat-icon>
+
                 <span class="button-text">{{ transloco('EXIT_GAME') }}</span>
               </div>
             </button>
@@ -241,6 +325,7 @@
     <app-dialog-component #deleteStoryDialog (confirmEvent)="handleDeleteStoryDialogConfirmation()">
     </app-dialog-component>
 
-    <app-dialog-component #exitGameDialog (confirmEvent)="handleExitGameDialogConfirmation()"></app-dialog-component>
+    <app-dialog-component #exitGameDialog (confirmEvent)="handleExitGameDialogConfirmation()">
+    </app-dialog-component>
   </ng-container>
 </ng-container>

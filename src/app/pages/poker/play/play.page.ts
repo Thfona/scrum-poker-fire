@@ -32,11 +32,11 @@ import { DOMAIN } from 'src/app/shared/constants/domain.constant';
 
 @Component({
   selector: 'app-play-page',
-  templateUrl: './play-game.page.html',
-  styleUrls: ['./play-game.page.scss'],
+  templateUrl: './play.page.html',
+  styleUrls: ['./play.page.scss'],
   providers: [GamesService, SidenavService, ViewportService],
 })
-export class PlayGamePage implements OnInit, OnDestroy {
+export class PlayPage implements OnInit, OnDestroy {
   @ViewChild('editGameDialog') editGameDialog: GameDialogComponent;
   @ViewChild('deleteStoryDialog') deleteStoryDialog: DialogComponent;
   @ViewChild('exitGameDialog') exitGameDialog: DialogComponent;
@@ -68,8 +68,6 @@ export class PlayGamePage implements OnInit, OnDestroy {
   public isPlayer: boolean;
   public isDesktop: boolean;
   public isLargeScreen: boolean;
-  public passVoteValue = 'PASS_CARD';
-  public errorMessageCode = 'PLAY_GAME_ERROR_MESSAGE';
 
   get isPrivateAccess() {
     return (
@@ -162,9 +160,8 @@ export class PlayGamePage implements OnInit, OnDestroy {
           const CARDS = DOMAIN.cardSetOptions.find((cardSet) => {
             return cardSet.name === this.game.cardSet;
           }).cards;
-          const VOTE_SKIP_OPTIONS = DOMAIN.voteSkipOptions;
 
-          this.cards = [...CARDS, ...VOTE_SKIP_OPTIONS];
+          this.cards = [...CARDS, ...DOMAIN.voteSkipOptions];
 
           const SESSION_USER = this.game.session.users.find((user) => user.id === this.userId);
 
@@ -354,7 +351,7 @@ export class PlayGamePage implements OnInit, OnDestroy {
   }
 
   public handleExitGameDialogConfirmation() {
-    this.router.navigate(['home']);
+    this.router.navigate(['/home']);
   }
 
   public handleAddStoriesButtonClick() {

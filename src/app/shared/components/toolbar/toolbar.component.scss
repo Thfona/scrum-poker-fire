@@ -5,17 +5,25 @@
   z-index: 100;
 }
 
-.home-button {
+.logo {
   font-size: 20px;
   padding: 0;
   margin-left: 1rem;
   min-width: 0;
+
+  @include fromSmallMedium {
+    padding-right: 4px;
+  }
 }
 
-.home-button-text {
+.logo-text {
   @include belowSmallMedium {
     display: none;
   }
+}
+
+.poker-link {
+  margin-left: 1rem;
 }
 
 .spacer {

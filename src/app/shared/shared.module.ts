@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
 import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
@@ -35,6 +36,8 @@ import { SignInCardComponent } from './components/sign-in-card/sign-in-card.comp
 import { StoryDialogComponent } from './components/story-dialog/story-dialog.component';
 import { StoryDialogContentComponent } from './components/story-dialog/story-dialog-content/story-dialog-content.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { RetrospectivesFragment } from './fragments/retrospectives/retrospectives.fragment';
+import { SavedGamesFragment } from './fragments/saved-games/saved-games.fragment';
 
 const COMPONENTS = [
   CardComponent,
@@ -53,6 +56,8 @@ const COMPONENTS = [
   StoryDialogContentComponent,
   ToolbarComponent,
 ];
+
+const FRAGMENTS = [RetrospectivesFragment, SavedGamesFragment];
 
 const MODULES = [
   CommonModule,
@@ -76,15 +81,16 @@ const MODULES = [
   MatToolbarModule,
   MatTooltipModule,
   ReactiveFormsModule,
+  RouterModule,
   TranslocoRootModule,
 ];
 
 const SERVICES = [];
 
 @NgModule({
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS, ...FRAGMENTS],
   imports: [...MODULES],
-  exports: [...COMPONENTS, ...MODULES],
+  exports: [...COMPONENTS, ...FRAGMENTS, ...MODULES],
   providers: [...SERVICES],
 })
 export class SharedModule {}
