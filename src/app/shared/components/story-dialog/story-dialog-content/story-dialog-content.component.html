@@ -38,6 +38,16 @@
 
     <button
       mat-button
+      *ngIf="data.isEditOperation"
+      [mat-dialog-close]="goToResult"
+      color="primary"
+      class="action-button"
+    >
+      {{ transloco('GO_TO') }}
+    </button>
+
+    <button
+      mat-button
       [mat-dialog-close]="saveResult"
       [disabled]="formGroup.invalid"
       color="accent"

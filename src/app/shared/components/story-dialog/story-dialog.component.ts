@@ -35,7 +35,7 @@ export class StoryDialogComponent implements OnDestroy {
     this.dialogSubscription = DIALOG_REFERENCE.afterClosed().subscribe((result: StoryDialogResultInterface) => {
       this.dialogService.currentDialogReference = undefined;
 
-      if (result?.save) {
+      if (result?.save || result?.goTo) {
         this.confirmEvent.emit(result);
       }
     });

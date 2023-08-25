@@ -423,7 +423,15 @@ export class PlayPage implements OnInit, OnDestroy {
     if (this.storyDialogOperation === 'edit') {
       const STORY = this.game.stories.find((story) => story.id === this.storyToEditId);
 
-      if (storyDialogResult.delete) {
+      if (storyDialogResult.goTo) {
+        try {
+          this.gamesService.updateCurrentStory(this.gameId, STORY.id);
+        } catch (error) {
+          this.handlePromiseError();
+
+          console.error(error);
+        }
+      } else if (storyDialogResult.delete) {
         const DELETE_STORY_DIALOG_DATA: DialogDataInterface = {
           title: this.translocoService.translate('DELETE_STORY_TITLE', { storyName: STORY.name }),
           content: this.translocoService.translate('DELETE_STORY_CONTENT', { storyName: STORY.name }),
@@ -542,7 +550,11 @@ export class PlayPage implements OnInit, OnDestroy {
         }
       }
     } catch (error) {
-      this.handlePromiseError();
+      this.snackBarService.open(
+        this.translocoService.translate('REMOVE_USER_ERROR'),
+        this.translocoService.translate(SNACKBAR_ACTION),
+        SNACKBAR_CONFIGURATION,
+      );
 
       console.error(error);
     }

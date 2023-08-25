@@ -11,6 +11,7 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
 import { StoryDialogDataInterface } from 'src/app/shared/interfaces/story-dialog-data.interface';
+import { StoryDialogResultInterface } from 'src/app/shared/interfaces/story-dialog-result.interface';
 import { DialogService } from 'src/app/shared/services/dialog.service';
 
 @Component({
@@ -25,28 +26,31 @@ export class StoryDialogContentComponent implements OnInit, AfterViewInit {
     name: FormControl<string>;
     score: FormControl<number>;
   }>;
+  public cancelResult: StoryDialogResultInterface = {
+    save: false,
+    formValue: null,
+    delete: false,
+    goTo: false,
+  };
+  public deleteResult: StoryDialogResultInterface = {
+    save: true,
+    formValue: null,
+    delete: true,
+    goTo: false,
+  };
+  public goToResult: StoryDialogResultInterface = {
+    save: false,
+    formValue: null,
+    delete: false,
+    goTo: true,
+  };
 
-  get cancelResult() {
-    return {
-      save: false,
-      formValue: null,
-      delete: false,
-    };
-  }
-
-  get deleteResult() {
-    return {
-      save: true,
-      formValue: null,
-      delete: true,
-    };
-  }
-
-  get saveResult() {
+  public get saveResult(): StoryDialogResultInterface {
     return {
       save: true,
       formValue: this.formGroup.value,
       delete: false,
+      goTo: false,
     };
   }
 
