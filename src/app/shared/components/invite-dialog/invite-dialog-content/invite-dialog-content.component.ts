@@ -12,18 +12,20 @@ import { SNACKBAR_CONFIGURATION } from 'src/app/shared/constants/snackbar-config
 export class InviteDialogContentComponent {
   @ViewChild('linkInput') linkInput: ElementRef;
 
-  constructor(private snackBarService: MatSnackBar, private translocoService: TranslocoService) {}
-
-  public getGameUrl() {
+  public get gameUrl() {
     return window.location.href;
   }
 
-  public copyLinkToClipboard() {
+  constructor(private readonly snackBarService: MatSnackBar, private readonly translocoService: TranslocoService) {}
+
+  public handleLinkInputClick() {
     const INPUT: HTMLInputElement = this.linkInput.nativeElement;
 
     INPUT.select();
-    document.execCommand('copy');
-    INPUT.setSelectionRange(0, 0);
+  }
+
+  public copyLinkToClipboard() {
+    navigator.clipboard.writeText(this.gameUrl);
 
     this.snackBarService.open(
       this.translocoService.translate('LINK_COPIED_MESSAGE'),

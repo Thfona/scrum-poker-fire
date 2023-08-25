@@ -1,3 +1,9 @@
-<div class="root">
-  <app-sign-in-card-component></app-sign-in-card-component>
-</div>
+<ng-container *ngIf="!authService.user">
+  <div class="sign-in-card-container">
+    <app-sign-in-card-component></app-sign-in-card-component>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="authService.user">
+  <app-content-loading-component></app-content-loading-component>
+</ng-container>

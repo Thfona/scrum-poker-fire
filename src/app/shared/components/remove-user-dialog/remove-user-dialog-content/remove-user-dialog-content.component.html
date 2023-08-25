@@ -1,0 +1,21 @@
+<ng-container *transloco="let transloco">
+  <h2 mat-dialog-title>{{ transloco('REMOVE_USER_TITLE', { userName: data.userName }) }}</h2>
+
+  <mat-dialog-content class="mat-typography">
+    <p class="content-text">{{ transloco('REMOVE_USER_CONTENT') }}</p>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="cancelResult" class="action-button">
+      {{ transloco('CANCEL') }}
+    </button>
+
+    <button mat-button [mat-dialog-close]="removeAndBanResult" color="warn" class="action-button">
+      {{ transloco('REMOVE_AND_BAN') }}
+    </button>
+
+    <button mat-button [mat-dialog-close]="removeResult" color="warn" class="action-button">
+      {{ transloco('REMOVE') }}
+    </button>
+  </mat-dialog-actions>
+</ng-container>

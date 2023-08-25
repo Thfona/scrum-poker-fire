@@ -15,6 +15,7 @@ import { DialogService } from 'src/app/shared/services/dialog.service';
 import { CardSetInterface } from 'src/app/shared/interfaces/card-set.interface';
 import { GameCardInterface } from 'src/app/shared/interfaces/game-card.interface';
 import { GameDialogDataInterface } from 'src/app/shared/interfaces/game-dialog-data.interface';
+import { GameDialogResultInterface } from 'src/app/shared/interfaces/game-dialog-result.interface';
 import { CardSetOption } from 'src/app/shared/types/card-set-option.type';
 import { DOMAIN } from 'src/app/shared/constants/domain.constant';
 
@@ -42,7 +43,7 @@ export class GameDialogContentComponent implements OnInit, AfterViewInit {
   }>;
   public saveAsDefaultSettings = false;
 
-  get cancelResult() {
+  public get cancelResult(): GameDialogResultInterface {
     return {
       save: false,
       start: false,
@@ -51,7 +52,7 @@ export class GameDialogContentComponent implements OnInit, AfterViewInit {
     };
   }
 
-  get saveResult() {
+  public get saveResult(): GameDialogResultInterface {
     return {
       save: true,
       start: false,
@@ -60,7 +61,7 @@ export class GameDialogContentComponent implements OnInit, AfterViewInit {
     };
   }
 
-  get saveAndStartResult() {
+  public get saveAndStartResult(): GameDialogResultInterface {
     return {
       ...this.saveResult,
       start: true,
@@ -68,10 +69,10 @@ export class GameDialogContentComponent implements OnInit, AfterViewInit {
   }
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: GameDialogDataInterface,
-    private changeDetector: ChangeDetectorRef,
-    private dialogService: DialogService,
-    private translocoService: TranslocoService,
+    private readonly changeDetector: ChangeDetectorRef,
+    private readonly dialogService: DialogService,
+    private readonly translocoService: TranslocoService,
+    @Inject(MAT_DIALOG_DATA) public readonly data: GameDialogDataInterface,
   ) {}
 
   ngOnInit() {
@@ -83,13 +84,13 @@ export class GameDialogContentComponent implements OnInit, AfterViewInit {
       description: new FormControl(this.data.formData.description),
       teamVelocity: new FormControl(this.data.formData.teamVelocity, Validators.required),
       shareVelocity: new FormControl(this.data.formData.shareVelocity, Validators.required),
-      isPrivate: new FormControl(DOMAIN.defaultGameSettings.isPrivate, Validators.required), // TODO(v2): Enable once private rooms are implemented
+      isPrivate: new FormControl(DOMAIN.defaultGameSettings.isPrivate, Validators.required), // TODO(backlog): Enable once private rooms are implemented
       cardSet: new FormControl(this.data.formData.cardSet, Validators.required),
       autoFlip: new FormControl(this.data.formData.autoFlip, Validators.required),
       allowVoteChangeAfterReveal: new FormControl(this.data.formData.allowVoteChangeAfterReveal, Validators.required),
       calculateScore: new FormControl(this.data.formData.calculateScore, Validators.required),
-      storyTimer: new FormControl(DOMAIN.defaultGameSettings.storyTimer, Validators.required), // TODO(v2): Enable once story timers are implemented
-      storyTimerMinutes: new FormControl(DOMAIN.defaultGameSettings.storyTimerMinutes), // TODO(v2): Enable once story timers are implemented
+      storyTimer: new FormControl(DOMAIN.defaultGameSettings.storyTimer, Validators.required), // TODO(backlog): Enable once story timers are implemented
+      storyTimerMinutes: new FormControl(DOMAIN.defaultGameSettings.storyTimerMinutes), // TODO(backlog): Enable once story timers are implemented
     });
   }
 

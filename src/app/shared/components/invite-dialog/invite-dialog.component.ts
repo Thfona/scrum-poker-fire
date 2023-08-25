@@ -10,7 +10,7 @@ import { InviteDialogContentComponent } from './invite-dialog-content/invite-dia
 export class InviteDialogComponent implements OnDestroy {
   private dialogSubscription: Subscription;
 
-  constructor(private matDialog: MatDialog) {}
+  constructor(private readonly matDialog: MatDialog) {}
 
   ngOnDestroy() {
     if (this.dialogSubscription) {

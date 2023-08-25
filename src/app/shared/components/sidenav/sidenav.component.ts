@@ -12,7 +12,7 @@ export class SidenavComponent {
   @Input() shouldDisplayOverlay: boolean;
   @Input() shouldDisplayMenuButton: boolean;
 
-  constructor(public sidenavService: SidenavService) {}
+  constructor(public readonly sidenavService: SidenavService) {}
 
   public toggle() {
     this.sidenavService.toggleSidenav();

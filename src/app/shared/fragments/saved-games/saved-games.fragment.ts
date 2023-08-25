@@ -51,11 +51,11 @@ export class SavedGamesFragment implements OnInit, OnDestroy {
   public hasError: boolean;
 
   constructor(
-    private gamesService: GamesService,
-    private router: Router,
-    private snackBarService: MatSnackBar,
-    private translocoService: TranslocoService,
-    private userService: UserService,
+    private readonly gamesService: GamesService,
+    private readonly router: Router,
+    private readonly snackBarService: MatSnackBar,
+    private readonly translocoService: TranslocoService,
+    private readonly userService: UserService,
   ) {}
 
   ngOnInit() {

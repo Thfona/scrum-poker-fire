@@ -10,7 +10,7 @@ export class ViewportService {
   public isDesktopObservable: Observable<boolean>;
   public isLargeScreenObservable: Observable<boolean>;
 
-  constructor(@Inject(WINDOW) private window: Window) {
+  constructor(@Inject(WINDOW) private readonly window: Window) {
     this.isDesktopSubject = new BehaviorSubject(this.setIsDesktop());
     this.isLargeScreenSubject = new BehaviorSubject(this.setIsLargeScreen());
 

@@ -2,8 +2,10 @@
   <div class="card mat-elevation-z4" [ngClass]="getClasses()">
     <ng-container *ngIf="isCardFront">
       <span class="corner-value" [class.small]="isSmall" *ngIf="shouldDisplayCornerValue">{{ transloco(displayValue) }}</span>
+
       <span class="center-value" [class.small]="isSmall">{{ transloco(displayValue) }}</span>
     </ng-container>
+
     <ng-container *ngIf="!isCardFront">
       <span class="center-value" [class.small]="isSmall">
         <mat-icon>local_fire_department</mat-icon>

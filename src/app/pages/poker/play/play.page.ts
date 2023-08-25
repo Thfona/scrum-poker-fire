@@ -13,6 +13,8 @@ import { GameInterface } from 'src/app/shared/interfaces/game.interface';
 import { GameSettingsInterface } from 'src/app/shared/interfaces/game-settings.interface';
 import { GameVoteInterface } from 'src/app/shared/interfaces/game-vote.interface';
 import { PlayerWithVoteInterface } from 'src/app/shared/interfaces/player-with-vote.interface';
+import { RemoveUserDialogDataInterface } from 'src/app/shared/interfaces/remove-user-dialog-data.interface';
+import { RemoveUserDialogResultInterface } from 'src/app/shared/interfaces/remove-user-dialog-result.interface';
 import { StoryDialogDataInterface } from 'src/app/shared/interfaces/story-dialog-data.interface';
 import { StoryDialogResultInterface } from 'src/app/shared/interfaces/story-dialog-result.interface';
 import { StoryInterface } from 'src/app/shared/interfaces/story.interface';
@@ -24,6 +26,7 @@ import { ViewportService } from 'src/app/shared/services/viewport.service';
 import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
 import { GameDialogComponent } from 'src/app/shared/components/game-dialog/game-dialog.component';
 import { InviteDialogComponent } from 'src/app/shared/components/invite-dialog/invite-dialog.component';
+import { RemoveUserDialogComponent } from 'src/app/shared/components/remove-user-dialog/remove-user-dialog.component';
 import { StoryDialogComponent } from 'src/app/shared/components/story-dialog/story-dialog.component';
 import { generateUniqueIdUtil } from 'src/app/shared/utils/generateUniqueId.util';
 import { SNACKBAR_ACTION } from 'src/app/shared/constants/snackbar-action.constant';
@@ -38,10 +41,11 @@ import { DOMAIN } from 'src/app/shared/constants/domain.constant';
 })
 export class PlayPage implements OnInit, OnDestroy {
   @ViewChild('editGameDialog') editGameDialog: GameDialogComponent;
-  @ViewChild('deleteStoryDialog') deleteStoryDialog: DialogComponent;
-  @ViewChild('exitGameDialog') exitGameDialog: DialogComponent;
   @ViewChild('inviteDialog') inviteDialog: InviteDialogComponent;
   @ViewChild('storyDialog') storyDialog: StoryDialogComponent;
+  @ViewChild('deleteStoryDialog') deleteStoryDialog: DialogComponent;
+  @ViewChild('exitGameDialog') exitGameDialog: DialogComponent;
+  @ViewChild('removeUserDialog') removeUserDialog: RemoveUserDialogComponent;
   @ViewChild(MatMenuTrigger) usersMenu: MatMenuTrigger;
   private isDesktopSubscription: Subscription;
   private isLargeScreenSubscription: Subscription;
@@ -50,7 +54,7 @@ export class PlayPage implements OnInit, OnDestroy {
   private userName: string;
   private cardMargin = '12px';
   private userCurrentVote: GameVoteInterface;
-  private userToEditId: string;
+  private userToRemoveId: string;
   private storyDialogOperation: 'create' | 'edit';
   private storyToEditId: string;
   private currentStoryId: string;
@@ -77,15 +81,15 @@ export class PlayPage implements OnInit, OnDestroy {
   }
 
   constructor(
-    private authService: AuthService,
-    private gamesService: GamesService,
-    private route: ActivatedRoute,
-    private router: Router,
-    public sidenavService: SidenavService,
-    private snackBarService: MatSnackBar,
-    private translocoService: TranslocoService,
-    private userService: UserService,
-    private viewportService: ViewportService,
+    private readonly authService: AuthService,
+    private readonly gamesService: GamesService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly router: Router,
+    private readonly snackBarService: MatSnackBar,
+    private readonly translocoService: TranslocoService,
+    private readonly userService: UserService,
+    private readonly viewportService: ViewportService,
+    public readonly sidenavService: SidenavService,
   ) {}
 
   ngOnInit() {
@@ -93,7 +97,7 @@ export class PlayPage implements OnInit, OnDestroy {
 
     this.userId = this.authService.user.uid;
     this.userName = this.authService.user.displayName || this.authService.user.email;
-    this.gameId = this.route.snapshot.paramMap.get('gameId');
+    this.gameId = this.activatedRoute.snapshot.paramMap.get('gameId');
 
     this.isDesktopSubscription = this.viewportService.isDesktopObservable.subscribe((value) => {
       if (this.isDesktop !== value) {
@@ -240,7 +244,7 @@ export class PlayPage implements OnInit, OnDestroy {
   private async initializeSession() {
     try {
       if (this.isHost && !this.game.session.isActive) {
-        await this.gamesService.updateGameSessionIsActive(this.gameId, true);
+        await this.gamesService.updateIsActive(this.gameId, true);
       }
 
       const SESSION_USER = this.game.session.users.find((user) => user.id === this.userId);
@@ -254,7 +258,7 @@ export class PlayPage implements OnInit, OnDestroy {
           isPlayer: this.isPlayer,
         };
 
-        await this.gamesService.updateGameSessionUsers(this.gameId, NEW_SESSION_USER, 'add');
+        await this.gamesService.updateUsers(this.gameId, NEW_SESSION_USER, 'add');
       }
 
       this.isLoading = false;
@@ -269,11 +273,11 @@ export class PlayPage implements OnInit, OnDestroy {
     try {
       const SESSION_USER = this.game.session.users.find((user) => user.id === userId);
 
-      await this.gamesService.updateGameSessionUsers(this.gameId, SESSION_USER, 'remove');
+      await this.gamesService.updateUsers(this.gameId, SESSION_USER, 'remove');
 
       SESSION_USER.isPlayer = !SESSION_USER.isPlayer;
 
-      await this.gamesService.updateGameSessionUsers(this.gameId, SESSION_USER, 'add');
+      await this.gamesService.updateUsers(this.gameId, SESSION_USER, 'add');
     } catch (error) {
       this.handlePromiseError();
 
@@ -285,7 +289,7 @@ export class PlayPage implements OnInit, OnDestroy {
     if (!this.hasFlippedCards || this.game.allowVoteChangeAfterReveal) {
       try {
         if (this.userCurrentVote && this.userCurrentVote.displayValue === card.displayValue) {
-          await this.gamesService.updateGameSessionVotes(this.gameId, this.userCurrentVote, 'remove');
+          await this.gamesService.updateVotes(this.gameId, this.userCurrentVote, 'remove');
 
           this.userCurrentVote = undefined;
 
@@ -293,7 +297,7 @@ export class PlayPage implements OnInit, OnDestroy {
         }
 
         if (this.userCurrentVote) {
-          await this.gamesService.updateGameSessionVotes(this.gameId, this.userCurrentVote, 'remove');
+          await this.gamesService.updateVotes(this.gameId, this.userCurrentVote, 'remove');
         }
 
         const USER_NEW_VOTE: GameVoteInterface = {
@@ -302,7 +306,7 @@ export class PlayPage implements OnInit, OnDestroy {
           ...card,
         };
 
-        await this.gamesService.updateGameSessionVotes(this.gameId, USER_NEW_VOTE, 'add');
+        await this.gamesService.updateVotes(this.gameId, USER_NEW_VOTE, 'add');
 
         this.userCurrentVote = USER_NEW_VOTE;
       } catch (error) {
@@ -330,11 +334,9 @@ export class PlayPage implements OnInit, OnDestroy {
   }
 
   public async handleStartGameButtonClick() {
-    await this.gamesService.updateGameSessionCurrentStory(
-      this.gameId,
-      this.game.stories.find((story) => story.index === 0).id,
-    );
-    await this.gamesService.updateGameSessionHasStarted(this.gameId, true);
+    await this.gamesService.updateCurrentStory(this.gameId, this.game.stories.find((story) => story.index === 0).id);
+
+    await this.gamesService.updateHasStarted(this.gameId, true);
   }
 
   public handleExitGameButtonClick() {
@@ -475,11 +477,11 @@ export class PlayPage implements OnInit, OnDestroy {
 
       if (!this.game.stories.length) {
         if (this.game.session.hasStarted) {
-          await this.gamesService.updateGameSessionHasStarted(this.gameId, false);
+          await this.gamesService.updateHasStarted(this.gameId, false);
         }
 
         if (this.game.session.currentStoryId) {
-          await this.gamesService.updateGameSessionCurrentStory(this.gameId, '');
+          await this.gamesService.updateCurrentStory(this.gameId, '');
         }
       } else {
         if (this.game.session.currentStoryId && this.game.session.currentStoryId === STORY.id) {
@@ -487,7 +489,7 @@ export class PlayPage implements OnInit, OnDestroy {
           const PREVIOUS_STORY = this.game.stories.find((story) => story.index === STORY.index - 1);
           const NEW_CURRENT_STORY_ID = NEXT_STORY ? NEXT_STORY.id : PREVIOUS_STORY.id;
 
-          await this.gamesService.updateGameSessionCurrentStory(this.gameId, NEW_CURRENT_STORY_ID);
+          await this.gamesService.updateCurrentStory(this.gameId, NEW_CURRENT_STORY_ID);
         }
 
         const NEW_STORIES_LIST = this.game.stories.map((story) => {
@@ -514,9 +516,36 @@ export class PlayPage implements OnInit, OnDestroy {
     }
   }
 
-  // TODO: Finish implementation
-  public handleUserMenuRowClick(userId: string) {
-    this.userToEditId = userId;
+  public handleUserMenuRowClick(userId: string, userName: string) {
+    if (userId !== this.userId) {
+      this.userToRemoveId = userId;
+
+      const REMOVE_USER_DIALOG_DATA: RemoveUserDialogDataInterface = {
+        userName,
+      };
+
+      this.removeUserDialog.data = REMOVE_USER_DIALOG_DATA;
+
+      this.removeUserDialog.openDialog();
+    }
+  }
+
+  public handleRemoveUserDialogConfirmation(removeUserDialogResult: RemoveUserDialogResultInterface) {
+    try {
+      const USER_TO_REMOVE = this.game.session.users.find((user) => (user.id = this.userToRemoveId));
+
+      if (USER_TO_REMOVE) {
+        this.gamesService.updateUsers(this.gameId, USER_TO_REMOVE, 'remove');
+
+        if (removeUserDialogResult.ban) {
+          this.gamesService.updateBannedUsers(this.gameId, this.userToRemoveId, 'add');
+        }
+      }
+    } catch (error) {
+      this.handlePromiseError();
+
+      console.error(error);
+    }
   }
 
   public async handleResetCardsButtonClick() {
@@ -540,7 +569,7 @@ export class PlayPage implements OnInit, OnDestroy {
 
       const NEW_VOTES_LIST = this.game.session.votes.filter((vote) => vote.storyId !== this.currentStoryId);
 
-      await this.gamesService.updateGameSessionVotesList(this.gameId, NEW_VOTES_LIST);
+      await this.gamesService.updateVotesList(this.gameId, NEW_VOTES_LIST);
       await this.gamesService.updateStoriesList(this.gameId, NEW_STORIES_LIST);
     } catch (error) {
       this.handlePromiseError();
@@ -594,7 +623,7 @@ export class PlayPage implements OnInit, OnDestroy {
     try {
       const NEW_CURRENT_STORY_ID = this.game.stories.find((story) => story.index === 0).id;
 
-      await this.gamesService.updateGameSessionCurrentStory(this.gameId, NEW_CURRENT_STORY_ID);
+      await this.gamesService.updateCurrentStory(this.gameId, NEW_CURRENT_STORY_ID);
     } catch (error) {
       this.handlePromiseError();
 
@@ -606,7 +635,7 @@ export class PlayPage implements OnInit, OnDestroy {
     try {
       const NEW_CURRENT_STORY_ID = this.game.stories.find((story) => story.index === this.game.stories.length - 1).id;
 
-      await this.gamesService.updateGameSessionCurrentStory(this.gameId, NEW_CURRENT_STORY_ID);
+      await this.gamesService.updateCurrentStory(this.gameId, NEW_CURRENT_STORY_ID);
     } catch (error) {
       this.handlePromiseError();
 
@@ -618,7 +647,7 @@ export class PlayPage implements OnInit, OnDestroy {
     try {
       const NEW_CURRENT_STORY_ID = this.game.stories.find((story) => story.index === this.currentStoryIndex - 1).id;
 
-      await this.gamesService.updateGameSessionCurrentStory(this.gameId, NEW_CURRENT_STORY_ID);
+      await this.gamesService.updateCurrentStory(this.gameId, NEW_CURRENT_STORY_ID);
     } catch (error) {
       this.handlePromiseError();
 
@@ -630,7 +659,7 @@ export class PlayPage implements OnInit, OnDestroy {
     try {
       const NEW_CURRENT_STORY_ID = this.game.stories.find((story) => story.index === this.currentStoryIndex + 1).id;
 
-      await this.gamesService.updateGameSessionCurrentStory(this.gameId, NEW_CURRENT_STORY_ID);
+      await this.gamesService.updateCurrentStory(this.gameId, NEW_CURRENT_STORY_ID);
     } catch (error) {
       this.handlePromiseError();
 

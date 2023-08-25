@@ -1,7 +1,5 @@
 <ng-container *ngIf="isLoading">
-  <div class="loading-container">
-    <app-loading-component [center]="false" [size]="'medium'"></app-loading-component>
-  </div>
+  <app-content-loading-component></app-content-loading-component>
 </ng-container>
 
 <ng-container *ngIf="!isLoading && hasError">
@@ -219,7 +217,7 @@
 
     <mat-menu #usersMenu="matMenu" [xPosition]="isLargeScreen ? 'before' : 'after'">
       <ng-container *ngFor="let user of game.session.users">
-        <button mat-menu-item (click)="handleUserMenuRowClick(user.id)">
+        <button mat-menu-item (click)="handleUserMenuRowClick(user.id, user.name)">
           <div class="users-menu-item-content">
             <mat-icon>person</mat-icon>
 
@@ -327,5 +325,8 @@
 
     <app-dialog-component #exitGameDialog (confirmEvent)="handleExitGameDialogConfirmation()">
     </app-dialog-component>
+
+    <app-remove-user-dialog-component #removeUserDialog (confirmEvent)="handleRemoveUserDialogConfirmation($event)">
+    </app-remove-user-dialog-component>
   </ng-container>
 </ng-container>

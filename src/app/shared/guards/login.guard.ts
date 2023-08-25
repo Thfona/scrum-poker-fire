@@ -8,7 +8,7 @@ import { AuthService } from '../services/auth.service';
   providedIn: 'root',
 })
 export class LoginGuard implements CanActivate, CanLoad {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private readonly authService: AuthService, private readonly router: Router) {}
 
   private canAccess(routeAfterSignIn: string) {
     return this.authService.userDocument.pipe(
@@ -24,11 +24,11 @@ export class LoginGuard implements CanActivate, CanLoad {
     );
   }
 
-  canActivate(_: Route, routerStateSnapshot: RouterStateSnapshot): Observable<boolean> {
+  public canActivate(_: Route, routerStateSnapshot: RouterStateSnapshot): Observable<boolean> {
     return this.canAccess(routerStateSnapshot.url);
   }
 
-  canLoad(_: Route, segments: UrlSegment[]): Observable<boolean> {
+  public canLoad(_: Route, segments: UrlSegment[]): Observable<boolean> {
     const url = segments.reduce((path, currentSegment) => {
       return `${path}/${currentSegment.path}`;
     }, '');

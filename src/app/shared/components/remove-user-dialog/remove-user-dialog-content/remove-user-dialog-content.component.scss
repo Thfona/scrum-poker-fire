@@ -1,0 +1,11 @@
+.action-button {
+  &:hover:enabled {
+    background-color: whitesmoke;
+  }
+}
+
+.content-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre;
+}

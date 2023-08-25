@@ -1,12 +1,15 @@
 <ng-container *transloco="let transloco">
   <h2 mat-dialog-title>{{ data.title }}</h2>
+
   <mat-dialog-content class="mat-typography" *ngIf="data.content">
     <p class="content-text">{{ data.content }}</p>
   </mat-dialog-content>
+
   <mat-dialog-actions align="end">
     <button mat-button [mat-dialog-close]="false" class="action-button">
       {{ data.cancelButtonText || transloco('CANCEL') }}
     </button>
+
     <button mat-button [mat-dialog-close]="true" [color]="data.confirmButtonColor" class="action-button">
       {{ data.confirmButtonText }}
     </button>

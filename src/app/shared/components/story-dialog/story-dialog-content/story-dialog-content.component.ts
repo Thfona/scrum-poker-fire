@@ -51,9 +51,9 @@ export class StoryDialogContentComponent implements OnInit, AfterViewInit {
   }
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: StoryDialogDataInterface,
-    private changeDetector: ChangeDetectorRef,
-    private dialogService: DialogService,
+    private readonly changeDetector: ChangeDetectorRef,
+    private readonly dialogService: DialogService,
+    @Inject(MAT_DIALOG_DATA) public readonly data: StoryDialogDataInterface,
   ) {}
 
   ngOnInit() {

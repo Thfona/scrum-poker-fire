@@ -20,10 +20,10 @@ export class ToolbarComponent {
   public gitHubRepositoryLink = 'https://github.com/Thfona/scrum-poker-fire-frontend';
 
   constructor(
-    public authService: AuthService,
-    private userService: UserService,
-    private snackBarService: MatSnackBar,
-    private translocoService: TranslocoService,
+    private readonly userService: UserService,
+    private readonly snackBarService: MatSnackBar,
+    private readonly translocoService: TranslocoService,
+    public readonly authService: AuthService,
   ) {}
 
   public openGitHubRepository() {

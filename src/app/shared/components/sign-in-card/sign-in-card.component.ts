@@ -12,9 +12,9 @@ import { SNACKBAR_CONFIGURATION } from '../../constants/snackbar-configuration.c
 })
 export class SignInCardComponent {
   constructor(
-    public authService: AuthService,
-    private snackBarService: MatSnackBar,
-    private translocoService: TranslocoService,
+    private readonly snackBarService: MatSnackBar,
+    private readonly translocoService: TranslocoService,
+    public readonly authService: AuthService,
   ) {}
 
   public async signIn() {

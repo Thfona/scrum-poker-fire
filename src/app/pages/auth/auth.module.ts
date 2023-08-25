@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { AuthRoutingModule } from './auth-routing.module';
 import { AuthPage } from './auth.page';
 
-const MODULES = [SharedModule];
+const MODULES = [AuthRoutingModule, SharedModule];
 
 const PAGES = [AuthPage];
 

@@ -16,7 +16,7 @@ export class GameDialogComponent implements OnDestroy {
   @Output() confirmEvent = new EventEmitter();
   private dialogSubscription: Subscription;
 
-  constructor(private matDialog: MatDialog, private dialogService: DialogService) {}
+  constructor(private readonly matDialog: MatDialog, private readonly dialogService: DialogService) {}
 
   ngOnDestroy() {
     if (this.dialogSubscription) {
@@ -35,7 +35,7 @@ export class GameDialogComponent implements OnDestroy {
     this.dialogSubscription = DIALOG_REFERENCE.afterClosed().subscribe((result: GameDialogResultInterface) => {
       this.dialogService.currentDialogReference = undefined;
 
-      if (result && result.save) {
+      if (result?.save) {
         if (!result.formValue.storyTimerMinutes) {
           result.formValue.storyTimerMinutes = DOMAIN.defaultGameSettings.storyTimerMinutes;
         }

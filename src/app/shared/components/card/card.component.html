@@ -2,10 +2,12 @@
   <mat-card class="card">
     <mat-card-header class="card-header">
       <mat-card-title class="header-text">{{ transloco(cardTitleCode) }}</mat-card-title>
+
       <div class="header-button-container" *ngIf="shouldDisplayHeaderButton">
         <button mat-raised-button color="accent" class="header-button" (click)="handleHeaderButtonClick()">
           <div class="button-content">
             <mat-icon>{{ headerButtonIconCode }}</mat-icon>
+
             <span class="button-text">{{ transloco(headerButtonTextCode) }}</span>
           </div>
         </button>

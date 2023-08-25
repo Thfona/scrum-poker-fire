@@ -1,33 +1,35 @@
 <ng-container *transloco="let transloco">
-  <mat-card class="card" [class.signing-in]="authService.isSigningIn">
-    <mat-card-content class="card-content">
-      <button mat-button class="logo-button" color="primary" [disableRipple]="true">
-        <mat-icon>local_fire_department</mat-icon>
+  <ng-container *ngIf="!authService.user">
+    <mat-card class="card" [class.signing-in]="authService.isSigningIn">
+      <mat-card-content class="card-content">
+        <button mat-button class="logo-button" color="primary" [disableRipple]="true">
+          <mat-icon>local_fire_department</mat-icon>
 
-        <span>ScrumPokerFire</span>
-      </button>
+          <span>ScrumPokerFire</span>
+        </button>
 
-      <ng-container *ngIf="!authService.isSigningIn">
-        <h2>{{ transloco('AUTH_WELCOME_TEXT') }}</h2>
+        <ng-container *ngIf="!authService.isSigningIn">
+          <h2>{{ transloco('AUTH_WELCOME_TEXT') }}</h2>
 
-        <h3>{{ transloco('AUTH_SIGN_IN_TEXT') }}</h3>
-      </ng-container>
-
-      <ng-container *ngIf="authService.isSigningIn">
-        <ng-container *ngIf="authService.isWaitingPopUp">
-          <h3>{{ transloco('AUTH_POP_UP_TEXT') }}</h3>
-
-          <h3>{{ transloco('AUTH_ALLOW_POP_UP_TEXT') }}</h3>
+          <h3>{{ transloco('AUTH_SIGN_IN_TEXT') }}</h3>
         </ng-container>
 
-        <mat-spinner class="spinner" [diameter]="40"></mat-spinner>
-      </ng-container>
-    </mat-card-content>
+        <ng-container *ngIf="authService.isSigningIn">
+          <ng-container *ngIf="authService.isWaitingPopUp">
+            <h3>{{ transloco('AUTH_POP_UP_TEXT') }}</h3>
 
-    <mat-card-actions *ngIf="!authService.isSigningIn">
-      <button mat-raised-button aria-label="Sign in button" color="primary" class="sign-in-button" (click)="signIn()">
-        <span>{{ transloco('SIGN_IN_BUTTON_TEXT') }}</span>
-      </button>
-    </mat-card-actions>
-  </mat-card>
+            <h3>{{ transloco('AUTH_ALLOW_POP_UP_TEXT') }}</h3>
+          </ng-container>
+
+          <mat-spinner class="spinner" [diameter]="40"></mat-spinner>
+        </ng-container>
+      </mat-card-content>
+
+      <mat-card-actions *ngIf="!authService.isSigningIn">
+        <button mat-raised-button aria-label="Sign in button" color="primary" class="sign-in-button" (click)="signIn()">
+          <span>{{ transloco('SIGN_IN_BUTTON_TEXT') }}</span>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </ng-container>
 </ng-container>

@@ -14,7 +14,7 @@ import { generateUniqueIdUtil } from '../utils/generateUniqueId.util';
 export class GamesService {
   public latestCreatedGameId: string;
 
-  constructor(private angularFirestore: AngularFirestore, private authService: AuthService) {}
+  constructor(private readonly angularFirestore: AngularFirestore, private readonly authService: AuthService) {}
 
   public getGame(gameId: string) {
     const GAME_DOCUMENT: AngularFirestoreDocument<GameInterface> = this.angularFirestore.doc(`/games/${gameId}`);
@@ -116,25 +116,25 @@ export class GamesService {
     return GAME_DOCUMENT.update({ stories });
   }
 
-  public updateGameSessionIsActive(gameId: string, isActive: boolean) {
+  public updateIsActive(gameId: string, isActive: boolean) {
     const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
 
     return GAME_DOCUMENT.update({ 'session.isActive': isActive });
   }
 
-  public updateGameSessionHasStarted(gameId: string, hasStarted: boolean) {
+  public updateHasStarted(gameId: string, hasStarted: boolean) {
     const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
 
     return GAME_DOCUMENT.update({ 'session.hasStarted': hasStarted });
   }
 
-  public updateGameSessionCurrentStory(gameId: string, currentStoryId: string) {
+  public updateCurrentStory(gameId: string, currentStoryId: string) {
     const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
 
     return GAME_DOCUMENT.update({ 'session.currentStoryId': currentStoryId });
   }
 
-  public updateGameSessionUsers(gameId: string, user: GameSessionUserInterface, operation: 'add' | 'remove') {
+  public updateUsers(gameId: string, user: GameSessionUserInterface, operation: 'add' | 'remove') {
     const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
 
     if (operation === 'add') {
@@ -144,7 +144,7 @@ export class GamesService {
     }
   }
 
-  public updateGameSessionVotes(gameId: string, vote: GameVoteInterface, operation: 'add' | 'remove') {
+  public updateVotes(gameId: string, vote: GameVoteInterface, operation: 'add' | 'remove') {
     const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
 
     if (operation === 'add') {
@@ -154,7 +154,7 @@ export class GamesService {
     }
   }
 
-  public updateGameSessionVotesList(gameId: string, votes: GameVoteInterface[]) {
+  public updateVotesList(gameId: string, votes: GameVoteInterface[]) {
     const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
 
     return GAME_DOCUMENT.update({ 'session.votes': votes });

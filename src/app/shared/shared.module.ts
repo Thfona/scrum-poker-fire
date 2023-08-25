@@ -22,6 +22,7 @@ import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/le
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { TranslocoRootModule } from '../transloco-root.module';
 import { CardComponent } from './components/card/card.component';
+import { ContentLoadingComponent } from './components/content-loading/content-loading.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { DialogContentComponent } from './components/dialog/dialog-content/dialog-content.component';
 import { ErrorComponent } from './components/error/error.component';
@@ -31,6 +32,8 @@ import { GameDialogContentComponent } from './components/game-dialog/game-dialog
 import { InviteDialogComponent } from './components/invite-dialog/invite-dialog.component';
 import { InviteDialogContentComponent } from './components/invite-dialog/invite-dialog-content/invite-dialog-content.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { RemoveUserDialogComponent } from './components/remove-user-dialog/remove-user-dialog.component';
+import { RemoveUserDialogContentComponent } from './components/remove-user-dialog/remove-user-dialog-content/remove-user-dialog-content.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SignInCardComponent } from './components/sign-in-card/sign-in-card.component';
 import { StoryDialogComponent } from './components/story-dialog/story-dialog.component';
@@ -41,6 +44,7 @@ import { SavedGamesFragment } from './fragments/saved-games/saved-games.fragment
 
 const COMPONENTS = [
   CardComponent,
+  ContentLoadingComponent,
   DialogComponent,
   DialogContentComponent,
   ErrorComponent,
@@ -50,6 +54,8 @@ const COMPONENTS = [
   InviteDialogComponent,
   InviteDialogContentComponent,
   LoadingComponent,
+  RemoveUserDialogComponent,
+  RemoveUserDialogContentComponent,
   SidenavComponent,
   SignInCardComponent,
   StoryDialogComponent,

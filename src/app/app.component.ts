@@ -9,7 +9,6 @@ import { UserService } from './shared/services/user.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
   private routerEventsSubscription: Subscription;
@@ -20,7 +19,11 @@ export class AppComponent implements OnInit, OnDestroy {
   public isLoadingContent: boolean;
   public hasError: boolean;
 
-  constructor(private authService: AuthService, private router: Router, private userService: UserService) {
+  constructor(
+    private readonly authService: AuthService,
+    private readonly router: Router,
+    private readonly userService: UserService,
+  ) {
     this.routerEventsSubscription = this.router.events.subscribe((event) => {
       if (
         (event instanceof NavigationStart || event instanceof NavigationEnd) &&

@@ -8,7 +8,7 @@ import { AuthService } from '../services/auth.service';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate, CanLoad {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private readonly authService: AuthService, private readonly router: Router) {}
 
   private canAccess(): Observable<boolean> {
     return this.authService.userDocument.pipe(
@@ -22,11 +22,11 @@ export class AuthGuard implements CanActivate, CanLoad {
     );
   }
 
-  canActivate(): Observable<boolean> {
+  public canActivate(): Observable<boolean> {
     return this.canAccess();
   }
 
-  canLoad(): Observable<boolean> {
+  public canLoad(): Observable<boolean> {
     return this.canAccess();
   }
 }

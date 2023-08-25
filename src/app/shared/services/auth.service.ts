@@ -19,9 +19,9 @@ export class AuthService {
   public routeAfterSignIn = '/home';
 
   constructor(
-    private angularFireAuth: AngularFireAuth,
-    private angularFirestore: AngularFirestore,
-    private router: Router,
+    private readonly angularFireAuth: AngularFireAuth,
+    private readonly angularFirestore: AngularFirestore,
+    private readonly router: Router,
   ) {
     this.userDocument = this.angularFireAuth.authState.pipe(
       switchMap((user) => {

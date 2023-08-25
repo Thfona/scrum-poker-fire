@@ -13,7 +13,7 @@ export class DialogComponent implements OnDestroy {
   @Output() confirmEvent = new EventEmitter();
   private dialogSubscription: Subscription;
 
-  constructor(private matDialog: MatDialog) {}
+  constructor(private readonly matDialog: MatDialog) {}
 
   ngOnDestroy() {
     if (this.dialogSubscription) {
@@ -27,7 +27,7 @@ export class DialogComponent implements OnDestroy {
       autoFocus: false,
     });
 
-    this.dialogSubscription = DIALOG_REFERENCE.afterClosed().subscribe((result) => {
+    this.dialogSubscription = DIALOG_REFERENCE.afterClosed().subscribe((result: boolean) => {
       if (result) {
         this.confirmEvent.emit();
       }
