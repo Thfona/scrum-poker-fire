@@ -1,15 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import {
-  TRANSLOCO_LOADER,
-  Translation,
-  TranslocoLoader,
-  TRANSLOCO_CONFIG,
-  translocoConfig,
-  TranslocoModule,
-} from '@ngneat/transloco';
-import { TranslocoLocaleModule } from '@ngneat/transloco-locale';
 import { Injectable, NgModule } from '@angular/core';
-import { getBrowserLang } from '@ngneat/transloco';
+import { HttpClient } from '@angular/common/http';
+import { Translation, TranslocoLoader, TranslocoModule, getBrowserLang, provideTransloco } from '@ngneat/transloco';
+import { TranslocoLocaleModule, provideTranslocoLocale } from '@ngneat/transloco-locale';
 import { environment } from '../environments/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -22,27 +14,24 @@ export class TranslocoHttpLoader implements TranslocoLoader {
 }
 
 @NgModule({
-  imports: [
-    TranslocoLocaleModule.forRoot({
-      langToLocaleMapping: {
-        en: 'en-US',
-        pt: 'pt-BR',
-      },
-    }),
-  ],
   exports: [TranslocoModule, TranslocoLocaleModule],
   providers: [
-    {
-      provide: TRANSLOCO_CONFIG,
-      useValue: translocoConfig({
+    provideTransloco({
+      config: {
         availableLangs: ['en', 'pt'],
         defaultLang: getBrowserLang() || 'en',
         fallbackLang: 'en',
         reRenderOnLangChange: true,
         prodMode: environment.production,
-      }),
-    },
-    { provide: TRANSLOCO_LOADER, useClass: TranslocoHttpLoader },
+      },
+      loader: TranslocoHttpLoader,
+    }),
+    provideTranslocoLocale({
+      langToLocaleMapping: {
+        en: 'en-US',
+        pt: 'pt-BR',
+      },
+    }),
   ],
 })
 export class TranslocoRootModule {}
