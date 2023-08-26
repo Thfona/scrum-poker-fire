@@ -14,7 +14,10 @@ import { generateUniqueIdUtil } from '../utils/generateUniqueId.util';
 export class GamesService {
   public latestCreatedGameId: string;
 
-  constructor(private readonly angularFirestore: AngularFirestore, private readonly authService: AuthService) {}
+  constructor(
+    private readonly angularFirestore: AngularFirestore,
+    private readonly authService: AuthService,
+  ) {}
 
   public getGame(gameId: string) {
     const GAME_DOCUMENT: AngularFirestoreDocument<GameInterface> = this.angularFirestore.doc(`/games/${gameId}`);

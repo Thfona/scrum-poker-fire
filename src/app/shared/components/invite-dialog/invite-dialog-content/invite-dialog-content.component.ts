@@ -16,7 +16,10 @@ export class InviteDialogContentComponent {
     return window.location.href;
   }
 
-  constructor(private readonly snackBarService: MatSnackBar, private readonly translocoService: TranslocoService) {}
+  constructor(
+    private readonly snackBarService: MatSnackBar,
+    private readonly translocoService: TranslocoService,
+  ) {}
 
   public handleLinkInputClick() {
     const INPUT: HTMLInputElement = this.linkInput.nativeElement;

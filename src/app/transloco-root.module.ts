@@ -1,8 +1,7 @@
-import { Injectable, NgModule } from '@angular/core';
+import { Injectable, NgModule, isDevMode } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Translation, TranslocoLoader, TranslocoModule, getBrowserLang, provideTransloco } from '@ngneat/transloco';
 import { TranslocoLocaleModule, provideTranslocoLocale } from '@ngneat/transloco-locale';
-import { environment } from '../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class TranslocoHttpLoader implements TranslocoLoader {
@@ -22,7 +21,7 @@ export class TranslocoHttpLoader implements TranslocoLoader {
         defaultLang: getBrowserLang() || 'en',
         fallbackLang: 'en',
         reRenderOnLangChange: true,
-        prodMode: environment.production,
+        prodMode: !isDevMode(),
       },
       loader: TranslocoHttpLoader,
     }),

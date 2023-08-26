@@ -8,7 +8,10 @@ import { AuthService } from '../services/auth.service';
   providedIn: 'root',
 })
 class LoginGuard {
-  constructor(private readonly authService: AuthService, private readonly router: Router) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly router: Router,
+  ) {}
 
   public canAccess(): Observable<boolean> {
     return this.authService.userDocument.pipe(

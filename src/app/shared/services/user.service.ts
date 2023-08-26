@@ -18,7 +18,10 @@ export class UserService {
     this.defaultGameSettings = value;
   }
 
-  constructor(private readonly angularFirestore: AngularFirestore, private readonly authService: AuthService) {}
+  constructor(
+    private readonly angularFirestore: AngularFirestore,
+    private readonly authService: AuthService,
+  ) {}
 
   public updateUserDefaultGameSettings(gameSettings: GameSettingsInterface) {
     const USER_ID = this.authService.user.uid;

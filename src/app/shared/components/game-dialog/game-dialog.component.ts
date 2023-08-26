@@ -16,7 +16,10 @@ export class GameDialogComponent implements OnDestroy {
   @Output() confirmEvent = new EventEmitter();
   private dialogSubscription: Subscription;
 
-  constructor(private readonly matDialog: MatDialog, private readonly dialogService: DialogService) {}
+  constructor(
+    private readonly matDialog: MatDialog,
+    private readonly dialogService: DialogService,
+  ) {}
 
   ngOnDestroy() {
     if (this.dialogSubscription) {
