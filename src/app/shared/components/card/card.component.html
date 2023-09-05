@@ -1,14 +1,14 @@
 <ng-container *transloco="let transloco">
   <mat-card class="card">
     <mat-card-header class="card-header">
-      <mat-card-title class="header-text">{{ transloco(cardTitleCode) }}</mat-card-title>
+      <mat-card-title class="header-text">{{ transloco(cardTitleKey) }}</mat-card-title>
 
       <div class="header-button-container" *ngIf="shouldDisplayHeaderButton">
         <button mat-raised-button color="accent" class="header-button" (click)="handleHeaderButtonClick()">
           <div class="button-content">
-            <mat-icon>{{ headerButtonIconCode }}</mat-icon>
+            <mat-icon>{{ headerButtonIconKey }}</mat-icon>
 
-            <span class="button-text">{{ transloco(headerButtonTextCode) }}</span>
+            <span class="button-text">{{ transloco(headerButtonTextKey) }}</span>
           </div>
         </button>
       </div>
@@ -21,9 +21,7 @@
     </ng-container>
 
     <ng-container *ngIf="!isLoading && hasError">
-      <div class="card-content-placeholder">
-        <app-error-component [center]="false" [message]="errorMessageCode"></app-error-component>
-      </div>
+      <app-error-component [center]="false" [message]="errorMessageKey"></app-error-component>
     </ng-container>
 
     <ng-container *ngIf="!isLoading && !hasError">

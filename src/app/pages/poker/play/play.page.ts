@@ -28,7 +28,7 @@ import { GameDialogComponent } from 'src/app/shared/components/game-dialog/game-
 import { InviteDialogComponent } from 'src/app/shared/components/invite-dialog/invite-dialog.component';
 import { RemoveUserDialogComponent } from 'src/app/shared/components/remove-user-dialog/remove-user-dialog.component';
 import { StoryDialogComponent } from 'src/app/shared/components/story-dialog/story-dialog.component';
-import { generateUniqueIdUtil } from 'src/app/shared/utils/generateUniqueId.util';
+import { generateUniqueId } from 'src/app/shared/utils/generate-unique-id.util';
 import { SNACKBAR_ACTION } from 'src/app/shared/constants/snackbar-action.constant';
 import { SNACKBAR_CONFIGURATION } from 'src/app/shared/constants/snackbar-configuration.constant';
 import { DOMAIN } from 'src/app/shared/constants/domain.constant';
@@ -50,7 +50,7 @@ export class PlayPage implements OnInit, OnDestroy {
   private isDesktopSubscription: Subscription;
   private isLargeScreenSubscription: Subscription;
   private gameSubscription: Subscription;
-  private hasInitializedSession: boolean;
+  private hasJoinedSession: boolean;
   private userName: string;
   private cardMargin = '12px';
   private userCurrentVote: GameVoteInterface;
@@ -132,6 +132,10 @@ export class PlayPage implements OnInit, OnDestroy {
             throw new Error('Game not found or access forbidden.');
           }
 
+          if (this.game.ownerId === this.userId) {
+            this.isHost = true;
+          }
+
           this.currentStoryId = this.game.session.currentStoryId;
 
           const CURRENT_STORY = this.game.stories.find((story) => story.id === this.currentStoryId);
@@ -150,6 +154,7 @@ export class PlayPage implements OnInit, OnDestroy {
           this.game.stories = this.game.stories.sort((a, b) => a.index - b.index);
 
           const PLAYERS = this.game.session.users.filter((user) => user.isPlayer);
+
           this.playersWithVotes = PLAYERS.map((player) => {
             const PLAYER_VOTE = this.game.session.votes.find(
               (vote) => vote.userId === player.id && vote.storyId === this.currentStoryId,
@@ -173,19 +178,15 @@ export class PlayPage implements OnInit, OnDestroy {
             this.isPlayer = SESSION_USER.isPlayer;
           }
 
-          if (!this.hasInitializedSession) {
-            if (this.game.ownerId === this.userId) {
-              this.isHost = true;
-            }
+          if (!this.hasJoinedSession) {
+            this.joinSession();
 
-            this.initializeSession();
-
-            this.hasInitializedSession = true;
+            this.hasJoinedSession = true;
           }
 
-          const VALID_PLAYERS_WITH_VOTES = this.playersWithVotes.filter((player) => player.vote && player.vote.value);
+          const PLAYERS_WITH_VALID_VOTES = this.playersWithVotes.filter((player) => player.vote && player.vote.value);
 
-          if (VALID_PLAYERS_WITH_VOTES.length === this.playersWithVotes.length && this.game.autoFlip) {
+          if (this.game.autoFlip && PLAYERS_WITH_VALID_VOTES.length === this.playersWithVotes.length) {
             this.handleFlipCards();
           }
         }),
@@ -241,7 +242,7 @@ export class PlayPage implements OnInit, OnDestroy {
     return AVERAGE_SCORE;
   }
 
-  private async initializeSession() {
+  private async joinSession() {
     try {
       if (this.isHost && !this.game.session.isActive) {
         await this.gamesService.updateIsActive(this.gameId, true);
@@ -402,7 +403,7 @@ export class PlayPage implements OnInit, OnDestroy {
         await this.gamesService.updateStories(
           this.gameId,
           {
-            id: generateUniqueIdUtil(),
+            id: generateUniqueId(),
             index: NEW_STORY_INDEX,
             name: storyDialogResult.formValue.name,
             hasFlippedCards: false,
@@ -591,13 +592,13 @@ export class PlayPage implements OnInit, OnDestroy {
   }
 
   public async handleFlipCards() {
-    if (!this.hasFlippedCards) {
+    if (this.isHost && !this.hasFlippedCards) {
       try {
         const STORY = this.game.stories.find((story) => story.id === this.currentStoryId);
 
-        const VALID_PLAYERS_WITH_VOTES = this.playersWithVotes.filter((player) => player.vote && player.vote.value);
+        const PLAYERS_WITH_VALID_VOTES = this.playersWithVotes.filter((player) => player.vote && player.vote.value);
 
-        const VOTE_VALUES = VALID_PLAYERS_WITH_VOTES.map((player) => player.vote.value);
+        const VOTE_VALUES = PLAYERS_WITH_VALID_VOTES.map((player) => player.vote.value);
 
         let newScore: number;
 

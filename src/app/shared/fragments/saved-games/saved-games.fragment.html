@@ -3,11 +3,11 @@
     <app-card-component
       [isLoading]="isLoading"
       [hasError]="hasError"
-      cardTitleCode="SAVED_GAMES"
+      cardTitleKey="SAVED_GAMES"
       [shouldDisplayHeaderButton]="true"
-      headerButtonIconCode="add"
-      headerButtonTextCode="CREATE_NEW_GAME_BUTTON_TEXT"
-      errorMessageCode="GAMES_ERROR_MESSAGE"
+      headerButtonIconKey="add"
+      headerButtonTextKey="CREATE_NEW_GAME_BUTTON_TEXT"
+      errorMessageKey="GAMES_ERROR_MESSAGE"
       (headerButtonEvent)="handleCreateNewGameButtonClick()"
     >
       <mat-card-content>

@@ -1,5 +1,5 @@
 <ng-container *transloco="let transloco">
-  <div [class.root]="center">
+  <div class="root" [class.uncentered]="!center">
     <div class="error-text">
       <h1 class="error-title" [class.medium]="!center">{{ transloco('ERROR_TITLE') }}</h1>
 

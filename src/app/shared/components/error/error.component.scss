@@ -3,6 +3,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &.uncentered {
+    height: 300px;
+    margin: 0 auto;
+  }
 }
 
 .error-text {

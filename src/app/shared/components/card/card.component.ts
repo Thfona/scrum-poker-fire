@@ -8,11 +8,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class CardComponent {
   @Input() isLoading: boolean;
   @Input() hasError: boolean;
-  @Input() cardTitleCode: string;
+  @Input() cardTitleKey: string;
   @Input() shouldDisplayHeaderButton: boolean;
-  @Input() headerButtonIconCode: string;
-  @Input() headerButtonTextCode: string;
-  @Input() errorMessageCode: string;
+  @Input() headerButtonIconKey: string;
+  @Input() headerButtonTextKey: string;
+  @Input() errorMessageKey: string;
   @Output() headerButtonEvent = new EventEmitter();
 
   public handleHeaderButtonClick() {

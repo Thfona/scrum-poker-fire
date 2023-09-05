@@ -7,8 +7,8 @@ import { GameSessionUserInterface } from '../interfaces/game-session-user.interf
 import { GameVoteInterface } from '../interfaces/game-vote.interface';
 import { StoryInterface } from '../interfaces/story.interface';
 import { AuthService } from './auth.service';
-import { dateFormatterUtil } from '../utils/dateFormatter.util';
-import { generateUniqueIdUtil } from '../utils/generateUniqueId.util';
+import { formatDate } from '../utils/format-date.util';
+import { generateUniqueId } from '../utils/generate-unique-id.util';
 
 @Injectable()
 export class GamesService {
@@ -43,9 +43,9 @@ export class GamesService {
   }
 
   public createGame(data: FormGameInterface) {
-    const GAME_ID = generateUniqueIdUtil();
+    const GAME_ID = generateUniqueId();
     const USER_ID = this.authService.user.uid;
-    const CREATION_DATE = dateFormatterUtil(new Date());
+    const CREATION_DATE = formatDate(new Date());
 
     this.latestCreatedGameId = GAME_ID;
 
