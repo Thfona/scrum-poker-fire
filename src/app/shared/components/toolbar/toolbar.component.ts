@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogDataInterface } from '../../interfaces/dialog-data.interface';
 import { UserInterface } from '../../interfaces/user.interface';
 import { AuthService } from '../../services/auth.service';

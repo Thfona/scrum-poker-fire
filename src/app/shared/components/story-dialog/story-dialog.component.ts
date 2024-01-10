@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { StoryDialogDataInterface } from '../../interfaces/story-dialog-data.interface';
 import { StoryDialogResultInterface } from '../../interfaces/story-dialog-result.interface';

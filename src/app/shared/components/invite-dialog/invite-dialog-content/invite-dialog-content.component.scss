@@ -4,7 +4,7 @@
   }
 }
 
-.mat-form-field {
+.mat-mdc-form-field {
   width: 100%;
 }
 
@@ -19,9 +19,16 @@
 
 .copy-button {
   padding: 4px 8px;
+  width: 50px;
+  height: 56px;
   min-width: 0;
-  line-height: normal;
-  margin-left: 4px;
-  border-top: 0.84375em solid transparent;
-  box-shadow: none;
+  margin-left: 8px;
+}
+
+.mat-mdc-unelevated-button > .mat-icon {
+  font-size: 1.5rem;
+  height: 1.5rem;
+  width: 1.5rem;
+  margin-left: 0;
+  margin-right: 0;
 }

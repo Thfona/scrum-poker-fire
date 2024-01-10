@@ -1,6 +1,6 @@
 <ng-container *transloco="let transloco">
   <ng-container *ngIf="!authService.user">
-    <mat-card class="card" [class.signing-in]="authService.isSigningIn">
+    <mat-card appearance="outlined" class="card" [class.signing-in]="authService.isSigningIn">
       <mat-card-content class="card-content">
         <button mat-button class="logo-button" color="primary" [disableRipple]="true">
           <mat-icon>local_fire_department</mat-icon>

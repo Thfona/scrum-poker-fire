@@ -16,6 +16,12 @@
   }
 }
 
+.mat-mdc-button > .mat-icon {
+  font-size: 1.5rem;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
 .logo-text {
   @include belowSmallMedium {
     display: none;

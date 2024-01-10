@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { StoryDialogDataInterface } from 'src/app/shared/interfaces/story-dialog-data.interface';
 import { StoryDialogResultInterface } from 'src/app/shared/interfaces/story-dialog-result.interface';
 import { DialogService } from 'src/app/shared/services/dialog.service';
