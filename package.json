@@ -14,7 +14,10 @@
     "lint": "eslint ./src && npm run prettier",
     "lint:fix": "eslint ./src --fix && npm run prettier:fix",
     "prettier": "prettier --config ./.prettierrc --check \"./**/*{.ts,.js,.json,.css,.scss}\"",
-    "prettier:fix": "prettier --config ./.prettierrc --check \"./**/*{.ts,.js,.json,.css,.scss}\" --write"
+    "prettier:fix": "prettier --config ./.prettierrc --check \"./**/*{.ts,.js,.json,.css,.scss}\" --write",
+    "clean": "rimraf dist && rimraf .angular",
+    "clean:packages": "rimraf node_modules",
+    "clean:all": "npm run clean && npm run clean:packages"
   },
   "pre-commit": [
     "lint"
