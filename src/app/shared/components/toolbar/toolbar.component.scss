@@ -16,10 +16,12 @@
   }
 }
 
-.mat-mdc-button > .mat-icon {
-  font-size: 24px;
-  height: 24px;
-  width: 24px;
+.mat-mdc-button {
+  & > .mat-icon {
+    font-size: 24px;
+    height: 24px;
+    width: 24px;
+  }
 }
 
 .logo-text {

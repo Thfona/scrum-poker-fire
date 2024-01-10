@@ -1,5 +1,5 @@
 .card {
-  max-width: 310px;
+  max-width: 350px;
   padding: 24px;
   text-align: center;
 
@@ -8,29 +8,25 @@
   }
 }
 
-.card-content {
-  margin-left: 16px;
-  margin-right: 16px;
+.mat-mdc-card-content:first-child {
+  padding-top: 8px;
 }
 
-.logo-button {
-  min-height: 50px;
-  font-size: 32px;
-  cursor: text;
-  padding: 0;
-  margin-bottom: 8px;
-  display: flex;
-  justify-content: center;
+.bottom-text {
+  margin-bottom: 16px !important;
 }
 
 .spinner {
   margin: 0 auto;
 }
 
+.card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .sign-in-button {
   width: 89%;
   min-height: 50px;
-  margin-left: 16px !important;
-  margin-right: 16px !important;
-  margin-bottom: 16px !important;
 }
