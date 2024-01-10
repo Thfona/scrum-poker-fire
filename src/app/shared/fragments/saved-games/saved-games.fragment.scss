@@ -1,7 +1,7 @@
 @import 'includes';
 
 .root {
-  padding: 2rem;
+  padding: 32px;
 }
 
 .table-container {
@@ -62,6 +62,6 @@ td.mat-mdc-footer-cell {
   }
 
   &.delete-button {
-    margin-left: 0.5rem;
+    margin-left: 8px;
   }
 }

@@ -21,11 +21,11 @@
 
   &.open {
     z-index: 97;
-    top: calc(2rem + #{$toolbar-height});
-    right: 2rem;
+    top: calc(32px + #{$toolbar-height});
+    right: 32px;
 
     @include belowSmallMedium {
-      top: calc(2rem + #{$toolbar-height-below-small-medium});
+      top: calc(32px + #{$toolbar-height-below-small-medium});
     }
   }
 

@@ -8,7 +8,7 @@
 .logo {
   font-size: 20px;
   padding: 0;
-  margin-left: 1rem;
+  margin-left: 16px;
   min-width: 0;
 
   @include fromSmallMedium {
@@ -17,9 +17,9 @@
 }
 
 .mat-mdc-button > .mat-icon {
-  font-size: 1.5rem;
-  height: 1.5rem;
-  width: 1.5rem;
+  font-size: 24px;
+  height: 24px;
+  width: 24px;
 }
 
 .logo-text {
@@ -29,7 +29,7 @@
 }
 
 .poker-link {
-  margin-left: 1rem;
+  margin-left: 16px;
 }
 
 .spacer {
@@ -37,7 +37,7 @@
 }
 
 .github-link-container {
-  margin-right: 1.5rem;
+  margin-right: 24px;
   width: 26px;
   height: 26px;
 
@@ -58,7 +58,7 @@
 }
 
 .avatar-container {
-  padding-right: 1.25rem;
+  padding-right: 20px;
 }
 
 .avatar-button {
@@ -79,8 +79,8 @@
 }
 
 .user-info {
-  margin-left: 1rem;
-  margin-right: 1rem;
+  margin-left: 16px;
+  margin-right: 16px;
   display: flex;
   align-items: center;
 }
@@ -90,7 +90,7 @@
 }
 
 .menu-content-container {
-  padding-top: 0.5rem;
+  padding-top: 8px;
 }
 
 .menu-item-content {
@@ -99,6 +99,6 @@
 }
 
 .menu-divider {
-  margin-top: 1rem;
-  margin-bottom: 0.3rem;
+  margin-top: 16px;
+  margin-bottom: 5px;
 }

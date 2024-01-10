@@ -5,7 +5,7 @@
 }
 
 .card-header {
-  margin-bottom: 1rem;
+  margin-bottom: 16px;
   justify-content: space-between;
 
   @include belowSmallMedium {
@@ -19,15 +19,15 @@
   margin-bottom: 0 !important;
 
   @include belowSmallMedium {
-    margin-bottom: 1rem !important;
+    margin-bottom: 16px !important;
   }
 }
 
 .header-button-container {
-  margin: 0 16px;
+  margin-left: 16px;
 
   @include belowSmallMedium {
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
   }
 }
 
