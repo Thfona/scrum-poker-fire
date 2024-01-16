@@ -159,7 +159,10 @@ export class SavedGamesFragment implements OnInit, OnDestroy {
     this.gameDialog.openDialog();
   }
 
-  public handleTableRowEditClick(game: GameInterface) {
+  public handleTableRowEditClick(event: Event, game: GameInterface) {
+    event.preventDefault();
+    event.stopPropagation();
+
     this.gameDialogOperation = 'edit';
     this.gameToEditId = game.id;
 
@@ -261,7 +264,10 @@ export class SavedGamesFragment implements OnInit, OnDestroy {
     }
   }
 
-  public handleTableRowDeleteClick(game: GameInterface) {
+  public handleTableRowDeleteClick(event: Event, game: GameInterface) {
+    event.preventDefault();
+    event.stopPropagation();
+
     this.gameToDeleteId = game.id;
 
     const DELETE_GAME_DIALOG_DATA: DialogDataInterface = {

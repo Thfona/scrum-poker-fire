@@ -62,13 +62,13 @@
                 <div class="options-column">
                   <button mat-mini-fab [matTooltip]="transloco('EDIT_TOOLTIP')" matTooltipPosition="above"
                     class="options-button" color="accent" aria-label="Edit game"
-                    (click)="handleTableRowEditClick(item)">
+                    (click)="handleTableRowEditClick($event, item)">
                     <mat-icon color="accent">edit</mat-icon>
                   </button>
 
                   <button mat-mini-fab [matTooltip]="transloco('DELETE_TOOLTIP')" matTooltipPosition="above"
                     class="options-button delete-button" color="warn" aria-label="Delete game"
-                    (click)="handleTableRowDeleteClick(item)">
+                    (click)="handleTableRowDeleteClick($event, item)">
                     <mat-icon color="warn">delete</mat-icon>
                   </button>
                 </div>
