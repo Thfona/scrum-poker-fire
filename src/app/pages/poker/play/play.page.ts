@@ -12,7 +12,7 @@ import { GameDialogResultInterface } from 'src/app/shared/interfaces/game-dialog
 import { GameInterface } from 'src/app/shared/interfaces/game.interface';
 import { GameSettingsInterface } from 'src/app/shared/interfaces/game-settings.interface';
 import { GameVoteInterface } from 'src/app/shared/interfaces/game-vote.interface';
-import { PlayerWithVoteInterface } from 'src/app/shared/interfaces/player-with-vote.interface';
+import { PlayerWithVoteInfoInterface } from 'src/app/shared/interfaces/player-with-vote.interface';
 import { RemoveUserDialogDataInterface } from 'src/app/shared/interfaces/remove-user-dialog-data.interface';
 import { RemoveUserDialogResultInterface } from 'src/app/shared/interfaces/remove-user-dialog-result.interface';
 import { StoryDialogDataInterface } from 'src/app/shared/interfaces/story-dialog-data.interface';
@@ -62,7 +62,7 @@ export class PlayPage implements OnInit, OnDestroy {
   public gameId: string;
   public game: GameInterface;
   public cards: GameCardInterface[];
-  public playersWithVotes: PlayerWithVoteInterface[];
+  public playersWithVoteInfo: PlayerWithVoteInfoInterface[];
   public currentStoryIndex: number;
   public currentStoryName: string;
   public hasFlippedCards: boolean;
@@ -155,7 +155,7 @@ export class PlayPage implements OnInit, OnDestroy {
 
           const PLAYERS = this.game.session.users.filter((user) => user.isPlayer);
 
-          this.playersWithVotes = PLAYERS.map((player) => {
+          this.playersWithVoteInfo = PLAYERS.map((player) => {
             const PLAYER_VOTE = this.game.session.votes.find(
               (vote) => vote.userId === player.id && vote.storyId === this.currentStoryId,
             );
@@ -184,9 +184,9 @@ export class PlayPage implements OnInit, OnDestroy {
             this.hasJoinedSession = true;
           }
 
-          const PLAYERS_WITH_VALID_VOTES = this.playersWithVotes.filter((player) => player.vote && player.vote.value);
+          const PLAYERS_WITH_VOTE = this.playersWithVoteInfo.filter((player) => player.vote);
 
-          if (this.game.autoFlip && PLAYERS_WITH_VALID_VOTES.length === this.playersWithVotes.length) {
+          if (this.game.autoFlip && PLAYERS_WITH_VOTE.length === this.playersWithVoteInfo.length) {
             this.handleFlipCards();
           }
         }),
@@ -596,9 +596,9 @@ export class PlayPage implements OnInit, OnDestroy {
       try {
         const STORY = this.game.stories.find((story) => story.id === this.currentStoryId);
 
-        const PLAYERS_WITH_VALID_VOTES = this.playersWithVotes.filter((player) => player.vote && player.vote.value);
+        const PLAYERS_WITH_VALID_VOTE = this.playersWithVoteInfo.filter((player) => player.vote && player.vote.value);
 
-        const VOTE_VALUES = PLAYERS_WITH_VALID_VOTES.map((player) => player.vote.value);
+        const VOTE_VALUES = PLAYERS_WITH_VALID_VOTE.map((player) => player.vote.value);
 
         let newScore: number;
 

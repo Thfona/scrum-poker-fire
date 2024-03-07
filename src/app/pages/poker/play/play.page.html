@@ -192,13 +192,13 @@
           </div>
 
           <div class="votes-container">
-            <ng-container *ngFor="let player of playersWithVotes">
+            <ng-container *ngFor="let player of playersWithVoteInfo">
               <div class="vote">
                 <app-game-card-component
                   [color]="!hasFlippedCards
                     ? (player.vote ? 'primary' : 'grey')
-                    : (player.vote && player.vote.value && player.vote.value >= 0 ? 'accent' : 'white')"
-                  [displayValue]="player.vote && player.vote.displayValue ? player.vote.displayValue : 'PASS_CARD'"
+                    : (player.vote?.value >= 0 ? 'accent' : 'white')"
+                  [displayValue]="player.vote?.displayValue || 'PASS_CARD'"
                   [interactive]="false"
                   [isCardFront]="hasFlippedCards"
                   [isSmall]="true"
