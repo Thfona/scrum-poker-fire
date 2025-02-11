@@ -8,25 +8,25 @@ Front-End for the ScrumPokerFire application.
 # Install dependencies
 $ npm install
 
-# Start application in development mode
+# Start application
 $ npm start
-
-# Testing
-$ npm run test
-
-# Linting
-$ npm run lint
-$ npm run lint:fix
 
 # Build
 npm run build
 npm run build:prod
 
+# Lint
+$ npm run lint
+$ npm run lint:fix
+
+# Test
+$ npm run test
+
+# Deploy to Firebase
+npm run deploy
+
 # Clean
 $ npm run clean                   # Removes dist and .angular folders
 $ npm run clean:packages          # Removes node_modules folder
 $ npm run clean:all               # Runs all of the above
-
-# Deploy to Firebase
-npm run deploy
 ```
