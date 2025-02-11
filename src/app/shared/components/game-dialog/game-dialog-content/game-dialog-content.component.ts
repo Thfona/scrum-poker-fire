@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { DialogService } from 'src/app/shared/services/dialog.service';
 import { CardSetInterface } from 'src/app/shared/interfaces/card-set.interface';
 import { GameCardInterface } from 'src/app/shared/interfaces/game-card.interface';

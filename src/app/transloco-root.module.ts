@@ -1,7 +1,7 @@
 import { Injectable, NgModule, isDevMode } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Translation, TranslocoLoader, TranslocoModule, getBrowserLang, provideTransloco } from '@ngneat/transloco';
-import { TranslocoLocaleModule, provideTranslocoLocale } from '@ngneat/transloco-locale';
+import { Translation, TranslocoLoader, TranslocoModule, getBrowserLang, provideTransloco } from '@jsverse/transloco';
+import { TranslocoLocaleModule, provideTranslocoLocale } from '@jsverse/transloco-locale';
 
 @Injectable({ providedIn: 'root' })
 export class TranslocoHttpLoader implements TranslocoLoader {

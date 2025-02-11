@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { EMPTY, Subscription } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { DialogDataInterface } from 'src/app/shared/interfaces/dialog-data.interface';

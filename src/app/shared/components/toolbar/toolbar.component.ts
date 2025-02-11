@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogDataInterface } from '../../interfaces/dialog-data.interface';
 import { UserInterface } from '../../interfaces/user.interface';
