@@ -1,7 +1,8 @@
 @use '@angular/material' as ng-material;
 
 @include ng-material.all-component-typographies();
-@include ng-material.core();
+@include ng-material.elevation-classes();
+@include ng-material.app-background();
 
 $app-primary: ng-material.m2-define-palette(ng-material.$m2-deep-purple-palette);
 $app-accent: ng-material.m2-define-palette(ng-material.$m2-green-palette);
