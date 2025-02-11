@@ -3,11 +3,11 @@
 @include ng-material.all-component-typographies();
 @include ng-material.core();
 
-$app-primary: ng-material.define-palette(ng-material.$deep-purple-palette);
-$app-accent: ng-material.define-palette(ng-material.$green-palette);
-$app-warn: ng-material.define-palette(ng-material.$red-palette);
+$app-primary: ng-material.m2-define-palette(ng-material.$m2-deep-purple-palette);
+$app-accent: ng-material.m2-define-palette(ng-material.$m2-green-palette);
+$app-warn: ng-material.m2-define-palette(ng-material.$m2-red-palette);
 
-$app-theme: ng-material.define-light-theme(
+$app-theme: ng-material.m2-define-light-theme(
   (
     color: (
       primary: $app-primary,
@@ -17,8 +17,8 @@ $app-theme: ng-material.define-light-theme(
   )
 );
 
-$primary: ng-material.get-color-from-palette($app-primary);
-$accent: ng-material.get-color-from-palette($app-accent);
-$warn: ng-material.get-color-from-palette($app-warn);
+$primary: ng-material.m2-get-color-from-palette($app-primary);
+$accent: ng-material.m2-get-color-from-palette($app-accent);
+$warn: ng-material.m2-get-color-from-palette($app-warn);
 
 @include ng-material.all-component-themes($app-theme);
