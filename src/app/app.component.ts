@@ -21,14 +21,14 @@ export class AppComponent implements OnInit, OnDestroy {
     public hasError: boolean;
 
     constructor(
-    private readonly authService: AuthService,
-    private readonly router: Router,
-    private readonly userService: UserService,
+        private readonly authService: AuthService,
+        private readonly router: Router,
+        private readonly userService: UserService,
     ) {
         this.routerEventsSubscription = this.router.events.subscribe((event) => {
             if (
                 (event instanceof NavigationStart || event instanceof NavigationEnd) &&
-        !this.contentLoadingSafelist.includes(event.url)
+                !this.contentLoadingSafelist.includes(event.url)
             ) {
                 if (event instanceof NavigationStart) {
                     this.isLoadingContent = true;

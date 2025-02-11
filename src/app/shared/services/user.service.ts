@@ -19,8 +19,8 @@ export class UserService {
     }
 
     constructor(
-    private readonly angularFirestore: AngularFirestore,
-    private readonly authService: AuthService,
+        private readonly angularFirestore: AngularFirestore,
+        private readonly authService: AuthService,
     ) {}
 
     public updateUserDefaultGameSettings(gameSettings: GameSettingsInterface) {
