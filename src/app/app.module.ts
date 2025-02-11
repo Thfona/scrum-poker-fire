@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgProgressModule } from 'ngx-progressbar';
-import { NgProgressRouterModule } from 'ngx-progressbar/router';
+import { NgProgressbar } from 'ngx-progressbar';
+import { NgProgressRouter } from 'ngx-progressbar/router';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
@@ -17,8 +17,8 @@ const modules = [
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
-    NgProgressModule,
-    NgProgressRouterModule,
+    NgProgressbar,
+    NgProgressRouter,
     SharedModule,
 ];
 
