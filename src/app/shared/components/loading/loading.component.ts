@@ -4,6 +4,7 @@ import { Component, Input, OnInit } from '@angular/core';
     selector: 'app-loading-component',
     templateUrl: './loading.component.html',
     styleUrls: ['./loading.component.scss'],
+    standalone: false
 })
 export class LoadingComponent implements OnInit {
   @Input() center = true;

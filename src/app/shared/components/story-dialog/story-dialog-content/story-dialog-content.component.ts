@@ -18,6 +18,7 @@ import { DialogService } from 'src/app/shared/services/dialog.service';
     selector: 'app-story-dialog-content-component',
     templateUrl: './story-dialog-content.component.html',
     styleUrls: ['./story-dialog-content.component.scss'],
+    standalone: false
 })
 export class StoryDialogContentComponent implements OnInit, AfterViewInit {
   @ViewChild('storyName') storyName: ElementRef;

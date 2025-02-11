@@ -23,6 +23,7 @@ import { DOMAIN } from 'src/app/shared/constants/domain.constant';
     selector: 'app-game-dialog-content-component',
     templateUrl: './game-dialog-content.component.html',
     styleUrls: ['./game-dialog-content.component.scss'],
+    standalone: false
 })
 export class GameDialogContentComponent implements OnInit, AfterViewInit {
   @ViewChild('gameName') gameName: ElementRef;

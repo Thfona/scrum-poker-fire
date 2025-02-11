@@ -9,6 +9,7 @@ import { SNACKBAR_CONFIGURATION } from '../../constants/snackbar-configuration.c
     selector: 'app-sign-in-card-component',
     templateUrl: './sign-in-card.component.html',
     styleUrls: ['./sign-in-card.component.scss'],
+    standalone: false
 })
 export class SignInCardComponent {
     constructor(

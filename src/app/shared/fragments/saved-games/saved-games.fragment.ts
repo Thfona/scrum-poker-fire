@@ -25,6 +25,7 @@ import { SNACKBAR_CONFIGURATION } from 'src/app/shared/constants/snackbar-config
     templateUrl: './saved-games.fragment.html',
     styleUrls: ['./saved-games.fragment.scss'],
     providers: [GamesService],
+    standalone: false
 })
 export class SavedGamesFragment implements OnInit, OnDestroy {
   @ViewChild('tablePaginator') paginator: MatPaginator;

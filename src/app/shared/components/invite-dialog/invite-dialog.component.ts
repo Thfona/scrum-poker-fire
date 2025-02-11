@@ -6,6 +6,7 @@ import { InviteDialogContentComponent } from './invite-dialog-content/invite-dia
 @Component({
     selector: 'app-invite-dialog-component',
     template: '',
+    standalone: false
 })
 export class InviteDialogComponent implements OnDestroy {
     private dialogSubscription: Subscription;

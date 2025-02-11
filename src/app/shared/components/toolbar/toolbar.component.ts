@@ -13,6 +13,7 @@ import { SNACKBAR_CONFIGURATION } from '../../constants/snackbar-configuration.c
     selector: 'app-toolbar-component',
     templateUrl: './toolbar.component.html',
     styleUrls: ['./toolbar.component.scss'],
+    standalone: false
 })
 export class ToolbarComponent {
   @ViewChild('deleteAccountDialog') deleteAccountDialog: DialogComponent;

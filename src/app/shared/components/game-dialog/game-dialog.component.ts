@@ -10,6 +10,7 @@ import { DOMAIN } from '../../constants/domain.constant';
 @Component({
     selector: 'app-game-dialog-component',
     template: '',
+    standalone: false
 })
 export class GameDialogComponent implements OnDestroy {
   @Input() data: GameDialogDataInterface;

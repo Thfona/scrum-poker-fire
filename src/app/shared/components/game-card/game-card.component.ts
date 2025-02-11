@@ -4,6 +4,7 @@ import { Component, Input } from '@angular/core';
     selector: 'app-game-card-component',
     templateUrl: 'game-card.component.html',
     styleUrls: ['game-card.component.scss'],
+    standalone: false
 })
 export class GameCardComponent {
   @Input() color: 'primary' | 'accent' | 'white' | 'grey';

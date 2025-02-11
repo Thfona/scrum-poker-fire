@@ -38,6 +38,7 @@ import { DOMAIN } from 'src/app/shared/constants/domain.constant';
     templateUrl: './play.page.html',
     styleUrls: ['./play.page.scss'],
     providers: [GamesService, SidenavService, ViewportService],
+    standalone: false
 })
 export class PlayPage implements OnInit, OnDestroy {
   @ViewChild('editGameDialog') editGameDialog: GameDialogComponent;
