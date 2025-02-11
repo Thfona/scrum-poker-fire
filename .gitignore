@@ -40,4 +40,5 @@ yarn-error.log
 testem.log
 /typings
 *.cache
+*.log
 /.angular
