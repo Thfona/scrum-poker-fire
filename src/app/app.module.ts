@@ -4,8 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgProgressModule } from 'ngx-progressbar';
 import { NgProgressRouterModule } from 'ngx-progressbar/router';
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { windowProviders } from './shared/services/window.service';
@@ -13,8 +14,6 @@ import { environment } from 'src/environments/environment';
 import { AppComponent } from './app.component';
 
 const modules = [
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
@@ -24,6 +23,9 @@ const modules = [
 ];
 
 const providers = [
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
     provideHttpClient(),
     windowProviders,
 ];

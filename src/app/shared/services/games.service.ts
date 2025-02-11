@@ -1,6 +1,20 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
-import firebase from 'firebase/compat/app';
+import {
+    collection,
+    collectionData,
+    CollectionReference,
+    deleteDoc,
+    doc,
+    docData,
+    DocumentReference,
+    Firestore,
+    orderBy,
+    query,
+    setDoc,
+    updateDoc,
+    where,
+} from '@angular/fire/firestore';
+import { arrayUnion, arrayRemove } from 'firebase/firestore';
 import { FormGameInterface } from '../interfaces/form-game.interface';
 import { GameInterface } from '../interfaces/game.interface';
 import { GameSessionUserInterface } from '../interfaces/game-session-user.interface';
@@ -15,14 +29,14 @@ export class GamesService {
     public latestCreatedGameId: string;
 
     constructor(
-    private readonly angularFirestore: AngularFirestore,
-    private readonly authService: AuthService,
+        private readonly firestore: Firestore,
+        private readonly authService: AuthService,
     ) {}
 
     public getGame(gameId: string) {
-        const GAME_DOCUMENT: AngularFirestoreDocument<GameInterface> = this.angularFirestore.doc(`/games/${gameId}`);
+        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<GameInterface>;
 
-        const GAME = GAME_DOCUMENT.valueChanges();
+        const GAME = docData(GAME_DOCUMENT);
 
         return GAME;
     }
@@ -30,14 +44,11 @@ export class GamesService {
     public getGames() {
         const USER_ID = this.authService.user.uid;
 
-        const GAMES_COLLECTION: AngularFirestoreCollection<GameInterface> = this.angularFirestore.collection(
-            'games',
-            (ref) => {
-                return ref.where('ownerId', '==', USER_ID).orderBy('creationDate', 'desc');
-            },
-        );
+        const GAMES_COLLECTION = collection(this.firestore, 'games') as CollectionReference<GameInterface>;
 
-        const GAMES = GAMES_COLLECTION.valueChanges();
+        const gamesQuery = query(GAMES_COLLECTION, where('ownerId', '==', USER_ID), orderBy('creationDate', 'desc'));
+
+        const GAMES = collectionData(gamesQuery);
 
         return GAMES;
     }
@@ -66,100 +77,98 @@ export class GamesService {
             bannedUsers: [],
         };
 
-        const GAMES_COLLECTION: AngularFirestoreCollection<GameInterface> = this.angularFirestore.collection('games');
-
-        return GAMES_COLLECTION.doc(GAME_ID).set(GAME);
+        return setDoc(doc(this.firestore, 'games', GAME_ID), GAME);
     }
 
     public updateGame(gameId: string, data: FormGameInterface) {
-        const GAME_DOCUMENT: AngularFirestoreDocument<GameInterface> = this.angularFirestore.doc(`/games/${gameId}`);
+        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<GameInterface>;
 
-        return GAME_DOCUMENT.update({ ...data });
+        return updateDoc(GAME_DOCUMENT, { ...data });
     }
 
     public deleteGame(gameId: string) {
-        const GAME_DOCUMENT: AngularFirestoreDocument<GameInterface> = this.angularFirestore.doc(`/games/${gameId}`);
+        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<GameInterface>;
 
-        return GAME_DOCUMENT.delete();
+        return deleteDoc(GAME_DOCUMENT);
     }
 
     public updateAuthorizedUsers(gameId: string, userId: string, operation: 'add' | 'remove') {
-        const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
+        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
 
         if (operation === 'add') {
-            return GAME_DOCUMENT.update({ authorizedUsers: firebase.firestore.FieldValue.arrayUnion(userId) });
+            return updateDoc(GAME_DOCUMENT, { authorizedUsers: arrayUnion(userId) });
         } else {
-            return GAME_DOCUMENT.update({ authorizedUsers: firebase.firestore.FieldValue.arrayRemove(userId) });
+            return updateDoc(GAME_DOCUMENT, { authorizedUsers: arrayRemove(userId) });
         }
     }
 
     public updateBannedUsers(gameId: string, userId: string, operation: 'add' | 'remove') {
-        const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
+        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
 
         if (operation === 'add') {
-            return GAME_DOCUMENT.update({ bannedUsers: firebase.firestore.FieldValue.arrayUnion(userId) });
+            return updateDoc(GAME_DOCUMENT, { bannedUsers: arrayUnion(userId) });
         } else {
-            return GAME_DOCUMENT.update({ bannedUsers: firebase.firestore.FieldValue.arrayRemove(userId) });
+            return updateDoc(GAME_DOCUMENT, { bannedUsers: arrayRemove(userId) });
         }
     }
 
     public updateStories(gameId: string, story: StoryInterface, operation: 'add' | 'remove') {
-        const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
+        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
 
         if (operation === 'add') {
-            return GAME_DOCUMENT.update({ stories: firebase.firestore.FieldValue.arrayUnion(story) });
+            return updateDoc(GAME_DOCUMENT, { stories: arrayUnion(story) });
         } else {
-            return GAME_DOCUMENT.update({ stories: firebase.firestore.FieldValue.arrayRemove(story) });
+            return updateDoc(GAME_DOCUMENT, { stories: arrayRemove(story) });
         }
     }
 
     public updateStoriesList(gameId: string, stories: StoryInterface[]) {
-        const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
+        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
 
-        return GAME_DOCUMENT.update({ stories });
+        return updateDoc(GAME_DOCUMENT, { stories });
     }
 
     public updateIsActive(gameId: string, isActive: boolean) {
-        const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
+        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
 
-        return GAME_DOCUMENT.update({ 'session.isActive': isActive });
+        return updateDoc(GAME_DOCUMENT, { 'session.isActive': isActive });
     }
 
     public updateHasStarted(gameId: string, hasStarted: boolean) {
-        const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
+        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
 
-        return GAME_DOCUMENT.update({ 'session.hasStarted': hasStarted });
+        return updateDoc(GAME_DOCUMENT, { 'session.hasStarted': hasStarted });
     }
 
     public updateCurrentStory(gameId: string, currentStoryId: string) {
-        const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
+        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
 
-        return GAME_DOCUMENT.update({ 'session.currentStoryId': currentStoryId });
+        return updateDoc(GAME_DOCUMENT, { 'session.currentStoryId': currentStoryId });
     }
 
     public updateUsers(gameId: string, user: GameSessionUserInterface, operation: 'add' | 'remove') {
-        const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
+        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
 
         if (operation === 'add') {
-            return GAME_DOCUMENT.update({ 'session.users': firebase.firestore.FieldValue.arrayUnion(user) });
+            return updateDoc(GAME_DOCUMENT, { 'session.users': arrayUnion(user) });
         } else {
-            return GAME_DOCUMENT.update({ 'session.users': firebase.firestore.FieldValue.arrayRemove(user) });
+            return updateDoc(GAME_DOCUMENT, { 'session.users': arrayRemove(user) });
         }
     }
 
     public updateVotes(gameId: string, vote: GameVoteInterface, operation: 'add' | 'remove') {
-        const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
+        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
 
         if (operation === 'add') {
-            return GAME_DOCUMENT.update({ 'session.votes': firebase.firestore.FieldValue.arrayUnion(vote) });
+            return updateDoc(GAME_DOCUMENT, { 'session.votes': arrayUnion(vote) });
         } else {
-            return GAME_DOCUMENT.update({ 'session.votes': firebase.firestore.FieldValue.arrayRemove(vote) });
+            return updateDoc(GAME_DOCUMENT, { 'session.votes': arrayRemove(vote) });
         }
     }
 
     public updateVotesList(gameId: string, votes: GameVoteInterface[]) {
-        const GAME_DOCUMENT: AngularFirestoreDocument<any> = this.angularFirestore.doc(`/games/${gameId}`);
+        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
 
-        return GAME_DOCUMENT.update({ 'session.votes': votes });
+        return updateDoc(GAME_DOCUMENT, { 'session.votes': votes });
     }
 }

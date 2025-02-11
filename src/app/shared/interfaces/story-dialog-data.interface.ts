@@ -4,4 +4,5 @@ export interface StoryDialogDataInterface {
   title: string;
   formData: FormStoryInterface;
   isEditOperation: boolean;
+  gameHasStarted: boolean;
 }

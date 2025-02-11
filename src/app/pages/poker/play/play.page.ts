@@ -367,6 +367,7 @@ export class PlayPage implements OnInit, OnDestroy {
               name: '',
           },
           isEditOperation: false,
+          gameHasStarted: this.game.session.hasStarted,
       };
 
       this.storyDialog.data = CREATE_STORY_DIALOG_DATA;
@@ -386,6 +387,7 @@ export class PlayPage implements OnInit, OnDestroy {
                   score: story.score,
               },
               isEditOperation: true,
+              gameHasStarted: this.game.session.hasStarted,
           };
 
           this.storyDialog.data = EDIT_STORY_DIALOG_DATA;

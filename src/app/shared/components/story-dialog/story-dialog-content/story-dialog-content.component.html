@@ -38,7 +38,7 @@
 
     <button
       mat-button
-      *ngIf="data.isEditOperation"
+      *ngIf="data.isEditOperation && data.gameHasStarted"
       [mat-dialog-close]="goToResult"
       color="primary"
       class="action-button"
