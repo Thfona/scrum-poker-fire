@@ -7,7 +7,7 @@ import { DialogContentComponent } from './dialog-content/dialog-content.componen
 @Component({
     selector: 'app-dialog-component',
     template: '',
-    standalone: false
+    standalone: false,
 })
 export class DialogComponent implements OnDestroy {
   @Input() data: DialogDataInterface;

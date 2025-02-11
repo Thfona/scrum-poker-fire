@@ -7,7 +7,7 @@ import { RemoveUserDialogResultInterface } from 'src/app/shared/interfaces/remov
     selector: 'app-remove-user-dialog-content-component',
     templateUrl: './remove-user-dialog-content.component.html',
     styleUrls: ['./remove-user-dialog-content.component.scss'],
-    standalone: false
+    standalone: false,
 })
 export class RemoveUserDialogContentComponent {
     public cancelResult: RemoveUserDialogResultInterface = {

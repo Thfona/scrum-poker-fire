@@ -4,7 +4,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     selector: 'app-card-component',
     templateUrl: './card.component.html',
     styleUrls: ['./card.component.scss'],
-    standalone: false
+    standalone: false,
 })
 export class CardComponent {
   @Input() isLoading: boolean;

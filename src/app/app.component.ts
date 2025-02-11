@@ -9,7 +9,7 @@ import { UserService } from './shared/services/user.service';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    standalone: false
+    standalone: false,
 })
 export class AppComponent implements OnInit, OnDestroy {
     private routerEventsSubscription: Subscription;

@@ -4,7 +4,7 @@ import { Component, Input } from '@angular/core';
     selector: 'app-error-component',
     templateUrl: './error.component.html',
     styleUrls: ['./error.component.scss'],
-    standalone: false
+    standalone: false,
 })
 export class ErrorComponent {
   @Input() center = true;

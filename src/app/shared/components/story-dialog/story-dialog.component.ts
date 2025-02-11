@@ -9,7 +9,7 @@ import { StoryDialogContentComponent } from './story-dialog-content/story-dialog
 @Component({
     selector: 'app-story-dialog-component',
     template: '',
-    standalone: false
+    standalone: false,
 })
 export class StoryDialogComponent implements OnDestroy {
   @Input() data: StoryDialogDataInterface;

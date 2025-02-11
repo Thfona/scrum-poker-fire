@@ -8,7 +8,7 @@ import { RemoveUserDialogContentComponent } from './remove-user-dialog-content/r
 @Component({
     selector: 'app-remove-user-dialog-component',
     template: '',
-    standalone: false
+    standalone: false,
 })
 export class RemoveUserDialogComponent implements OnDestroy {
   @Input() data: RemoveUserDialogDataInterface;

@@ -8,7 +8,7 @@ import { SNACKBAR_CONFIGURATION } from 'src/app/shared/constants/snackbar-config
     selector: 'app-invite-dialog-content-component',
     templateUrl: './invite-dialog-content.component.html',
     styleUrls: ['./invite-dialog-content.component.scss'],
-    standalone: false
+    standalone: false,
 })
 export class InviteDialogContentComponent {
   @ViewChild('linkInput') linkInput: ElementRef;

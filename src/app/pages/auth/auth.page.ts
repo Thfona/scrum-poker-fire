@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
     selector: 'app-auth-page',
     templateUrl: './auth.page.html',
     styleUrls: ['./auth.page.scss'],
-    standalone: false
+    standalone: false,
 })
 export class AuthPage {
     constructor(public readonly authService: AuthService) {}
