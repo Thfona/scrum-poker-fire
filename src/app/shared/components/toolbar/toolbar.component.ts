@@ -10,9 +10,9 @@ import { SNACKBAR_ACTION } from '../../constants/snackbar-action.constant';
 import { SNACKBAR_CONFIGURATION } from '../../constants/snackbar-configuration.constant';
 
 @Component({
-  selector: 'app-toolbar-component',
-  templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss'],
+    selector: 'app-toolbar-component',
+    templateUrl: './toolbar.component.html',
+    styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent {
   @ViewChild('deleteAccountDialog') deleteAccountDialog: DialogComponent;
@@ -27,43 +27,43 @@ export class ToolbarComponent {
   ) {}
 
   public openGitHubRepository() {
-    window.open(this.gitHubRepositoryLink, '_blank');
+      window.open(this.gitHubRepositoryLink, '_blank');
   }
 
   public handleDeleteAccountClick() {
-    const DELETE_ACCOUNT_DIALOG_DATA: DialogDataInterface = {
-      title: this.translocoService.translate('DELETE_ACCOUNT'),
-      content: this.translocoService.translate('DELETE_ACCOUNT_CONTENT'),
-      confirmButtonText: this.translocoService.translate('DELETE_ACCOUNT_BUTTON_TEXT'),
-      confirmButtonColor: 'warn',
-    };
+      const DELETE_ACCOUNT_DIALOG_DATA: DialogDataInterface = {
+          title: this.translocoService.translate('DELETE_ACCOUNT'),
+          content: this.translocoService.translate('DELETE_ACCOUNT_CONTENT'),
+          confirmButtonText: this.translocoService.translate('DELETE_ACCOUNT_BUTTON_TEXT'),
+          confirmButtonColor: 'warn',
+      };
 
-    this.deleteAccountDialog.data = DELETE_ACCOUNT_DIALOG_DATA;
+      this.deleteAccountDialog.data = DELETE_ACCOUNT_DIALOG_DATA;
 
-    this.deleteAccountDialog.openDialog();
+      this.deleteAccountDialog.openDialog();
   }
 
   public handleDeleteAccountDialogConfirmation() {
-    try {
-      this.userService.deleteUserAccount();
+      try {
+          this.userService.deleteUserAccount();
 
-      this.authService.signOut();
-    } catch (error) {
+          this.authService.signOut();
+      } catch (error) {
+          this.snackBarService.open(
+              this.translocoService.translate('DELETE_ACCOUNT_ERROR'),
+              this.translocoService.translate(SNACKBAR_ACTION),
+              SNACKBAR_CONFIGURATION,
+          );
+
+          console.error(error);
+
+          return;
+      }
+
       this.snackBarService.open(
-        this.translocoService.translate('DELETE_ACCOUNT_ERROR'),
-        this.translocoService.translate(SNACKBAR_ACTION),
-        SNACKBAR_CONFIGURATION,
+          this.translocoService.translate('DELETE_ACCOUNT_SUCCESS'),
+          this.translocoService.translate(SNACKBAR_ACTION),
+          SNACKBAR_CONFIGURATION,
       );
-
-      console.error(error);
-
-      return;
-    }
-
-    this.snackBarService.open(
-      this.translocoService.translate('DELETE_ACCOUNT_SUCCESS'),
-      this.translocoService.translate(SNACKBAR_ACTION),
-      SNACKBAR_CONFIGURATION,
-    );
   }
 }

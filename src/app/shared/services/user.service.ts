@@ -5,39 +5,39 @@ import { UserInterface } from '../interfaces/user.interface';
 import { AuthService } from './auth.service';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class UserService {
-  private defaultGameSettings: GameSettingsInterface;
+    private defaultGameSettings: GameSettingsInterface;
 
-  get defaultGameSettingsState() {
-    return this.defaultGameSettings;
-  }
+    get defaultGameSettingsState() {
+        return this.defaultGameSettings;
+    }
 
-  set defaultGameSettingsState(value: GameSettingsInterface) {
-    this.defaultGameSettings = value;
-  }
+    set defaultGameSettingsState(value: GameSettingsInterface) {
+        this.defaultGameSettings = value;
+    }
 
-  constructor(
+    constructor(
     private readonly angularFirestore: AngularFirestore,
     private readonly authService: AuthService,
-  ) {}
+    ) {}
 
-  public updateUserDefaultGameSettings(gameSettings: GameSettingsInterface) {
-    const USER_ID = this.authService.user.uid;
+    public updateUserDefaultGameSettings(gameSettings: GameSettingsInterface) {
+        const USER_ID = this.authService.user.uid;
 
-    const USER_DOCUMENT: AngularFirestoreDocument<UserInterface> = this.angularFirestore.doc(`/users/${USER_ID}`);
+        const USER_DOCUMENT: AngularFirestoreDocument<UserInterface> = this.angularFirestore.doc(`/users/${USER_ID}`);
 
-    this.defaultGameSettings = gameSettings;
+        this.defaultGameSettings = gameSettings;
 
-    return USER_DOCUMENT.update({ defaultGameSettings: gameSettings });
-  }
+        return USER_DOCUMENT.update({ defaultGameSettings: gameSettings });
+    }
 
-  public deleteUserAccount() {
-    const USER_ID = this.authService.user.uid;
+    public deleteUserAccount() {
+        const USER_ID = this.authService.user.uid;
 
-    const USER_DOCUMENT: AngularFirestoreDocument<UserInterface> = this.angularFirestore.doc(`/users/${USER_ID}`);
+        const USER_DOCUMENT: AngularFirestoreDocument<UserInterface> = this.angularFirestore.doc(`/users/${USER_ID}`);
 
-    return USER_DOCUMENT.delete();
-  }
+        return USER_DOCUMENT.delete();
+    }
 }

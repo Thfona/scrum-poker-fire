@@ -1,12 +1,12 @@
 import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  HostListener,
-  Inject,
-  OnInit,
-  ViewChild,
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    HostListener,
+    Inject,
+    OnInit,
+    ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -20,9 +20,9 @@ import { CardSetOption } from 'src/app/shared/types/card-set-option.type';
 import { DOMAIN } from 'src/app/shared/constants/domain.constant';
 
 @Component({
-  selector: 'app-game-dialog-content-component',
-  templateUrl: './game-dialog-content.component.html',
-  styleUrls: ['./game-dialog-content.component.scss'],
+    selector: 'app-game-dialog-content-component',
+    templateUrl: './game-dialog-content.component.html',
+    styleUrls: ['./game-dialog-content.component.scss'],
 })
 export class GameDialogContentComponent implements OnInit, AfterViewInit {
   @ViewChild('gameName') gameName: ElementRef;
@@ -44,28 +44,28 @@ export class GameDialogContentComponent implements OnInit, AfterViewInit {
   public saveAsDefaultSettings = false;
 
   public get cancelResult(): GameDialogResultInterface {
-    return {
-      save: false,
-      start: false,
-      formValue: null,
-      saveAsDefaultSettings: false,
-    };
+      return {
+          save: false,
+          start: false,
+          formValue: null,
+          saveAsDefaultSettings: false,
+      };
   }
 
   public get saveResult(): GameDialogResultInterface {
-    return {
-      save: true,
-      start: false,
-      formValue: this.formGroup.value,
-      saveAsDefaultSettings: this.saveAsDefaultSettings,
-    };
+      return {
+          save: true,
+          start: false,
+          formValue: this.formGroup.value,
+          saveAsDefaultSettings: this.saveAsDefaultSettings,
+      };
   }
 
   public get saveAndStartResult(): GameDialogResultInterface {
-    return {
-      ...this.saveResult,
-      start: true,
-    };
+      return {
+          ...this.saveResult,
+          start: true,
+      };
   }
 
   constructor(
@@ -76,53 +76,53 @@ export class GameDialogContentComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.voteSkipOptions = DOMAIN.voteSkipOptions;
-    this.cardSets = DOMAIN.cardSetOptions;
+      this.voteSkipOptions = DOMAIN.voteSkipOptions;
+      this.cardSets = DOMAIN.cardSetOptions;
 
-    this.formGroup = new FormGroup({
-      name: new FormControl(this.data.formData.name, Validators.required),
-      description: new FormControl(this.data.formData.description),
-      teamVelocity: new FormControl(this.data.formData.teamVelocity, Validators.required),
-      shareVelocity: new FormControl(this.data.formData.shareVelocity, Validators.required),
-      isPrivate: new FormControl(DOMAIN.defaultGameSettings.isPrivate, Validators.required), // TODO(backlog): Enable once private rooms are implemented
-      cardSet: new FormControl(this.data.formData.cardSet, Validators.required),
-      autoFlip: new FormControl(this.data.formData.autoFlip, Validators.required),
-      allowVoteChangeAfterReveal: new FormControl(this.data.formData.allowVoteChangeAfterReveal, Validators.required),
-      calculateScore: new FormControl(this.data.formData.calculateScore, Validators.required),
-      storyTimer: new FormControl(DOMAIN.defaultGameSettings.storyTimer, Validators.required), // TODO(backlog): Enable once story timers are implemented
-      storyTimerMinutes: new FormControl(DOMAIN.defaultGameSettings.storyTimerMinutes), // TODO(backlog): Enable once story timers are implemented
-    });
+      this.formGroup = new FormGroup({
+          name: new FormControl(this.data.formData.name, Validators.required),
+          description: new FormControl(this.data.formData.description),
+          teamVelocity: new FormControl(this.data.formData.teamVelocity, Validators.required),
+          shareVelocity: new FormControl(this.data.formData.shareVelocity, Validators.required),
+          isPrivate: new FormControl(DOMAIN.defaultGameSettings.isPrivate, Validators.required), // TODO(backlog): Enable once private rooms are implemented
+          cardSet: new FormControl(this.data.formData.cardSet, Validators.required),
+          autoFlip: new FormControl(this.data.formData.autoFlip, Validators.required),
+          allowVoteChangeAfterReveal: new FormControl(this.data.formData.allowVoteChangeAfterReveal, Validators.required),
+          calculateScore: new FormControl(this.data.formData.calculateScore, Validators.required),
+          storyTimer: new FormControl(DOMAIN.defaultGameSettings.storyTimer, Validators.required), // TODO(backlog): Enable once story timers are implemented
+          storyTimerMinutes: new FormControl(DOMAIN.defaultGameSettings.storyTimerMinutes), // TODO(backlog): Enable once story timers are implemented
+      });
   }
 
   ngAfterViewInit() {
-    this.gameName.nativeElement.focus();
-    this.changeDetector.detectChanges();
+      this.gameName.nativeElement.focus();
+      this.changeDetector.detectChanges();
   }
 
   @HostListener('window:keyup.enter')
   onEnter() {
-    if (this.formGroup.valid) {
-      this.dialogService.currentDialogReference.close(this.saveResult);
-    }
+      if (this.formGroup.valid) {
+          this.dialogService.currentDialogReference.close(this.saveResult);
+      }
   }
 
   public setSaveAsDefaultSettings() {
-    this.saveAsDefaultSettings = !this.saveAsDefaultSettings;
+      this.saveAsDefaultSettings = !this.saveAsDefaultSettings;
   }
 
   public getCardSetDisplayValues(cards: GameCardInterface[]) {
-    let cardDisplayValues = '(';
+      let cardDisplayValues = '(';
 
-    cards.map((card) => {
-      cardDisplayValues = cardDisplayValues.concat(this.translocoService.translate(card.displayValue).concat(', '));
-    });
+      cards.map((card) => {
+          cardDisplayValues = cardDisplayValues.concat(this.translocoService.translate(card.displayValue).concat(', '));
+      });
 
-    this.voteSkipOptions.map((item) => {
-      cardDisplayValues = cardDisplayValues.concat(this.translocoService.translate(item.displayValue).concat(', '));
-    });
+      this.voteSkipOptions.map((item) => {
+          cardDisplayValues = cardDisplayValues.concat(this.translocoService.translate(item.displayValue).concat(', '));
+      });
 
-    cardDisplayValues = cardDisplayValues.slice(0, -2).concat(')');
+      cardDisplayValues = cardDisplayValues.slice(0, -2).concat(')');
 
-    return cardDisplayValues;
+      return cardDisplayValues;
   }
 }

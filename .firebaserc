@@ -1,14 +1,14 @@
 {
-  "projects": {
-    "default": "scrum-poker-fire"
-  },
-  "targets": {
-    "scrum-poker-fire": {
-      "hosting": {
-        "scrum-poker-fire": [
-          "scrum-poker-fire"
-        ]
-      }
+    "projects": {
+        "default": "scrum-poker-fire"
+    },
+    "targets": {
+        "scrum-poker-fire": {
+            "hosting": {
+                "scrum-poker-fire": [
+                    "scrum-poker-fire"
+                ]
+            }
+        }
     }
-  }
 }

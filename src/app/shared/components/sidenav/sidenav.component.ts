@@ -3,10 +3,10 @@ import { SidenavService } from '../../services/sidenav.service';
 import { SLIDE_ANIMATION } from 'src/app/shared/animations/slide.animation';
 
 @Component({
-  selector: 'app-sidenav-component',
-  templateUrl: './sidenav.component.html',
-  styleUrls: ['./sidenav.component.scss'],
-  animations: [SLIDE_ANIMATION],
+    selector: 'app-sidenav-component',
+    templateUrl: './sidenav.component.html',
+    styleUrls: ['./sidenav.component.scss'],
+    animations: [SLIDE_ANIMATION],
 })
 export class SidenavComponent {
   @Input() shouldDisplayOverlay: boolean;
@@ -15,6 +15,6 @@ export class SidenavComponent {
   constructor(public readonly sidenavService: SidenavService) {}
 
   public toggle() {
-    this.sidenavService.toggleSidenav();
+      this.sidenavService.toggleSidenav();
   }
 }

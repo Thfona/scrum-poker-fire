@@ -9,80 +9,80 @@ import { UserInterface } from '../interfaces/user.interface';
 import { UserAuthDataInterface } from '../interfaces/user-auth-data.interface';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class AuthService {
-  public user: UserAuthDataInterface;
-  public userDocument: Observable<UserInterface>;
-  public isSigningIn: boolean;
-  public isWaitingPopUp: boolean;
-  public routeAfterSignIn = '/home';
+    public user: UserAuthDataInterface;
+    public userDocument: Observable<UserInterface>;
+    public isSigningIn: boolean;
+    public isWaitingPopUp: boolean;
+    public routeAfterSignIn = '/home';
 
-  constructor(
+    constructor(
     private readonly angularFireAuth: AngularFireAuth,
     private readonly angularFirestore: AngularFirestore,
     private readonly router: Router,
-  ) {
-    this.userDocument = this.angularFireAuth.authState.pipe(
-      switchMap((user) => {
-        if (user) {
-          this.user = user;
+    ) {
+        this.userDocument = this.angularFireAuth.authState.pipe(
+            switchMap((user) => {
+                if (user) {
+                    this.user = user;
 
-          return this.angularFirestore.doc<UserInterface>(`users/${user.uid}`).valueChanges();
-        } else {
-          this.user = null;
+                    return this.angularFirestore.doc<UserInterface>(`users/${user.uid}`).valueChanges();
+                } else {
+                    this.user = null;
 
-          return of(null);
-        }
-      }),
-    );
-  }
-
-  public async signIn() {
-    this.isSigningIn = true;
-    this.isWaitingPopUp = true;
-
-    const PROVIDER = new firebase.auth.GoogleAuthProvider();
-    let credential: firebase.auth.UserCredential;
-
-    try {
-      credential = await this.angularFireAuth.signInWithPopup(PROVIDER);
-    } catch (error) {
-      this.isSigningIn = false;
-      this.isWaitingPopUp = false;
-
-      console.error(error);
-
-      return;
+                    return of(null);
+                }
+            }),
+        );
     }
 
-    this.isWaitingPopUp = false;
+    public async signIn() {
+        this.isSigningIn = true;
+        this.isWaitingPopUp = true;
 
-    await this.updateUserData(credential.user);
+        const PROVIDER = new firebase.auth.GoogleAuthProvider();
+        let credential: firebase.auth.UserCredential;
 
-    this.isSigningIn = false;
+        try {
+            credential = await this.angularFireAuth.signInWithPopup(PROVIDER);
+        } catch (error) {
+            this.isSigningIn = false;
+            this.isWaitingPopUp = false;
 
-    return this.router.navigate([this.routeAfterSignIn]);
-  }
+            console.error(error);
 
-  public async signOut() {
-    this.routeAfterSignIn = '/home';
+            return;
+        }
 
-    await this.angularFireAuth.signOut();
+        this.isWaitingPopUp = false;
 
-    return this.router.navigate(['/auth']);
-  }
+        await this.updateUserData(credential.user);
 
-  private updateUserData({ uid, email, displayName, photoURL }: UserInterface) {
-    const USER_DOCUMENT: AngularFirestoreDocument<UserInterface> = this.angularFirestore.doc(`users/${uid}`);
+        this.isSigningIn = false;
 
-    const DATA = {
-      uid,
-      email,
-      displayName,
-      photoURL,
-    };
+        return this.router.navigate([this.routeAfterSignIn]);
+    }
 
-    return USER_DOCUMENT.set(DATA, { merge: true });
-  }
+    public async signOut() {
+        this.routeAfterSignIn = '/home';
+
+        await this.angularFireAuth.signOut();
+
+        return this.router.navigate(['/auth']);
+    }
+
+    private updateUserData({ uid, email, displayName, photoURL }: UserInterface) {
+        const USER_DOCUMENT: AngularFirestoreDocument<UserInterface> = this.angularFirestore.doc(`users/${uid}`);
+
+        const DATA = {
+            uid,
+            email,
+            displayName,
+            photoURL,
+        };
+
+        return USER_DOCUMENT.set(DATA, { merge: true });
+    }
 }

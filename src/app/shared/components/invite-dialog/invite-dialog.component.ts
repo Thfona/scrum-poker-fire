@@ -4,25 +4,25 @@ import { Subscription } from 'rxjs';
 import { InviteDialogContentComponent } from './invite-dialog-content/invite-dialog-content.component';
 
 @Component({
-  selector: 'app-invite-dialog-component',
-  template: '',
+    selector: 'app-invite-dialog-component',
+    template: '',
 })
 export class InviteDialogComponent implements OnDestroy {
-  private dialogSubscription: Subscription;
+    private dialogSubscription: Subscription;
 
-  constructor(private readonly matDialog: MatDialog) {}
+    constructor(private readonly matDialog: MatDialog) {}
 
-  ngOnDestroy() {
-    if (this.dialogSubscription) {
-      this.dialogSubscription.unsubscribe();
+    ngOnDestroy() {
+        if (this.dialogSubscription) {
+            this.dialogSubscription.unsubscribe();
+        }
     }
-  }
 
-  public openDialog() {
-    const DIALOG_REFERENCE = this.matDialog.open(InviteDialogContentComponent, {
-      autoFocus: false,
-    });
+    public openDialog() {
+        const DIALOG_REFERENCE = this.matDialog.open(InviteDialogContentComponent, {
+            autoFocus: false,
+        });
 
-    this.dialogSubscription = DIALOG_REFERENCE.afterClosed().subscribe();
-  }
+        this.dialogSubscription = DIALOG_REFERENCE.afterClosed().subscribe();
+    }
 }

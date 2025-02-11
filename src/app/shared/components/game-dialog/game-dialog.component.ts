@@ -8,8 +8,8 @@ import { GameDialogContentComponent } from './game-dialog-content/game-dialog-co
 import { DOMAIN } from '../../constants/domain.constant';
 
 @Component({
-  selector: 'app-game-dialog-component',
-  template: '',
+    selector: 'app-game-dialog-component',
+    template: '',
 })
 export class GameDialogComponent implements OnDestroy {
   @Input() data: GameDialogDataInterface;
@@ -22,29 +22,29 @@ export class GameDialogComponent implements OnDestroy {
   ) {}
 
   ngOnDestroy() {
-    if (this.dialogSubscription) {
-      this.dialogSubscription.unsubscribe();
-    }
+      if (this.dialogSubscription) {
+          this.dialogSubscription.unsubscribe();
+      }
   }
 
   public openDialog() {
-    const DIALOG_REFERENCE = this.matDialog.open(GameDialogContentComponent, {
-      data: this.data,
-      autoFocus: false,
-    });
+      const DIALOG_REFERENCE = this.matDialog.open(GameDialogContentComponent, {
+          data: this.data,
+          autoFocus: false,
+      });
 
-    this.dialogService.currentDialogReference = DIALOG_REFERENCE;
+      this.dialogService.currentDialogReference = DIALOG_REFERENCE;
 
-    this.dialogSubscription = DIALOG_REFERENCE.afterClosed().subscribe((result: GameDialogResultInterface) => {
-      this.dialogService.currentDialogReference = undefined;
+      this.dialogSubscription = DIALOG_REFERENCE.afterClosed().subscribe((result: GameDialogResultInterface) => {
+          this.dialogService.currentDialogReference = undefined;
 
-      if (result?.save) {
-        if (!result.formValue.storyTimerMinutes) {
-          result.formValue.storyTimerMinutes = DOMAIN.defaultGameSettings.storyTimerMinutes;
-        }
+          if (result?.save) {
+              if (!result.formValue.storyTimerMinutes) {
+                  result.formValue.storyTimerMinutes = DOMAIN.defaultGameSettings.storyTimerMinutes;
+              }
 
-        this.confirmEvent.emit(result);
-      }
-    });
+              this.confirmEvent.emit(result);
+          }
+      });
   }
 }

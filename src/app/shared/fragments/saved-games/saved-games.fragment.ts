@@ -21,10 +21,10 @@ import { SNACKBAR_ACTION } from 'src/app/shared/constants/snackbar-action.consta
 import { SNACKBAR_CONFIGURATION } from 'src/app/shared/constants/snackbar-configuration.constant';
 
 @Component({
-  selector: 'app-saved-games-fragment',
-  templateUrl: './saved-games.fragment.html',
-  styleUrls: ['./saved-games.fragment.scss'],
-  providers: [GamesService],
+    selector: 'app-saved-games-fragment',
+    templateUrl: './saved-games.fragment.html',
+    styleUrls: ['./saved-games.fragment.scss'],
+    providers: [GamesService],
 })
 export class SavedGamesFragment implements OnInit, OnDestroy {
   @ViewChild('tablePaginator') paginator: MatPaginator;
@@ -37,13 +37,13 @@ export class SavedGamesFragment implements OnInit, OnDestroy {
   private hasLoadedFirstTime: boolean;
   private gameDialogOperation: 'create' | 'edit';
   public displayedColumns: string[] = [
-    'name',
-    'description',
-    'cardSet',
-    'numberOfStories',
-    'totalEffort',
-    'creationDate',
-    'options',
+      'name',
+      'description',
+      'cardSet',
+      'numberOfStories',
+      'totalEffort',
+      'creationDate',
+      'options',
   ];
   public games: GameInterface[] = [];
   public dataSource: MatTableDataSource<GameInterface>;
@@ -59,244 +59,244 @@ export class SavedGamesFragment implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.isLoading = true;
+      this.isLoading = true;
 
-    this.gamesSubscription = this.gamesService
-      .getGames()
-      .pipe(
-        tap((games) => {
-          this.hasError = false;
-          this.games = games;
-          this.dataSource = new MatTableDataSource(this.games);
+      this.gamesSubscription = this.gamesService
+          .getGames()
+          .pipe(
+              tap((games) => {
+                  this.hasError = false;
+                  this.games = games;
+                  this.dataSource = new MatTableDataSource(this.games);
 
-          if (!this.hasLoadedFirstTime) {
-            this.isLoading = false;
-            this.hasLoadedFirstTime = true;
-          }
+                  if (!this.hasLoadedFirstTime) {
+                      this.isLoading = false;
+                      this.hasLoadedFirstTime = true;
+                  }
 
-          setTimeout(() => {
-            this.dataSource.paginator = this.paginator;
-          }, 0);
-        }),
-        catchError((error) => {
-          this.hasError = true;
+                  setTimeout(() => {
+                      this.dataSource.paginator = this.paginator;
+                  }, 0);
+              }),
+              catchError((error) => {
+                  this.hasError = true;
 
-          this.isLoading = false;
+                  this.isLoading = false;
 
-          console.error(error);
+                  console.error(error);
 
-          return EMPTY;
-        }),
-      )
-      .subscribe();
+                  return EMPTY;
+              }),
+          )
+          .subscribe();
   }
 
   ngOnDestroy() {
-    if (this.gamesSubscription) {
-      this.gamesSubscription.unsubscribe();
-    }
+      if (this.gamesSubscription) {
+          this.gamesSubscription.unsubscribe();
+      }
   }
 
   private endLoading() {
-    this.isLoading = false;
+      this.isLoading = false;
 
-    setTimeout(() => {
-      this.dataSource.paginator = this.paginator;
-    }, 0);
+      setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+      }, 0);
   }
 
   public applyFilter(event: Event) {
-    clearTimeout(this.timeout);
+      clearTimeout(this.timeout);
 
-    this.timeout = setTimeout(() => {
-      const FILTER_VALUE = (event.target as HTMLInputElement).value;
+      this.timeout = setTimeout(() => {
+          const FILTER_VALUE = (event.target as HTMLInputElement).value;
 
-      this.dataSource.filter = FILTER_VALUE.trim().toLowerCase();
-    }, 600);
+          this.dataSource.filter = FILTER_VALUE.trim().toLowerCase();
+      }, 600);
   }
 
   public calculateTotalGameEffort(stories: StoryInterface[]) {
-    if (!stories.length) {
-      return 0;
-    }
-
-    let total = 0;
-
-    stories.map((story) => {
-      if (story.score) {
-        total += +story.score;
+      if (!stories.length) {
+          return 0;
       }
-    });
 
-    return total;
+      let total = 0;
+
+      stories.map((story) => {
+          if (story.score) {
+              total += +story.score;
+          }
+      });
+
+      return total;
   }
 
   public handleTableRowClick(event: Event, game: GameInterface) {
-    const ELEMENT_TAG = (event.target as HTMLElement).tagName;
+      const ELEMENT_TAG = (event.target as HTMLElement).tagName;
 
-    if (ELEMENT_TAG !== 'BUTTON' && ELEMENT_TAG !== 'MAT-ICON') {
-      this.router.navigate([`/poker/${game.id}`]);
-    }
+      if (ELEMENT_TAG !== 'BUTTON' && ELEMENT_TAG !== 'MAT-ICON') {
+          this.router.navigate([`/poker/${game.id}`]);
+      }
   }
 
   public handleCreateNewGameButtonClick() {
-    this.gameDialogOperation = 'create';
+      this.gameDialogOperation = 'create';
 
-    const DEFAULT_GAME_SETTINGS = this.userService.defaultGameSettingsState || DOMAIN.defaultGameSettings;
+      const DEFAULT_GAME_SETTINGS = this.userService.defaultGameSettingsState || DOMAIN.defaultGameSettings;
 
-    const CREATE_GAME_DIALOG_DATA: GameDialogDataInterface = {
-      title: this.translocoService.translate('CREATE_GAME_TITLE'),
-      formData: {
-        name: '',
-        description: '',
-        ...DEFAULT_GAME_SETTINGS,
-      },
-      shouldDisplaySaveAndStart: true,
-    };
+      const CREATE_GAME_DIALOG_DATA: GameDialogDataInterface = {
+          title: this.translocoService.translate('CREATE_GAME_TITLE'),
+          formData: {
+              name: '',
+              description: '',
+              ...DEFAULT_GAME_SETTINGS,
+          },
+          shouldDisplaySaveAndStart: true,
+      };
 
-    this.gameDialog.data = CREATE_GAME_DIALOG_DATA;
+      this.gameDialog.data = CREATE_GAME_DIALOG_DATA;
 
-    this.gameDialog.openDialog();
+      this.gameDialog.openDialog();
   }
 
   public handleTableRowEditClick(event: Event, game: GameInterface) {
-    event.preventDefault();
-    event.stopPropagation();
+      event.preventDefault();
+      event.stopPropagation();
 
-    this.gameDialogOperation = 'edit';
-    this.gameToEditId = game.id;
+      this.gameDialogOperation = 'edit';
+      this.gameToEditId = game.id;
 
-    const EDIT_GAME_DIALOG_DATA: GameDialogDataInterface = {
-      title: this.translocoService.translate('EDIT_GAME_TITLE', { gameName: game.name }),
-      formData: {
-        name: game.name,
-        description: game.description,
-        teamVelocity: game.teamVelocity,
-        shareVelocity: game.shareVelocity,
-        isPrivate: game.isPrivate,
-        cardSet: game.cardSet,
-        autoFlip: game.autoFlip,
-        allowVoteChangeAfterReveal: game.allowVoteChangeAfterReveal,
-        calculateScore: game.calculateScore,
-        storyTimer: game.storyTimer,
-        storyTimerMinutes: game.storyTimerMinutes,
-      },
-      shouldDisplaySaveAndStart: true,
-    };
+      const EDIT_GAME_DIALOG_DATA: GameDialogDataInterface = {
+          title: this.translocoService.translate('EDIT_GAME_TITLE', { gameName: game.name }),
+          formData: {
+              name: game.name,
+              description: game.description,
+              teamVelocity: game.teamVelocity,
+              shareVelocity: game.shareVelocity,
+              isPrivate: game.isPrivate,
+              cardSet: game.cardSet,
+              autoFlip: game.autoFlip,
+              allowVoteChangeAfterReveal: game.allowVoteChangeAfterReveal,
+              calculateScore: game.calculateScore,
+              storyTimer: game.storyTimer,
+              storyTimerMinutes: game.storyTimerMinutes,
+          },
+          shouldDisplaySaveAndStart: true,
+      };
 
-    this.gameDialog.data = EDIT_GAME_DIALOG_DATA;
+      this.gameDialog.data = EDIT_GAME_DIALOG_DATA;
 
-    this.gameDialog.openDialog();
+      this.gameDialog.openDialog();
   }
 
   public async handleGameDialogConfirmation(gameDialogResult: GameDialogResultInterface) {
-    let hasError = false;
-    this.isLoading = true;
+      let hasError = false;
+      this.isLoading = true;
 
-    let gameId: string;
+      let gameId: string;
 
-    if (this.gameDialogOperation === 'create') {
-      try {
-        await this.gamesService.createGame(gameDialogResult.formValue);
-      } catch (error) {
-        hasError = true;
+      if (this.gameDialogOperation === 'create') {
+          try {
+              await this.gamesService.createGame(gameDialogResult.formValue);
+          } catch (error) {
+              hasError = true;
 
-        this.snackBarService.open(
-          this.translocoService.translate('CREATE_GAME_ERROR'),
-          this.translocoService.translate(SNACKBAR_ACTION),
-          SNACKBAR_CONFIGURATION,
-        );
+              this.snackBarService.open(
+                  this.translocoService.translate('CREATE_GAME_ERROR'),
+                  this.translocoService.translate(SNACKBAR_ACTION),
+                  SNACKBAR_CONFIGURATION,
+              );
 
-        console.error(error);
+              console.error(error);
+          }
+
+          gameId = this.gamesService.latestCreatedGameId;
       }
 
-      gameId = this.gamesService.latestCreatedGameId;
-    }
+      if (this.gameDialogOperation === 'edit') {
+          gameId = this.gameToEditId;
 
-    if (this.gameDialogOperation === 'edit') {
-      gameId = this.gameToEditId;
+          try {
+              await this.gamesService.updateGame(gameId, gameDialogResult.formValue);
+          } catch (error) {
+              hasError = true;
 
-      try {
-        await this.gamesService.updateGame(gameId, gameDialogResult.formValue);
-      } catch (error) {
-        hasError = true;
+              this.snackBarService.open(
+                  this.translocoService.translate('EDIT_GAME_ERROR'),
+                  this.translocoService.translate(SNACKBAR_ACTION),
+                  SNACKBAR_CONFIGURATION,
+              );
 
-        this.snackBarService.open(
-          this.translocoService.translate('EDIT_GAME_ERROR'),
-          this.translocoService.translate(SNACKBAR_ACTION),
-          SNACKBAR_CONFIGURATION,
-        );
-
-        console.error(error);
+              console.error(error);
+          }
       }
-    }
 
-    if (gameDialogResult.saveAsDefaultSettings) {
-      const GAME_SETTINGS: GameSettingsInterface = {
-        teamVelocity: gameDialogResult.formValue.teamVelocity,
-        shareVelocity: gameDialogResult.formValue.shareVelocity,
-        isPrivate: gameDialogResult.formValue.isPrivate,
-        cardSet: gameDialogResult.formValue.cardSet,
-        autoFlip: gameDialogResult.formValue.autoFlip,
-        allowVoteChangeAfterReveal: gameDialogResult.formValue.allowVoteChangeAfterReveal,
-        calculateScore: gameDialogResult.formValue.calculateScore,
-        storyTimer: gameDialogResult.formValue.storyTimer,
-        storyTimerMinutes: gameDialogResult.formValue.storyTimerMinutes,
-      };
+      if (gameDialogResult.saveAsDefaultSettings) {
+          const GAME_SETTINGS: GameSettingsInterface = {
+              teamVelocity: gameDialogResult.formValue.teamVelocity,
+              shareVelocity: gameDialogResult.formValue.shareVelocity,
+              isPrivate: gameDialogResult.formValue.isPrivate,
+              cardSet: gameDialogResult.formValue.cardSet,
+              autoFlip: gameDialogResult.formValue.autoFlip,
+              allowVoteChangeAfterReveal: gameDialogResult.formValue.allowVoteChangeAfterReveal,
+              calculateScore: gameDialogResult.formValue.calculateScore,
+              storyTimer: gameDialogResult.formValue.storyTimer,
+              storyTimerMinutes: gameDialogResult.formValue.storyTimerMinutes,
+          };
 
-      try {
-        await this.userService.updateUserDefaultGameSettings(GAME_SETTINGS);
-      } catch (error) {
-        this.snackBarService.open(
-          this.translocoService.translate('UPDATE_USER_DEFAULT_GAME_SETTINGS_ERROR'),
-          this.translocoService.translate(SNACKBAR_ACTION),
-          SNACKBAR_CONFIGURATION,
-        );
+          try {
+              await this.userService.updateUserDefaultGameSettings(GAME_SETTINGS);
+          } catch (error) {
+              this.snackBarService.open(
+                  this.translocoService.translate('UPDATE_USER_DEFAULT_GAME_SETTINGS_ERROR'),
+                  this.translocoService.translate(SNACKBAR_ACTION),
+                  SNACKBAR_CONFIGURATION,
+              );
 
-        console.error(error);
+              console.error(error);
+          }
       }
-    }
 
-    this.endLoading();
+      this.endLoading();
 
-    if (gameDialogResult.start && !hasError) {
-      this.router.navigate([`/poker/${gameId}`]);
-    }
+      if (gameDialogResult.start && !hasError) {
+          this.router.navigate([`/poker/${gameId}`]);
+      }
   }
 
   public handleTableRowDeleteClick(event: Event, game: GameInterface) {
-    event.preventDefault();
-    event.stopPropagation();
+      event.preventDefault();
+      event.stopPropagation();
 
-    this.gameToDeleteId = game.id;
+      this.gameToDeleteId = game.id;
 
-    const DELETE_GAME_DIALOG_DATA: DialogDataInterface = {
-      title: this.translocoService.translate('DELETE_GAME_TITLE', { gameName: game.name }),
-      content: this.translocoService.translate('DELETE_GAME_CONTENT', { gameName: game.name }),
-      confirmButtonText: this.translocoService.translate('DELETE'),
-      confirmButtonColor: 'warn',
-    };
+      const DELETE_GAME_DIALOG_DATA: DialogDataInterface = {
+          title: this.translocoService.translate('DELETE_GAME_TITLE', { gameName: game.name }),
+          content: this.translocoService.translate('DELETE_GAME_CONTENT', { gameName: game.name }),
+          confirmButtonText: this.translocoService.translate('DELETE'),
+          confirmButtonColor: 'warn',
+      };
 
-    this.deleteGameDialog.data = DELETE_GAME_DIALOG_DATA;
+      this.deleteGameDialog.data = DELETE_GAME_DIALOG_DATA;
 
-    this.deleteGameDialog.openDialog();
+      this.deleteGameDialog.openDialog();
   }
 
   public async handleDeleteGameDialogConfirmation() {
-    this.isLoading = true;
+      this.isLoading = true;
 
-    try {
-      await this.gamesService.deleteGame(this.gameToDeleteId);
-    } catch (error) {
-      this.snackBarService.open(
-        this.translocoService.translate('DELETE_GAME_ERROR'),
-        this.translocoService.translate(SNACKBAR_ACTION),
-        SNACKBAR_CONFIGURATION,
-      );
+      try {
+          await this.gamesService.deleteGame(this.gameToDeleteId);
+      } catch (error) {
+          this.snackBarService.open(
+              this.translocoService.translate('DELETE_GAME_ERROR'),
+              this.translocoService.translate(SNACKBAR_ACTION),
+              SNACKBAR_CONFIGURATION,
+          );
 
-      console.error(error);
-    }
+          console.error(error);
+      }
 
-    this.endLoading();
+      this.endLoading();
   }
 }

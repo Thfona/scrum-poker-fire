@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-game-card-component',
-  templateUrl: 'game-card.component.html',
-  styleUrls: ['game-card.component.scss'],
+    selector: 'app-game-card-component',
+    templateUrl: 'game-card.component.html',
+    styleUrls: ['game-card.component.scss'],
 })
 export class GameCardComponent {
   @Input() color: 'primary' | 'accent' | 'white' | 'grey';
@@ -15,24 +15,24 @@ export class GameCardComponent {
   @Input() shouldDisplayCornerValue: boolean;
 
   public getClasses() {
-    const CLASSES: string[] = [];
+      const CLASSES: string[] = [];
 
-    if (this.color) {
-      CLASSES.push(this.color);
-    }
+      if (this.color) {
+          CLASSES.push(this.color);
+      }
 
-    if (this.interactive) {
-      CLASSES.push('interactive');
-    }
+      if (this.interactive) {
+          CLASSES.push('interactive');
+      }
 
-    if (this.marginRight) {
-      CLASSES.push('margin-right');
-    }
+      if (this.marginRight) {
+          CLASSES.push('margin-right');
+      }
 
-    if (this.isSmall) {
-      CLASSES.push('small');
-    }
+      if (this.isSmall) {
+          CLASSES.push('small');
+      }
 
-    return CLASSES;
+      return CLASSES;
   }
 }

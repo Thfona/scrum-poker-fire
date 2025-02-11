@@ -9,7 +9,7 @@ const MODULES = [RetroRoutingModule, SharedModule];
 const PAGES = [ReflectPage, RetroPage];
 
 @NgModule({
-  declarations: [...PAGES],
-  imports: [...MODULES],
+    declarations: [...PAGES],
+    imports: [...MODULES],
 })
 export class RetroModule {}

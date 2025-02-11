@@ -13,23 +13,23 @@ import { environment } from 'src/environments/environment';
 import { AppComponent } from './app.component';
 
 const MODULES = [
-  AngularFireModule.initializeApp(environment.firebaseConfig),
-  AngularFirestoreModule,
-  AppRoutingModule,
-  BrowserAnimationsModule,
-  BrowserModule,
-  HttpClientModule,
-  NgProgressModule,
-  NgProgressRouterModule,
-  SharedModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    HttpClientModule,
+    NgProgressModule,
+    NgProgressRouterModule,
+    SharedModule,
 ];
 
 const SERVICES = [WINDOW_PROVIDERS];
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [...MODULES],
-  providers: [...SERVICES],
-  bootstrap: [AppComponent],
+    declarations: [AppComponent],
+    imports: [...MODULES],
+    providers: [...SERVICES],
+    bootstrap: [AppComponent],
 })
 export class AppModule {}
