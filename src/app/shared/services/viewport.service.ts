@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { VIEWPORTS } from '../constants/viewports.constant';
-import { WINDOW } from './window.service';
+import { windowInjectionToken } from './window.service';
+import { viewports } from '../constants/viewports.constant';
 
 @Injectable()
 export class ViewportService {
@@ -10,7 +10,7 @@ export class ViewportService {
     public isDesktopObservable: Observable<boolean>;
     public isLargeScreenObservable: Observable<boolean>;
 
-    constructor(@Inject(WINDOW) private readonly window: Window) {
+    constructor(@Inject(windowInjectionToken) private readonly window: Window) {
         this.isDesktopSubject = new BehaviorSubject(this.setIsDesktop());
         this.isLargeScreenSubject = new BehaviorSubject(this.setIsLargeScreen());
 
@@ -21,11 +21,11 @@ export class ViewportService {
     }
 
     private setIsDesktop() {
-        return this.window.innerWidth >= VIEWPORTS.mediumLarge;
+        return this.window.innerWidth >= viewports.mediumLarge;
     }
 
     private setIsLargeScreen() {
-        return this.window.innerWidth >= VIEWPORTS.large;
+        return this.window.innerWidth >= viewports.large;
     }
 
     private onResize() {

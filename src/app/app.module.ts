@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgProgressModule } from 'ngx-progressbar';
@@ -8,28 +8,30 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
-import { WINDOW_PROVIDERS } from './shared/services/window.service';
+import { windowProviders } from './shared/services/window.service';
 import { environment } from 'src/environments/environment';
 import { AppComponent } from './app.component';
 
-const MODULES = [
+const modules = [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
-    HttpClientModule,
     NgProgressModule,
     NgProgressRouterModule,
     SharedModule,
 ];
 
-const SERVICES = [WINDOW_PROVIDERS];
+const providers = [
+    provideHttpClient(),
+    windowProviders,
+];
 
 @NgModule({
     declarations: [AppComponent],
-    imports: [...MODULES],
-    providers: [...SERVICES],
+    imports: [...modules],
+    providers: [...providers],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

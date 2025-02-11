@@ -1,7 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { ClassProvider, FactoryProvider, InjectionToken, PLATFORM_ID } from '@angular/core';
 
-export const WINDOW = new InjectionToken('WindowToken');
+export const windowInjectionToken = new InjectionToken('WindowToken');
 
 export abstract class WindowRef {
     get nativeWindow(): Window | object {
@@ -27,15 +27,15 @@ export function windowFactory(browserWindowRef: BrowserWindowRef, platformId: ob
     return new Object();
 }
 
-const BROWSER_WINDOW_PROVIDER: ClassProvider = {
+const windowClassProvider: ClassProvider = {
     provide: WindowRef,
     useClass: BrowserWindowRef,
 };
 
-const WINDOW_PROVIDER: FactoryProvider = {
-    provide: WINDOW,
+const windowFactoryProvider: FactoryProvider = {
+    provide: windowInjectionToken,
     useFactory: windowFactory,
     deps: [WindowRef, PLATFORM_ID],
 };
 
-export const WINDOW_PROVIDERS = [BROWSER_WINDOW_PROVIDER, WINDOW_PROVIDER];
+export const windowProviders = [windowClassProvider, windowFactoryProvider];
