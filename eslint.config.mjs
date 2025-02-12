@@ -27,7 +27,7 @@ const codeFiles = [
 export default [
     {
         name: 'Ignores',
-        ignores: ['dist', 'node_modules', '.angular', '**/package-lock.json'],
+        ignores: ['dist', 'node_modules', '**/package-lock.json', '.angular'],
     },
     {
         ...js.configs.recommended,
