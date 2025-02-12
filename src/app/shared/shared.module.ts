@@ -42,7 +42,7 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { RetrospectivesFragment } from './fragments/retrospectives/retrospectives.fragment';
 import { SavedGamesFragment } from './fragments/saved-games/saved-games.fragment';
 
-const COMPONENTS = [
+const components = [
     CardComponent,
     ContentLoadingComponent,
     DialogComponent,
@@ -63,9 +63,9 @@ const COMPONENTS = [
     ToolbarComponent,
 ];
 
-const FRAGMENTS = [RetrospectivesFragment, SavedGamesFragment];
+const fragments = [RetrospectivesFragment, SavedGamesFragment];
 
-const MODULES = [
+const modules = [
     CommonModule,
     DigitOnlyModule,
     FormsModule,
@@ -91,12 +91,12 @@ const MODULES = [
     TranslocoRootModule,
 ];
 
-const SERVICES = [];
+const providers = [];
 
 @NgModule({
-    declarations: [...COMPONENTS, ...FRAGMENTS],
-    imports: [...MODULES],
-    exports: [...COMPONENTS, ...FRAGMENTS, ...MODULES],
-    providers: [...SERVICES],
+    declarations: [...components, ...fragments],
+    imports: [...modules],
+    exports: [...components, ...fragments, ...modules],
+    providers: [...providers],
 })
 export class SharedModule {}

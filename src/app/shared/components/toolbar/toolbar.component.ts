@@ -32,14 +32,14 @@ export class ToolbarComponent {
   }
 
   public handleDeleteAccountClick() {
-      const DELETE_ACCOUNT_DIALOG_DATA: DialogDataInterface = {
+      const deleteAccountDialogData: DialogDataInterface = {
           title: this.translocoService.translate('DELETE_ACCOUNT'),
           content: this.translocoService.translate('DELETE_ACCOUNT_CONTENT'),
           confirmButtonText: this.translocoService.translate('DELETE_ACCOUNT_BUTTON_TEXT'),
           confirmButtonColor: 'warn',
       };
 
-      this.deleteAccountDialog.data = DELETE_ACCOUNT_DIALOG_DATA;
+      this.deleteAccountDialog.data = deleteAccountDialogData;
 
       this.deleteAccountDialog.openDialog();
   }

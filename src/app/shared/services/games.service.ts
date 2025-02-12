@@ -34,37 +34,37 @@ export class GamesService {
     ) {}
 
     public getGame(gameId: string) {
-        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<GameInterface>;
+        const gameDocument = doc(this.firestore, `/games/${gameId}`) as DocumentReference<GameInterface>;
 
-        const GAME = docData(GAME_DOCUMENT);
+        const game = docData(gameDocument);
 
-        return GAME;
+        return game;
     }
 
     public getGames() {
-        const USER_ID = this.authService.user.uid;
+        const userId = this.authService.user.uid;
 
-        const GAMES_COLLECTION = collection(this.firestore, 'games') as CollectionReference<GameInterface>;
+        const gamesCollection = collection(this.firestore, 'games') as CollectionReference<GameInterface>;
 
-        const gamesQuery = query(GAMES_COLLECTION, where('ownerId', '==', USER_ID), orderBy('creationDate', 'desc'));
+        const gamesQuery = query(gamesCollection, where('ownerId', '==', userId), orderBy('creationDate', 'desc'));
 
-        const GAMES = collectionData(gamesQuery);
+        const games = collectionData(gamesQuery);
 
-        return GAMES;
+        return games;
     }
 
     public createGame(data: FormGameInterface) {
-        const GAME_ID = generateUniqueId();
-        const USER_ID = this.authService.user.uid;
-        const CREATION_DATE = formatDate(new Date());
+        const gameId = generateUniqueId();
+        const userId = this.authService.user.uid;
+        const creationDate = formatDate(new Date());
 
-        this.latestCreatedGameId = GAME_ID;
+        this.latestCreatedGameId = gameId;
 
-        const GAME: GameInterface = {
+        const game: GameInterface = {
             ...data,
-            id: GAME_ID,
-            ownerId: USER_ID,
-            creationDate: CREATION_DATE,
+            id: gameId,
+            ownerId: userId,
+            creationDate: creationDate,
             stories: [],
             session: {
                 isActive: false,
@@ -77,98 +77,98 @@ export class GamesService {
             bannedUsers: [],
         };
 
-        return setDoc(doc(this.firestore, 'games', GAME_ID), GAME);
+        return setDoc(doc(this.firestore, 'games', gameId), game);
     }
 
     public updateGame(gameId: string, data: FormGameInterface) {
-        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<GameInterface>;
+        const gameDocument = doc(this.firestore, `/games/${gameId}`) as DocumentReference<GameInterface>;
 
-        return updateDoc(GAME_DOCUMENT, { ...data });
+        return updateDoc(gameDocument, { ...data });
     }
 
     public deleteGame(gameId: string) {
-        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<GameInterface>;
+        const gameDocument = doc(this.firestore, `/games/${gameId}`) as DocumentReference<GameInterface>;
 
-        return deleteDoc(GAME_DOCUMENT);
+        return deleteDoc(gameDocument);
     }
 
     public updateAuthorizedUsers(gameId: string, userId: string, operation: 'add' | 'remove') {
-        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
+        const gameDocument = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
 
         if (operation === 'add') {
-            return updateDoc(GAME_DOCUMENT, { authorizedUsers: arrayUnion(userId) });
+            return updateDoc(gameDocument, { authorizedUsers: arrayUnion(userId) });
         } else {
-            return updateDoc(GAME_DOCUMENT, { authorizedUsers: arrayRemove(userId) });
+            return updateDoc(gameDocument, { authorizedUsers: arrayRemove(userId) });
         }
     }
 
     public updateBannedUsers(gameId: string, userId: string, operation: 'add' | 'remove') {
-        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
+        const gameDocument = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
 
         if (operation === 'add') {
-            return updateDoc(GAME_DOCUMENT, { bannedUsers: arrayUnion(userId) });
+            return updateDoc(gameDocument, { bannedUsers: arrayUnion(userId) });
         } else {
-            return updateDoc(GAME_DOCUMENT, { bannedUsers: arrayRemove(userId) });
+            return updateDoc(gameDocument, { bannedUsers: arrayRemove(userId) });
         }
     }
 
     public updateStories(gameId: string, story: StoryInterface, operation: 'add' | 'remove') {
-        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
+        const gameDocument = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
 
         if (operation === 'add') {
-            return updateDoc(GAME_DOCUMENT, { stories: arrayUnion(story) });
+            return updateDoc(gameDocument, { stories: arrayUnion(story) });
         } else {
-            return updateDoc(GAME_DOCUMENT, { stories: arrayRemove(story) });
+            return updateDoc(gameDocument, { stories: arrayRemove(story) });
         }
     }
 
     public updateStoriesList(gameId: string, stories: StoryInterface[]) {
-        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
+        const gameDocument = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
 
-        return updateDoc(GAME_DOCUMENT, { stories });
+        return updateDoc(gameDocument, { stories });
     }
 
     public updateIsActive(gameId: string, isActive: boolean) {
-        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
+        const gameDocument = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
 
-        return updateDoc(GAME_DOCUMENT, { 'session.isActive': isActive });
+        return updateDoc(gameDocument, { 'session.isActive': isActive });
     }
 
     public updateHasStarted(gameId: string, hasStarted: boolean) {
-        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
+        const gameDocument = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
 
-        return updateDoc(GAME_DOCUMENT, { 'session.hasStarted': hasStarted });
+        return updateDoc(gameDocument, { 'session.hasStarted': hasStarted });
     }
 
     public updateCurrentStory(gameId: string, currentStoryId: string) {
-        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
+        const gameDocument = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
 
-        return updateDoc(GAME_DOCUMENT, { 'session.currentStoryId': currentStoryId });
+        return updateDoc(gameDocument, { 'session.currentStoryId': currentStoryId });
     }
 
     public updateUsers(gameId: string, user: GameSessionUserInterface, operation: 'add' | 'remove') {
-        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
+        const gameDocument = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
 
         if (operation === 'add') {
-            return updateDoc(GAME_DOCUMENT, { 'session.users': arrayUnion(user) });
+            return updateDoc(gameDocument, { 'session.users': arrayUnion(user) });
         } else {
-            return updateDoc(GAME_DOCUMENT, { 'session.users': arrayRemove(user) });
+            return updateDoc(gameDocument, { 'session.users': arrayRemove(user) });
         }
     }
 
     public updateVotes(gameId: string, vote: GameVoteInterface, operation: 'add' | 'remove') {
-        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
+        const gameDocument = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
 
         if (operation === 'add') {
-            return updateDoc(GAME_DOCUMENT, { 'session.votes': arrayUnion(vote) });
+            return updateDoc(gameDocument, { 'session.votes': arrayUnion(vote) });
         } else {
-            return updateDoc(GAME_DOCUMENT, { 'session.votes': arrayRemove(vote) });
+            return updateDoc(gameDocument, { 'session.votes': arrayRemove(vote) });
         }
     }
 
     public updateVotesList(gameId: string, votes: GameVoteInterface[]) {
-        const GAME_DOCUMENT = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
+        const gameDocument = doc(this.firestore, `/games/${gameId}`) as DocumentReference<any>;
 
-        return updateDoc(GAME_DOCUMENT, { 'session.votes': votes });
+        return updateDoc(gameDocument, { 'session.votes': votes });
     }
 }

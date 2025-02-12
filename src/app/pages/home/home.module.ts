@@ -3,12 +3,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomePage } from './home.page';
 
-const MODULES = [HomeRoutingModule, SharedModule];
+const modules = [HomeRoutingModule, SharedModule];
 
-const PAGES = [HomePage];
+const pages = [HomePage];
 
 @NgModule({
-    declarations: [...PAGES],
-    imports: [...MODULES],
+    declarations: [...pages],
+    imports: [...modules],
 })
 export class HomeModule {}

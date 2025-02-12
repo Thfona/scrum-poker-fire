@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { RetroPage } from './retro.page';
 import { ReflectPage } from './reflect/reflect.page';
 
-const ROUTES: Routes = [
+const routes: Routes = [
     {
         path: '',
         children: [
@@ -21,7 +21,7 @@ const ROUTES: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(ROUTES)],
+    imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
 })
 export class RetroRoutingModule {}

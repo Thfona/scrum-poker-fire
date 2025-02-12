@@ -24,20 +24,20 @@ export class UserService {
     ) {}
 
     public updateUserDefaultGameSettings(gameSettings: GameSettingsInterface) {
-        const USER_ID = this.authService.user.uid;
+        const userId = this.authService.user.uid;
 
-        const USER_DOCUMENT = doc(this.angularFirestore, `/users/${USER_ID}`) as DocumentReference<UserInterface>;
+        const userDocument = doc(this.angularFirestore, `/users/${userId}`) as DocumentReference<UserInterface>;
 
         this.defaultGameSettings = gameSettings;
 
-        return updateDoc(USER_DOCUMENT, { defaultGameSettings: gameSettings });
+        return updateDoc(userDocument, { defaultGameSettings: gameSettings });
     }
 
     public deleteUserAccount() {
-        const USER_ID = this.authService.user.uid;
+        const userId = this.authService.user.uid;
 
-        const USER_DOCUMENT = doc(this.angularFirestore, `/users/${USER_ID}`) as DocumentReference<UserInterface>;
+        const userDocument = doc(this.angularFirestore, `/users/${userId}`) as DocumentReference<UserInterface>;
 
-        return deleteDoc(USER_DOCUMENT);
+        return deleteDoc(userDocument);
     }
 }

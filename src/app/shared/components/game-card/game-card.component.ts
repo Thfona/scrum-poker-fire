@@ -16,24 +16,24 @@ export class GameCardComponent {
   @Input() shouldDisplayCornerValue: boolean;
 
   public getClasses() {
-      const CLASSES: string[] = [];
+      const classes: string[] = [];
 
       if (this.color) {
-          CLASSES.push(this.color);
+          classes.push(this.color);
       }
 
       if (this.interactive) {
-          CLASSES.push('interactive');
+          classes.push('interactive');
       }
 
       if (this.marginRight) {
-          CLASSES.push('margin-right');
+          classes.push('margin-right');
       }
 
       if (this.isSmall) {
-          CLASSES.push('small');
+          classes.push('small');
       }
 
-      return CLASSES;
+      return classes;
   }
 }

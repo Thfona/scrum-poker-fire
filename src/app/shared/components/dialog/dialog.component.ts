@@ -23,12 +23,12 @@ export class DialogComponent implements OnDestroy {
   }
 
   public openDialog() {
-      const DIALOG_REFERENCE = this.matDialog.open(DialogContentComponent, {
+      const dialogReference = this.matDialog.open(DialogContentComponent, {
           data: this.data,
           autoFocus: false,
       });
 
-      this.dialogSubscription = DIALOG_REFERENCE.afterClosed().subscribe((result: boolean) => {
+      this.dialogSubscription = dialogReference.afterClosed().subscribe((result: boolean) => {
           if (result) {
               this.confirmEvent.emit();
           }

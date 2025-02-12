@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomePage } from './home.page';
 
-const ROUTES: Routes = [
+const routes: Routes = [
     {
         path: '',
         component: HomePage,
@@ -10,7 +10,7 @@ const ROUTES: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(ROUTES)],
+    imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
 })
 export class HomeRoutingModule {}

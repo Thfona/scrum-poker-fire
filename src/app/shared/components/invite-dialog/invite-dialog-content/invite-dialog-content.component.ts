@@ -23,9 +23,9 @@ export class InviteDialogContentComponent {
   ) {}
 
   public handleLinkInputClick() {
-      const INPUT: HTMLInputElement = this.linkInput.nativeElement;
+      const input: HTMLInputElement = this.linkInput.nativeElement;
 
-      INPUT.select();
+      input.select();
   }
 
   public copyLinkToClipboard() {

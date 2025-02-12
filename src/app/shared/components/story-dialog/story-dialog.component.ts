@@ -28,15 +28,15 @@ export class StoryDialogComponent implements OnDestroy {
   }
 
   public openDialog() {
-      const DIALOG_REFERENCE = this.matDialog.open(StoryDialogContentComponent, {
+      const dialogReference = this.matDialog.open(StoryDialogContentComponent, {
           data: this.data,
           autoFocus: false,
           minWidth: '430px',
       });
 
-      this.dialogService.currentDialogReference = DIALOG_REFERENCE;
+      this.dialogService.currentDialogReference = dialogReference;
 
-      this.dialogSubscription = DIALOG_REFERENCE.afterClosed().subscribe((result: StoryDialogResultInterface) => {
+      this.dialogSubscription = dialogReference.afterClosed().subscribe((result: StoryDialogResultInterface) => {
           this.dialogService.currentDialogReference = undefined;
 
           if (result?.save || result?.goTo) {

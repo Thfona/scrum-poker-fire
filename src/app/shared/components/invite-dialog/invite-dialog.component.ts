@@ -20,10 +20,10 @@ export class InviteDialogComponent implements OnDestroy {
     }
 
     public openDialog() {
-        const DIALOG_REFERENCE = this.matDialog.open(InviteDialogContentComponent, {
+        const dialogReference = this.matDialog.open(InviteDialogContentComponent, {
             autoFocus: false,
         });
 
-        this.dialogSubscription = DIALOG_REFERENCE.afterClosed().subscribe();
+        this.dialogSubscription = dialogReference.afterClosed().subscribe();
     }
 }

@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { windowInjectionToken } from './window.service';
-import { viewports } from '../constants/viewports.constant';
+import { VIEWPORTS } from '../constants/viewports.constant';
 
 @Injectable()
 export class ViewportService {
@@ -21,11 +21,11 @@ export class ViewportService {
     }
 
     private setIsDesktop() {
-        return this.window.innerWidth >= viewports.mediumLarge;
+        return this.window.innerWidth >= VIEWPORTS.mediumLarge;
     }
 
     private setIsLargeScreen() {
-        return this.window.innerWidth >= viewports.large;
+        return this.window.innerWidth >= VIEWPORTS.large;
     }
 
     private onResize() {

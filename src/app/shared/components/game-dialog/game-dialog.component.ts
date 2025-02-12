@@ -29,14 +29,14 @@ export class GameDialogComponent implements OnDestroy {
   }
 
   public openDialog() {
-      const DIALOG_REFERENCE = this.matDialog.open(GameDialogContentComponent, {
+      const dialogReference = this.matDialog.open(GameDialogContentComponent, {
           data: this.data,
           autoFocus: false,
       });
 
-      this.dialogService.currentDialogReference = DIALOG_REFERENCE;
+      this.dialogService.currentDialogReference = dialogReference;
 
-      this.dialogSubscription = DIALOG_REFERENCE.afterClosed().subscribe((result: GameDialogResultInterface) => {
+      this.dialogSubscription = dialogReference.afterClosed().subscribe((result: GameDialogResultInterface) => {
           this.dialogService.currentDialogReference = undefined;
 
           if (result?.save) {

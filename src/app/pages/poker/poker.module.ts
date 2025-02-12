@@ -4,12 +4,12 @@ import { PokerRoutingModule } from './poker-routing.module';
 import { PokerPage } from './poker.page';
 import { PlayPage } from './play/play.page';
 
-const MODULES = [PokerRoutingModule, SharedModule];
+const modules = [PokerRoutingModule, SharedModule];
 
-const PAGES = [PokerPage, PlayPage];
+const pages = [PokerPage, PlayPage];
 
 @NgModule({
-    declarations: [...PAGES],
-    imports: [...MODULES],
+    declarations: [...pages],
+    imports: [...modules],
 })
 export class PokerModule {}

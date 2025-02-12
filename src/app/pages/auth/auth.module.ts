@@ -3,12 +3,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthPage } from './auth.page';
 
-const MODULES = [AuthRoutingModule, SharedModule];
+const modules = [AuthRoutingModule, SharedModule];
 
-const PAGES = [AuthPage];
+const pages = [AuthPage];
 
 @NgModule({
-    declarations: [...PAGES],
-    imports: [...MODULES],
+    declarations: [...pages],
+    imports: [...modules],
 })
 export class AuthModule {}

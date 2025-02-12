@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthPage } from './auth.page';
 
-const ROUTES: Routes = [
+const routes: Routes = [
     {
         path: '',
         component: AuthPage,
@@ -10,7 +10,7 @@ const ROUTES: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(ROUTES)],
+    imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
 })
 export class AuthRoutingModule {}

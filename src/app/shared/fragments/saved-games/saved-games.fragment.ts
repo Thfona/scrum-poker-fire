@@ -110,9 +110,9 @@ export class SavedGamesFragment implements OnInit, OnDestroy {
       clearTimeout(this.timeout);
 
       this.timeout = setTimeout(() => {
-          const FILTER_VALUE = (event.target as HTMLInputElement).value;
+          const filterValue = (event.target as HTMLInputElement).value;
 
-          this.dataSource.filter = FILTER_VALUE.trim().toLowerCase();
+          this.dataSource.filter = filterValue.trim().toLowerCase();
       }, 600);
   }
 
@@ -133,9 +133,9 @@ export class SavedGamesFragment implements OnInit, OnDestroy {
   }
 
   public handleTableRowClick(event: Event, game: GameInterface) {
-      const ELEMENT_TAG = (event.target as HTMLElement).tagName;
+      const elementTag = (event.target as HTMLElement).tagName;
 
-      if (ELEMENT_TAG !== 'BUTTON' && ELEMENT_TAG !== 'MAT-ICON') {
+      if (elementTag !== 'BUTTON' && elementTag !== 'MAT-ICON') {
           this.router.navigate([`/poker/${game.id}`]);
       }
   }
@@ -143,19 +143,19 @@ export class SavedGamesFragment implements OnInit, OnDestroy {
   public handleCreateNewGameButtonClick() {
       this.gameDialogOperation = 'create';
 
-      const DEFAULT_GAME_SETTINGS = this.userService.defaultGameSettingsState || DOMAIN.defaultGameSettings;
+      const defaultGameSettings = this.userService.defaultGameSettingsState || DOMAIN.defaultGameSettings;
 
-      const CREATE_GAME_DIALOG_DATA: GameDialogDataInterface = {
+      const createGameDialogData: GameDialogDataInterface = {
           title: this.translocoService.translate('CREATE_GAME_TITLE'),
           formData: {
               name: '',
               description: '',
-              ...DEFAULT_GAME_SETTINGS,
+              ...defaultGameSettings,
           },
           shouldDisplaySaveAndStart: true,
       };
 
-      this.gameDialog.data = CREATE_GAME_DIALOG_DATA;
+      this.gameDialog.data = createGameDialogData;
 
       this.gameDialog.openDialog();
   }
@@ -167,7 +167,7 @@ export class SavedGamesFragment implements OnInit, OnDestroy {
       this.gameDialogOperation = 'edit';
       this.gameToEditId = game.id;
 
-      const EDIT_GAME_DIALOG_DATA: GameDialogDataInterface = {
+      const editGameDialogData: GameDialogDataInterface = {
           title: this.translocoService.translate('EDIT_GAME_TITLE', { gameName: game.name }),
           formData: {
               name: game.name,
@@ -185,7 +185,7 @@ export class SavedGamesFragment implements OnInit, OnDestroy {
           shouldDisplaySaveAndStart: true,
       };
 
-      this.gameDialog.data = EDIT_GAME_DIALOG_DATA;
+      this.gameDialog.data = editGameDialogData;
 
       this.gameDialog.openDialog();
   }
@@ -233,7 +233,7 @@ export class SavedGamesFragment implements OnInit, OnDestroy {
       }
 
       if (gameDialogResult.saveAsDefaultSettings) {
-          const GAME_SETTINGS: GameSettingsInterface = {
+          const gameSettings: GameSettingsInterface = {
               teamVelocity: gameDialogResult.formValue.teamVelocity,
               shareVelocity: gameDialogResult.formValue.shareVelocity,
               isPrivate: gameDialogResult.formValue.isPrivate,
@@ -246,7 +246,7 @@ export class SavedGamesFragment implements OnInit, OnDestroy {
           };
 
           try {
-              await this.userService.updateUserDefaultGameSettings(GAME_SETTINGS);
+              await this.userService.updateUserDefaultGameSettings(gameSettings);
           } catch (error) {
               this.snackBarService.open(
                   this.translocoService.translate('UPDATE_USER_DEFAULT_GAME_SETTINGS_ERROR'),
@@ -271,14 +271,14 @@ export class SavedGamesFragment implements OnInit, OnDestroy {
 
       this.gameToDeleteId = game.id;
 
-      const DELETE_GAME_DIALOG_DATA: DialogDataInterface = {
+      const deleteGameDialogData: DialogDataInterface = {
           title: this.translocoService.translate('DELETE_GAME_TITLE', { gameName: game.name }),
           content: this.translocoService.translate('DELETE_GAME_CONTENT', { gameName: game.name }),
           confirmButtonText: this.translocoService.translate('DELETE'),
           confirmButtonColor: 'warn',
       };
 
-      this.deleteGameDialog.data = DELETE_GAME_DIALOG_DATA;
+      this.deleteGameDialog.data = deleteGameDialogData;
 
       this.deleteGameDialog.openDialog();
   }

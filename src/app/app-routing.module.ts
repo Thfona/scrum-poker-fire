@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { authGuard } from './shared/guards/auth.guard';
 import { loginGuard } from './shared/guards/login.guard';
 
-const ROUTES: Routes = [
+const routes: Routes = [
     {
         path: 'home',
         loadChildren: () => import('./pages/home/home.module').then((m) => m.HomeModule),
@@ -40,7 +40,7 @@ const ROUTES: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(ROUTES)],
+    imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
 })
 export class AppRoutingModule {}

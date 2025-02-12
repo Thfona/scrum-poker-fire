@@ -24,12 +24,12 @@ export class RemoveUserDialogComponent implements OnDestroy {
   }
 
   public openDialog() {
-      const DIALOG_REFERENCE = this.matDialog.open(RemoveUserDialogContentComponent, {
+      const dialogReference = this.matDialog.open(RemoveUserDialogContentComponent, {
           data: this.data,
           autoFocus: false,
       });
 
-      this.dialogSubscription = DIALOG_REFERENCE.afterClosed().subscribe((result: RemoveUserDialogResultInterface) => {
+      this.dialogSubscription = dialogReference.afterClosed().subscribe((result: RemoveUserDialogResultInterface) => {
           if (result?.remove) {
               this.confirmEvent.emit(result);
           }
