@@ -1,7 +1,7 @@
 {
     "name": "scrum-poker-fire",
     "version": "1.0.0",
-    "description": "Front-End for the ScrumPokerFire application.",
+    "description": "Scrum poker for your plannings.",
     "author": "Thfona",
     "license": "MIT",
     "private": true,

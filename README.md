@@ -1,6 +1,6 @@
 # ScrumPokerFire
 
-Front-End for the ScrumPokerFire application.
+Scrum poker for your plannings.
 
 ## Scripts
 
