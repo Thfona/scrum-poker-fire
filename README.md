@@ -1,6 +1,6 @@
 # ScrumPokerFire
 
-Scrum poker for your plannings.
+Scrum poker for your plannings. Powered by Firebase.
 
 ## Scripts
 
