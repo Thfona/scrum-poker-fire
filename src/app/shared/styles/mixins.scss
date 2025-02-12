@@ -1,42 +1,42 @@
 /* MEDIA QUERIES */
 @mixin belowVerySmall {
-  @media only screen and (max-width: $bp-very-small - 1) {
+  @media only screen and (max-width: ($bp-very-small - 1)) {
     @content;
   }
 }
 
 @mixin belowSmall {
-  @media only screen and (max-width: $bp-small - 1) {
+  @media only screen and (max-width: ($bp-small - 1)) {
     @content;
   }
 }
 
 @mixin belowSmallMedium {
-  @media only screen and (max-width: $bp-small-medium - 1) {
+  @media only screen and (max-width: ($bp-small-medium - 1)) {
     @content;
   }
 }
 
 @mixin belowMedium {
-  @media only screen and (max-width: $bp-medium - 1) {
+  @media only screen and (max-width: ($bp-medium - 1)) {
     @content;
   }
 }
 
 @mixin belowMediumLarge {
-  @media only screen and (max-width: $bp-medium-large - 1) {
+  @media only screen and (max-width: ($bp-medium-large - 1)) {
     @content;
   }
 }
 
 @mixin belowLarge {
-  @media only screen and (max-width: $bp-large - 1) {
+  @media only screen and (max-width: ($bp-large - 1)) {
     @content;
   }
 }
 
 @mixin belowVeryLarge {
-  @media only screen and (max-width: $bp-very-large - 1) {
+  @media only screen and (max-width: ($bp-very-large - 1)) {
     @content;
   }
 }
