@@ -7,16 +7,16 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     standalone: false,
 })
 export class CardComponent {
-  @Input() isLoading: boolean;
-  @Input() hasError: boolean;
-  @Input() cardTitleKey: string;
-  @Input() shouldDisplayHeaderButton: boolean;
-  @Input() headerButtonIconKey: string;
-  @Input() headerButtonTextKey: string;
-  @Input() errorMessageKey: string;
-  @Output() headerButtonEvent = new EventEmitter();
+    @Input() isLoading: boolean;
+    @Input() hasError: boolean;
+    @Input() cardTitleKey: string;
+    @Input() shouldDisplayHeaderButton: boolean;
+    @Input() headerButtonIconKey: string;
+    @Input() headerButtonTextKey: string;
+    @Input() errorMessageKey: string;
+    @Output() headerButtonEvent = new EventEmitter();
 
-  public handleHeaderButtonClick() {
-      this.headerButtonEvent.emit();
-  }
+    public handleHeaderButtonClick() {
+        this.headerButtonEvent.emit();
+    }
 }

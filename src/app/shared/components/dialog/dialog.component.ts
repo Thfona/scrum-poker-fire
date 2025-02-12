@@ -10,28 +10,28 @@ import { DialogContentComponent } from './dialog-content/dialog-content.componen
     standalone: false,
 })
 export class DialogComponent implements OnDestroy {
-  @Input() data: DialogDataInterface;
-  @Output() confirmEvent = new EventEmitter();
-  private dialogSubscription: Subscription;
+    @Input() data: DialogDataInterface;
+    @Output() confirmEvent = new EventEmitter();
+    private dialogSubscription: Subscription;
 
-  constructor(private readonly matDialog: MatDialog) {}
+    constructor(private readonly matDialog: MatDialog) {}
 
-  ngOnDestroy() {
-      if (this.dialogSubscription) {
-          this.dialogSubscription.unsubscribe();
-      }
-  }
+    ngOnDestroy() {
+        if (this.dialogSubscription) {
+            this.dialogSubscription.unsubscribe();
+        }
+    }
 
-  public openDialog() {
-      const dialogReference = this.matDialog.open(DialogContentComponent, {
-          data: this.data,
-          autoFocus: false,
-      });
+    public openDialog() {
+        const dialogReference = this.matDialog.open(DialogContentComponent, {
+            data: this.data,
+            autoFocus: false,
+        });
 
-      this.dialogSubscription = dialogReference.afterClosed().subscribe((result: boolean) => {
-          if (result) {
-              this.confirmEvent.emit();
-          }
-      });
-  }
+        this.dialogSubscription = dialogReference.afterClosed().subscribe((result: boolean) => {
+            if (result) {
+                this.confirmEvent.emit();
+            }
+        });
+    }
 }

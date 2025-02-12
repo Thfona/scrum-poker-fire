@@ -82,15 +82,15 @@ export class PlayPage implements OnInit, OnDestroy {
     }
 
     constructor(
-    private readonly authService: AuthService,
-    private readonly gamesService: GamesService,
-    private readonly activatedRoute: ActivatedRoute,
-    private readonly router: Router,
-    private readonly snackBarService: MatSnackBar,
-    private readonly translocoService: TranslocoService,
-    private readonly userService: UserService,
-    private readonly viewportService: ViewportService,
-    public readonly sidenavService: SidenavService,
+        private readonly authService: AuthService,
+        private readonly gamesService: GamesService,
+        private readonly activatedRoute: ActivatedRoute,
+        private readonly router: Router,
+        private readonly snackBarService: MatSnackBar,
+        private readonly translocoService: TranslocoService,
+        private readonly userService: UserService,
+        private readonly viewportService: ViewportService,
+        public readonly sidenavService: SidenavService,
     ) {}
 
     ngOnInit() {

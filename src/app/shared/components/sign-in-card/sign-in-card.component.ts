@@ -13,9 +13,9 @@ import { SNACKBAR_CONFIGURATION } from '../../constants/snackbar-configuration.c
 })
 export class SignInCardComponent {
     constructor(
-    private readonly snackBarService: MatSnackBar,
-    private readonly translocoService: TranslocoService,
-    public readonly authService: AuthService,
+        private readonly snackBarService: MatSnackBar,
+        private readonly translocoService: TranslocoService,
+        public readonly authService: AuthService,
     ) {}
 
     public async signIn() {

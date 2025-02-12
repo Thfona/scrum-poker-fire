@@ -16,55 +16,55 @@ import { SNACKBAR_CONFIGURATION } from '../../constants/snackbar-configuration.c
     standalone: false,
 })
 export class ToolbarComponent {
-  @ViewChild('deleteAccountDialog') deleteAccountDialog: DialogComponent;
-  @Input() user: UserInterface;
-  public gitHubRepositoryLink = 'https://github.com/Thfona/scrum-poker-fire';
+    @ViewChild('deleteAccountDialog') deleteAccountDialog: DialogComponent;
+    @Input() user: UserInterface;
+    public gitHubRepositoryLink = 'https://github.com/Thfona/scrum-poker-fire';
 
-  constructor(
-    private readonly userService: UserService,
-    private readonly snackBarService: MatSnackBar,
-    private readonly translocoService: TranslocoService,
-    public readonly authService: AuthService,
-  ) {}
+    constructor(
+        private readonly userService: UserService,
+        private readonly snackBarService: MatSnackBar,
+        private readonly translocoService: TranslocoService,
+        public readonly authService: AuthService,
+    ) {}
 
-  public openGitHubRepository() {
-      window.open(this.gitHubRepositoryLink, '_blank');
-  }
+    public openGitHubRepository() {
+        window.open(this.gitHubRepositoryLink, '_blank');
+    }
 
-  public handleDeleteAccountClick() {
-      const deleteAccountDialogData: DialogDataInterface = {
-          title: this.translocoService.translate('DELETE_ACCOUNT'),
-          content: this.translocoService.translate('DELETE_ACCOUNT_CONTENT'),
-          confirmButtonText: this.translocoService.translate('DELETE_ACCOUNT_BUTTON_TEXT'),
-          confirmButtonColor: 'warn',
-      };
+    public handleDeleteAccountClick() {
+        const deleteAccountDialogData: DialogDataInterface = {
+            title: this.translocoService.translate('DELETE_ACCOUNT'),
+            content: this.translocoService.translate('DELETE_ACCOUNT_CONTENT'),
+            confirmButtonText: this.translocoService.translate('DELETE_ACCOUNT_BUTTON_TEXT'),
+            confirmButtonColor: 'warn',
+        };
 
-      this.deleteAccountDialog.data = deleteAccountDialogData;
+        this.deleteAccountDialog.data = deleteAccountDialogData;
 
-      this.deleteAccountDialog.openDialog();
-  }
+        this.deleteAccountDialog.openDialog();
+    }
 
-  public handleDeleteAccountDialogConfirmation() {
-      try {
-          this.userService.deleteUserAccount();
+    public handleDeleteAccountDialogConfirmation() {
+        try {
+            this.userService.deleteUserAccount();
 
-          this.authService.signOut();
-      } catch (error) {
-          this.snackBarService.open(
-              this.translocoService.translate('DELETE_ACCOUNT_ERROR'),
-              this.translocoService.translate(SNACKBAR_ACTION),
-              SNACKBAR_CONFIGURATION,
-          );
+            this.authService.signOut();
+        } catch (error) {
+            this.snackBarService.open(
+                this.translocoService.translate('DELETE_ACCOUNT_ERROR'),
+                this.translocoService.translate(SNACKBAR_ACTION),
+                SNACKBAR_CONFIGURATION,
+            );
 
-          console.error(error);
+            console.error(error);
 
-          return;
-      }
+            return;
+        }
 
-      this.snackBarService.open(
-          this.translocoService.translate('DELETE_ACCOUNT_SUCCESS'),
-          this.translocoService.translate(SNACKBAR_ACTION),
-          SNACKBAR_CONFIGURATION,
-      );
-  }
+        this.snackBarService.open(
+            this.translocoService.translate('DELETE_ACCOUNT_SUCCESS'),
+            this.translocoService.translate(SNACKBAR_ACTION),
+            SNACKBAR_CONFIGURATION,
+        );
+    }
 }

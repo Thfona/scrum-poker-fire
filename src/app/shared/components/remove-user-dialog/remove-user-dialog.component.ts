@@ -11,28 +11,28 @@ import { RemoveUserDialogContentComponent } from './remove-user-dialog-content/r
     standalone: false,
 })
 export class RemoveUserDialogComponent implements OnDestroy {
-  @Input() data: RemoveUserDialogDataInterface;
-  @Output() confirmEvent = new EventEmitter();
-  private dialogSubscription: Subscription;
+    @Input() data: RemoveUserDialogDataInterface;
+    @Output() confirmEvent = new EventEmitter();
+    private dialogSubscription: Subscription;
 
-  constructor(private readonly matDialog: MatDialog) {}
+    constructor(private readonly matDialog: MatDialog) {}
 
-  ngOnDestroy() {
-      if (this.dialogSubscription) {
-          this.dialogSubscription.unsubscribe();
-      }
-  }
+    ngOnDestroy() {
+        if (this.dialogSubscription) {
+            this.dialogSubscription.unsubscribe();
+        }
+    }
 
-  public openDialog() {
-      const dialogReference = this.matDialog.open(RemoveUserDialogContentComponent, {
-          data: this.data,
-          autoFocus: false,
-      });
+    public openDialog() {
+        const dialogReference = this.matDialog.open(RemoveUserDialogContentComponent, {
+            data: this.data,
+            autoFocus: false,
+        });
 
-      this.dialogSubscription = dialogReference.afterClosed().subscribe((result: RemoveUserDialogResultInterface) => {
-          if (result?.remove) {
-              this.confirmEvent.emit(result);
-          }
-      });
-  }
+        this.dialogSubscription = dialogReference.afterClosed().subscribe((result: RemoveUserDialogResultInterface) => {
+            if (result?.remove) {
+                this.confirmEvent.emit(result);
+            }
+        });
+    }
 }

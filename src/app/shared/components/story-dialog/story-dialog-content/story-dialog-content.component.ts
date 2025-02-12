@@ -21,67 +21,67 @@ import { DialogService } from 'src/app/shared/services/dialog.service';
     standalone: false,
 })
 export class StoryDialogContentComponent implements OnInit, AfterViewInit {
-  @ViewChild('storyName') storyName: ElementRef;
-  @ViewChild('storyScore') storyScore: ElementRef;
-  public formGroup: FormGroup<{
-    name: FormControl<string>;
-    score: FormControl<number>;
-  }>;
-  public cancelResult: StoryDialogResultInterface = {
-      save: false,
-      formValue: null,
-      delete: false,
-      goTo: false,
-  };
-  public deleteResult: StoryDialogResultInterface = {
-      save: true,
-      formValue: null,
-      delete: true,
-      goTo: false,
-  };
-  public goToResult: StoryDialogResultInterface = {
-      save: false,
-      formValue: null,
-      delete: false,
-      goTo: true,
-  };
+    @ViewChild('storyName') storyName: ElementRef;
+    @ViewChild('storyScore') storyScore: ElementRef;
+    public formGroup: FormGroup<{
+        name: FormControl<string>;
+        score: FormControl<number>;
+    }>;
+    public cancelResult: StoryDialogResultInterface = {
+        save: false,
+        formValue: null,
+        delete: false,
+        goTo: false,
+    };
+    public deleteResult: StoryDialogResultInterface = {
+        save: true,
+        formValue: null,
+        delete: true,
+        goTo: false,
+    };
+    public goToResult: StoryDialogResultInterface = {
+        save: false,
+        formValue: null,
+        delete: false,
+        goTo: true,
+    };
 
-  public get saveResult(): StoryDialogResultInterface {
-      return {
-          save: true,
-          formValue: this.formGroup.value,
-          delete: false,
-          goTo: false,
-      };
-  }
+    public get saveResult(): StoryDialogResultInterface {
+        return {
+            save: true,
+            formValue: this.formGroup.value,
+            delete: false,
+            goTo: false,
+        };
+    }
 
-  constructor(
-    private readonly changeDetector: ChangeDetectorRef,
-    private readonly dialogService: DialogService,
-    @Inject(MAT_DIALOG_DATA) public readonly data: StoryDialogDataInterface,
-  ) {}
+    constructor(
+        private readonly changeDetector: ChangeDetectorRef,
+        private readonly dialogService: DialogService,
+        @Inject(MAT_DIALOG_DATA) public readonly data: StoryDialogDataInterface,
+    ) {}
 
-  ngOnInit() {
-      this.formGroup = new FormGroup({
-          name: new FormControl(this.data.formData.name, Validators.required),
-          score: new FormControl(this.data.formData.score),
-      });
-  }
+    ngOnInit() {
+        this.formGroup = new FormGroup({
+            name: new FormControl(this.data.formData.name, Validators.required),
+            score: new FormControl(this.data.formData.score),
+        });
+    }
 
-  ngAfterViewInit() {
-      if (this.storyScore) {
-          this.storyScore.nativeElement.focus();
-      } else {
-          this.storyName.nativeElement.focus();
-      }
+    ngAfterViewInit() {
+        if (this.storyScore) {
+            this.storyScore.nativeElement.focus();
+        } else {
+            this.storyName.nativeElement.focus();
+        }
 
-      this.changeDetector.detectChanges();
-  }
+        this.changeDetector.detectChanges();
+    }
 
-  @HostListener('window:keyup.enter')
-  onEnter() {
-      if (this.formGroup.valid) {
-          this.dialogService.currentDialogReference.close(this.saveResult);
-      }
-  }
+    @HostListener('window:keyup.enter')
+    onEnter() {
+        if (this.formGroup.valid) {
+            this.dialogService.currentDialogReference.close(this.saveResult);
+        }
+    }
 }

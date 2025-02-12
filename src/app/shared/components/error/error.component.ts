@@ -7,6 +7,6 @@ import { Component, Input } from '@angular/core';
     standalone: false,
 })
 export class ErrorComponent {
-  @Input() center = true;
-  @Input() message = 'ERROR_MESSAGE';
+    @Input() center = true;
+    @Input() message = 'ERROR_MESSAGE';
 }

@@ -10,12 +10,12 @@ import { SLIDE_ANIMATION } from 'src/app/shared/animations/slide.animation';
     standalone: false,
 })
 export class SidenavComponent {
-  @Input() shouldDisplayOverlay: boolean;
-  @Input() shouldDisplayMenuButton: boolean;
+    @Input() shouldDisplayOverlay: boolean;
+    @Input() shouldDisplayMenuButton: boolean;
 
-  constructor(public readonly sidenavService: SidenavService) {}
+    constructor(public readonly sidenavService: SidenavService) {}
 
-  public toggle() {
-      this.sidenavService.toggleSidenav();
-  }
+    public toggle() {
+        this.sidenavService.toggleSidenav();
+    }
 }

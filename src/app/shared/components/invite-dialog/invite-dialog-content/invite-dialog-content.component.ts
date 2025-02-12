@@ -11,30 +11,30 @@ import { SNACKBAR_CONFIGURATION } from 'src/app/shared/constants/snackbar-config
     standalone: false,
 })
 export class InviteDialogContentComponent {
-  @ViewChild('linkInput') linkInput: ElementRef;
+    @ViewChild('linkInput') linkInput: ElementRef;
 
-  public get gameUrl() {
-      return window.location.href;
-  }
+    public get gameUrl() {
+        return window.location.href;
+    }
 
-  constructor(
-    private readonly snackBarService: MatSnackBar,
-    private readonly translocoService: TranslocoService,
-  ) {}
+    constructor(
+        private readonly snackBarService: MatSnackBar,
+        private readonly translocoService: TranslocoService,
+    ) {}
 
-  public handleLinkInputClick() {
-      const input: HTMLInputElement = this.linkInput.nativeElement;
+    public handleLinkInputClick() {
+        const input: HTMLInputElement = this.linkInput.nativeElement;
 
-      input.select();
-  }
+        input.select();
+    }
 
-  public copyLinkToClipboard() {
-      navigator.clipboard.writeText(this.gameUrl);
+    public copyLinkToClipboard() {
+        navigator.clipboard.writeText(this.gameUrl);
 
-      this.snackBarService.open(
-          this.translocoService.translate('LINK_COPIED_MESSAGE'),
-          this.translocoService.translate(SNACKBAR_ACTION),
-          SNACKBAR_CONFIGURATION,
-      );
-  }
+        this.snackBarService.open(
+            this.translocoService.translate('LINK_COPIED_MESSAGE'),
+            this.translocoService.translate(SNACKBAR_ACTION),
+            SNACKBAR_CONFIGURATION,
+        );
+    }
 }

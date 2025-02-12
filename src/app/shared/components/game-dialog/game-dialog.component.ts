@@ -13,39 +13,39 @@ import { DOMAIN } from '../../constants/domain.constant';
     standalone: false,
 })
 export class GameDialogComponent implements OnDestroy {
-  @Input() data: GameDialogDataInterface;
-  @Output() confirmEvent = new EventEmitter();
-  private dialogSubscription: Subscription;
+    @Input() data: GameDialogDataInterface;
+    @Output() confirmEvent = new EventEmitter();
+    private dialogSubscription: Subscription;
 
-  constructor(
-    private readonly matDialog: MatDialog,
-    private readonly dialogService: DialogService,
-  ) {}
+    constructor(
+        private readonly matDialog: MatDialog,
+        private readonly dialogService: DialogService,
+    ) {}
 
-  ngOnDestroy() {
-      if (this.dialogSubscription) {
-          this.dialogSubscription.unsubscribe();
-      }
-  }
+    ngOnDestroy() {
+        if (this.dialogSubscription) {
+            this.dialogSubscription.unsubscribe();
+        }
+    }
 
-  public openDialog() {
-      const dialogReference = this.matDialog.open(GameDialogContentComponent, {
-          data: this.data,
-          autoFocus: false,
-      });
+    public openDialog() {
+        const dialogReference = this.matDialog.open(GameDialogContentComponent, {
+            data: this.data,
+            autoFocus: false,
+        });
 
-      this.dialogService.currentDialogReference = dialogReference;
+        this.dialogService.currentDialogReference = dialogReference;
 
-      this.dialogSubscription = dialogReference.afterClosed().subscribe((result: GameDialogResultInterface) => {
-          this.dialogService.currentDialogReference = undefined;
+        this.dialogSubscription = dialogReference.afterClosed().subscribe((result: GameDialogResultInterface) => {
+            this.dialogService.currentDialogReference = undefined;
 
-          if (result?.save) {
-              if (!result.formValue.storyTimerMinutes) {
-                  result.formValue.storyTimerMinutes = DOMAIN.defaultGameSettings.storyTimerMinutes;
-              }
+            if (result?.save) {
+                if (!result.formValue.storyTimerMinutes) {
+                    result.formValue.storyTimerMinutes = DOMAIN.defaultGameSettings.storyTimerMinutes;
+                }
 
-              this.confirmEvent.emit(result);
-          }
-      });
-  }
+                this.confirmEvent.emit(result);
+            }
+        });
+    }
 }

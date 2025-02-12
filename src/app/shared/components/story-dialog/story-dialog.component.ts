@@ -12,36 +12,36 @@ import { StoryDialogContentComponent } from './story-dialog-content/story-dialog
     standalone: false,
 })
 export class StoryDialogComponent implements OnDestroy {
-  @Input() data: StoryDialogDataInterface;
-  @Output() confirmEvent = new EventEmitter();
-  private dialogSubscription: Subscription;
+    @Input() data: StoryDialogDataInterface;
+    @Output() confirmEvent = new EventEmitter();
+    private dialogSubscription: Subscription;
 
-  constructor(
-    private readonly matDialog: MatDialog,
-    private readonly dialogService: DialogService,
-  ) {}
+    constructor(
+        private readonly matDialog: MatDialog,
+        private readonly dialogService: DialogService,
+    ) {}
 
-  ngOnDestroy() {
-      if (this.dialogSubscription) {
-          this.dialogSubscription.unsubscribe();
-      }
-  }
+    ngOnDestroy() {
+        if (this.dialogSubscription) {
+            this.dialogSubscription.unsubscribe();
+        }
+    }
 
-  public openDialog() {
-      const dialogReference = this.matDialog.open(StoryDialogContentComponent, {
-          data: this.data,
-          autoFocus: false,
-          minWidth: '430px',
-      });
+    public openDialog() {
+        const dialogReference = this.matDialog.open(StoryDialogContentComponent, {
+            data: this.data,
+            autoFocus: false,
+            minWidth: '430px',
+        });
 
-      this.dialogService.currentDialogReference = dialogReference;
+        this.dialogService.currentDialogReference = dialogReference;
 
-      this.dialogSubscription = dialogReference.afterClosed().subscribe((result: StoryDialogResultInterface) => {
-          this.dialogService.currentDialogReference = undefined;
+        this.dialogSubscription = dialogReference.afterClosed().subscribe((result: StoryDialogResultInterface) => {
+            this.dialogService.currentDialogReference = undefined;
 
-          if (result?.save || result?.goTo) {
-              this.confirmEvent.emit(result);
-          }
-      });
-  }
+            if (result?.save || result?.goTo) {
+                this.confirmEvent.emit(result);
+            }
+        });
+    }
 }

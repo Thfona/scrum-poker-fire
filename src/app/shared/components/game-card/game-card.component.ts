@@ -7,33 +7,33 @@ import { Component, Input } from '@angular/core';
     standalone: false,
 })
 export class GameCardComponent {
-  @Input() color: 'primary' | 'accent' | 'white' | 'grey';
-  @Input() displayValue: string;
-  @Input() interactive: boolean;
-  @Input() isCardFront: boolean;
-  @Input() isSmall: boolean;
-  @Input() marginRight: boolean;
-  @Input() shouldDisplayCornerValue: boolean;
+    @Input() color: 'primary' | 'accent' | 'white' | 'grey';
+    @Input() displayValue: string;
+    @Input() interactive: boolean;
+    @Input() isCardFront: boolean;
+    @Input() isSmall: boolean;
+    @Input() marginRight: boolean;
+    @Input() shouldDisplayCornerValue: boolean;
 
-  public getClasses() {
-      const classes: string[] = [];
+    public getClasses() {
+        const classes: string[] = [];
 
-      if (this.color) {
-          classes.push(this.color);
-      }
+        if (this.color) {
+            classes.push(this.color);
+        }
 
-      if (this.interactive) {
-          classes.push('interactive');
-      }
+        if (this.interactive) {
+            classes.push('interactive');
+        }
 
-      if (this.marginRight) {
-          classes.push('margin-right');
-      }
+        if (this.marginRight) {
+            classes.push('margin-right');
+        }
 
-      if (this.isSmall) {
-          classes.push('small');
-      }
+        if (this.isSmall) {
+            classes.push('small');
+        }
 
-      return classes;
-  }
+        return classes;
+    }
 }

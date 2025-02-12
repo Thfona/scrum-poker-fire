@@ -9,8 +9,8 @@ import { AuthService } from '../services/auth.service';
 })
 class AuthGuard {
     constructor(
-    private readonly authService: AuthService,
-    private readonly router: Router,
+        private readonly authService: AuthService,
+        private readonly router: Router,
     ) {}
 
     public canAccess(): Observable<boolean> {
