@@ -18,7 +18,7 @@ import { SNACKBAR_CONFIGURATION } from '../../constants/snackbar-configuration.c
 export class ToolbarComponent {
   @ViewChild('deleteAccountDialog') deleteAccountDialog: DialogComponent;
   @Input() user: UserInterface;
-  public gitHubRepositoryLink = 'https://github.com/Thfona/scrum-poker-fire-frontend';
+  public gitHubRepositoryLink = 'https://github.com/Thfona/scrum-poker-fire';
 
   constructor(
     private readonly userService: UserService,
