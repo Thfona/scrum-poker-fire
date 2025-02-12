@@ -41,4 +41,5 @@ testem.log
 /typings
 *.cache
 *.log
+/.firebase
 /.angular
