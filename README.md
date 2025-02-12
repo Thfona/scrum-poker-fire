@@ -26,7 +26,7 @@ $ npm run test
 npm run deploy
 
 # Clean
-$ npm run clean                   # Removes dist and .angular folders
-$ npm run clean:packages          # Removes node_modules folder
-$ npm run clean:all               # Runs all of the above
+$ npm run clean                     # Removes dist and .angular folders
+$ npm run clean:packages            # Removes node_modules folder
+$ npm run clean:all                 # Runs all of the above
 ```
