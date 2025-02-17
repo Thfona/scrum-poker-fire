@@ -77,7 +77,10 @@ export class PlayPage implements OnInit, OnDestroy {
     get isPrivateAccess() {
         return (
             this.game.ownerId !== this.userId &&
-      (!this.game.session.isActive || (this.game.isPrivate && !this.game.authorizedUsers.includes(this.userId)))
+            (
+                !this.game.session.isActive ||
+                (this.game.isPrivate && !this.game.authorizedUsers.includes(this.userId))
+            )
         );
     }
 
