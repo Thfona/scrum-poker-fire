@@ -8,7 +8,7 @@ export class TranslocoHttpLoader implements TranslocoLoader {
     constructor(private readonly httpClient: HttpClient) {}
 
     public getTranslation(lang: string) {
-        return this.httpClient.get<Translation>(`./assets/i18n/${lang}.json?t=${new Date().getTime()}`);
+        return this.httpClient.get<Translation>(`i18n/${lang}.json?t=${new Date().getTime()}`);
     }
 }
 

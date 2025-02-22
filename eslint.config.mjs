@@ -40,6 +40,7 @@ export default [
             quotes: ['error', 'single'],
             semi: ['error', 'always'],
             indent: ['error', 4],
+            'no-shadow': ['error', { hoist: 'all' }],
         },
     },
     {

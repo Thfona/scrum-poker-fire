@@ -428,7 +428,7 @@ export class PlayPage implements OnInit, OnDestroy {
         }
 
         if (this.storyDialogOperation === 'edit') {
-            const story = this.game.stories.find((story) => story.id === this.storyToEditId);
+            const story = this.game.stories.find((storyObj) => storyObj.id === this.storyToEditId);
 
             if (storyDialogResult.goTo) {
                 try {
@@ -462,12 +462,12 @@ export class PlayPage implements OnInit, OnDestroy {
                         newStory.score = storyDialogResult.formValue.score;
                     }
 
-                    const newStoriesList = this.game.stories.map((story) => {
-                        if (story.id === story.id) {
+                    const newStoriesList = this.game.stories.map((storyObj) => {
+                        if (storyObj.id === story.id) {
                             return newStory;
                         }
 
-                        return story;
+                        return storyObj;
                     });
 
                     await this.gamesService.updateStoriesList(this.gameId, newStoriesList);
@@ -485,7 +485,7 @@ export class PlayPage implements OnInit, OnDestroy {
     }
 
     public async handleDeleteStoryDialogConfirmation() {
-        const story = this.game.stories.find((story) => story.id === this.storyToEditId);
+        const story = this.game.stories.find((storyObj) => storyObj.id === this.storyToEditId);
 
         try {
             await this.gamesService.updateStories(this.gameId, story, 'remove');
@@ -500,21 +500,21 @@ export class PlayPage implements OnInit, OnDestroy {
                 }
             } else {
                 if (this.game.session.currentStoryId && this.game.session.currentStoryId === story.id) {
-                    const nextStory = this.game.stories.find((story) => story.index === story.index + 1);
-                    const previousStory = this.game.stories.find((story) => story.index === story.index - 1);
+                    const nextStory = this.game.stories.find((storyObj) => storyObj.index === story.index + 1);
+                    const previousStory = this.game.stories.find((storyObj) => storyObj.index === story.index - 1);
                     const newCurrentStoryId = nextStory ? nextStory.id : previousStory.id;
 
                     await this.gamesService.updateCurrentStory(this.gameId, newCurrentStoryId);
                 }
 
-                const newStoriesList = this.game.stories.map((story) => {
-                    if (story.index > story.index) {
+                const newStoriesList = this.game.stories.map((storyObj) => {
+                    if (storyObj.index > story.index) {
                         return {
-                            ...story,
-                            index: story.index - 1,
+                            ...storyObj,
+                            index: storyObj.index - 1,
                         };
                     } else {
-                        return story;
+                        return storyObj;
                     }
                 });
 
@@ -569,7 +569,7 @@ export class PlayPage implements OnInit, OnDestroy {
 
     public async handleResetCardsButtonClick() {
         try {
-            const story = this.game.stories.find((story) => story.id === this.currentStoryId);
+            const story = this.game.stories.find((storyObj) => storyObj.id === this.currentStoryId);
 
             delete story.score;
 
@@ -578,12 +578,12 @@ export class PlayPage implements OnInit, OnDestroy {
                 hasFlippedCards: false,
             };
 
-            const newStoriesList = this.game.stories.map((story) => {
-                if (story.id === story.id) {
+            const newStoriesList = this.game.stories.map((storyObj) => {
+                if (storyObj.id === story.id) {
                     return newStory;
                 }
 
-                return story;
+                return storyObj;
             });
 
             const newVotesList = this.game.session.votes.filter((vote) => vote.storyId !== this.currentStoryId);
@@ -600,7 +600,7 @@ export class PlayPage implements OnInit, OnDestroy {
     public async handleFlipCards() {
         if (this.isHost && !this.hasFlippedCards) {
             try {
-                const story = this.game.stories.find((story) => story.id === this.currentStoryId);
+                const story = this.game.stories.find((storyObj) => storyObj.id === this.currentStoryId);
 
                 const playersWithValidVote = this.playersWithVoteInfo.filter((player) => player.vote && player.vote.value);
 
@@ -621,12 +621,12 @@ export class PlayPage implements OnInit, OnDestroy {
                     newStory.score = newScore;
                 }
 
-                const newStoriesList = this.game.stories.map((story) => {
-                    if (story.id === story.id) {
+                const newStoriesList = this.game.stories.map((storyObj) => {
+                    if (storyObj.id === story.id) {
                         return newStory;
                     }
 
-                    return story;
+                    return storyObj;
                 });
 
                 await this.gamesService.updateStoriesList(this.gameId, newStoriesList);

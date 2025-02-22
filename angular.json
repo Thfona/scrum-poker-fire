@@ -20,22 +20,25 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": {
-              "base": "dist"
-            },
+            "outputPath": "dist/scrum-poker-fire",
             "index": "src/index.html",
+            "browser": "src/main.ts",
             "polyfills": [
-              "src/polyfills.ts"
+              "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/assets"],
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
             "styles": ["src/app/shared/styles/styles.scss"],
             "scripts": [],
             "stylePreprocessorOptions": {
               "includePaths": ["src/app/shared/styles"]
-            },
-            "browser": "src/main.ts"
+            }
           },
           "configurations": {
             "production": {
@@ -89,7 +92,10 @@
         "test": {
           "builder": "@angular-devkit/build-angular:jest",
           "options": {
-            "polyfills": ["src/polyfills.ts", "zone.js/testing"],
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "tsconfig.spec.json"
           }
         },

@@ -2,7 +2,7 @@
     "hosting": [
         {
             "target": "scrum-poker-fire",
-            "public": "dist/browser",
+            "public": "dist/scrum-poker-fire/browser",
             "ignore": ["**/.*"],
             "headers": [
                 {
