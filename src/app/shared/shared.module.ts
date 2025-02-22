@@ -91,12 +91,9 @@ const modules = [
     TranslocoRootModule,
 ];
 
-const providers = [];
-
 @NgModule({
     declarations: [...components, ...fragments],
     imports: [...modules],
     exports: [...components, ...fragments, ...modules],
-    providers: [...providers],
 })
 export class SharedModule {}
