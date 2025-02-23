@@ -10,10 +10,11 @@ $ npm install
 
 # Start application
 $ npm start
+$ npm run preview
 
 # Build
-npm run build
-npm run build:prod
+$ npm run build
+$ npm run build:prod
 
 # Lint
 $ npm run lint
