@@ -22,9 +22,6 @@ $ npm run lint:fix
 # Test
 $ npm run test
 
-# Deploy to Firebase
-npm run deploy
-
 # Clean
 $ npm run clean                     # Removes dist and .angular folders
 $ npm run clean:packages            # Removes node_modules folder

@@ -9,7 +9,6 @@
         "start": "ng serve --port 4500",
         "build": "ng build --configuration development",
         "build:prod": "ng build --configuration production",
-        "deploy": "firebase deploy",
         "test": "ng test",
         "lint": "eslint .",
         "lint:fix": "eslint . --fix",
