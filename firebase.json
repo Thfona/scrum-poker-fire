@@ -3,7 +3,9 @@
         {
             "target": "scrum-poker-fire",
             "public": "dist/scrum-poker-fire/browser",
-            "ignore": ["**/.*"],
+            "ignore": [
+                "**/.*"
+            ],
             "headers": [
                 {
                     "source": "*.[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f].+(css|js)",
