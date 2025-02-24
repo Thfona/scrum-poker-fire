@@ -49,6 +49,7 @@ export default [
         languageOptions: {
             globals: {
                 ...globals.browser,
+                ...globals.node,
                 ...globals.jest,
             },
             ecmaVersion: 2022,
@@ -64,6 +65,7 @@ export default [
         languageOptions: {
             globals: {
                 ...globals.browser,
+                ...globals.node,
                 ...globals.jest,
             },
             parser: tsParser,

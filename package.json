@@ -9,7 +9,7 @@
         "start": "ng serve --port 4500",
         "preview": "ng build --watch --configuration development",
         "build": "ng build --configuration development",
-        "build:prod": "ng build --configuration production",
+        "build:prod": "ng build --configuration production && node src/inject-metadata.js",
         "test": "ng test",
         "lint": "eslint .",
         "lint:fix": "eslint . --fix",
