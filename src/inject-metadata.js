@@ -8,7 +8,7 @@ const version = packageJson.version;
 const revision = require('child_process').execSync('git rev-parse --short HEAD').toString().trim();
 const createdAt = new Date().toLocaleString('en-UK');
 
-const indexPath = path.join(__dirname, '../dist/playtypus/browser/index.html');
+const indexPath = path.join(__dirname, '../dist/scrum-poker-fire/browser/index.html');
 
 fs.readFile(indexPath, 'utf8', (readError, data) => {
     if (readError) {
