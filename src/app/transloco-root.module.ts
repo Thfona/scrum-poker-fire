@@ -1,14 +1,13 @@
 import { Injectable, NgModule, isDevMode } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Translation, TranslocoLoader, TranslocoModule, getBrowserLang, provideTransloco } from '@jsverse/transloco';
+import { TranslocoLoader, TranslocoModule, getBrowserLang, provideTransloco } from '@jsverse/transloco';
 import { TranslocoLocaleModule, provideTranslocoLocale } from '@jsverse/transloco-locale';
 
 @Injectable({ providedIn: 'root' })
 export class TranslocoHttpLoader implements TranslocoLoader {
-    constructor(private readonly httpClient: HttpClient) {}
+    public async getTranslation(lang: string) {
+        const translation = await import(`../assets/i18n/${lang}.json`);
 
-    public getTranslation(lang: string) {
-        return this.httpClient.get<Translation>(`i18n/${lang}.json?t=${new Date().getTime()}`);
+        return translation.default;
     }
 }
 
