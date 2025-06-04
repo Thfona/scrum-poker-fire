@@ -114,6 +114,7 @@
 .story-column {
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 
   &.center {
     text-align: center;
@@ -135,6 +136,8 @@
 
 .story-name {
   margin-bottom: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cards-container {
