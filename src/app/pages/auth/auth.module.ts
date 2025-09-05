@@ -8,7 +8,7 @@ const modules = [AuthRoutingModule, SharedModule];
 const pages = [AuthPage];
 
 @NgModule({
-    declarations: [...pages],
-    imports: [...modules],
+  declarations: [...pages],
+  imports: [...modules],
 })
 export class AuthModule {}

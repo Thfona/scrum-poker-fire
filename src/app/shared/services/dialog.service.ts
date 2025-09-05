@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class DialogService {
-    public currentDialogReference: MatDialogRef<any>;
+  public currentDialogReference: MatDialogRef<any>;
 }

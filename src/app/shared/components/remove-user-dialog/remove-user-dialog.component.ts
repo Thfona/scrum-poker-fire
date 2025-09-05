@@ -6,9 +6,9 @@ import { RemoveUserDialogResultInterface } from '../../interfaces/remove-user-di
 import { RemoveUserDialogContentComponent } from './remove-user-dialog-content/remove-user-dialog-content.component';
 
 @Component({
-    selector: 'app-remove-user-dialog-component',
-    template: '',
-    standalone: false,
+  selector: 'app-remove-user-dialog-component',
+  template: '',
+  standalone: false,
 })
 export class RemoveUserDialogComponent implements OnDestroy {
     @Input() data: RemoveUserDialogDataInterface;
@@ -18,21 +18,21 @@ export class RemoveUserDialogComponent implements OnDestroy {
     constructor(private readonly matDialog: MatDialog) {}
 
     ngOnDestroy() {
-        if (this.dialogSubscription) {
-            this.dialogSubscription.unsubscribe();
-        }
+      if (this.dialogSubscription) {
+        this.dialogSubscription.unsubscribe();
+      }
     }
 
     public openDialog() {
-        const dialogReference = this.matDialog.open(RemoveUserDialogContentComponent, {
-            data: this.data,
-            autoFocus: false,
-        });
+      const dialogReference = this.matDialog.open(RemoveUserDialogContentComponent, {
+        data: this.data,
+        autoFocus: false,
+      });
 
-        this.dialogSubscription = dialogReference.afterClosed().subscribe((result: RemoveUserDialogResultInterface) => {
-            if (result?.remove) {
-                this.confirmEvent.emit(result);
-            }
-        });
+      this.dialogSubscription = dialogReference.afterClosed().subscribe((result: RemoveUserDialogResultInterface) => {
+        if (result?.remove) {
+          this.confirmEvent.emit(result);
+        }
+      });
     }
 }

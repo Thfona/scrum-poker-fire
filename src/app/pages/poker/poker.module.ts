@@ -9,7 +9,7 @@ const modules = [PokerRoutingModule, SharedModule];
 const pages = [PokerPage, PlayPage];
 
 @NgModule({
-    declarations: [...pages],
-    imports: [...modules],
+  declarations: [...pages],
+  imports: [...modules],
 })
 export class PokerModule {}

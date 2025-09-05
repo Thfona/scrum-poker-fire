@@ -5,25 +5,25 @@ import { map, take, tap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 class AuthGuard {
-    constructor(
+  constructor(
         private readonly authService: AuthService,
         private readonly router: Router,
-    ) {}
+  ) {}
 
-    public canAccess(): Observable<boolean> {
-        return this.authService.userDocument.pipe(
-            take(1),
-            map((user) => !user),
-            tap((notLoggedIn) => {
-                if (!notLoggedIn) {
-                    this.router.navigate(['/home']);
-                }
-            }),
-        );
-    }
+  public canAccess(): Observable<boolean> {
+    return this.authService.userDocument.pipe(
+      take(1),
+      map((user) => !user),
+      tap((notLoggedIn) => {
+        if (!notLoggedIn) {
+          this.router.navigate(['/home']);
+        }
+      }),
+    );
+  }
 }
 
 export const authGuard = () => inject(AuthGuard).canAccess();

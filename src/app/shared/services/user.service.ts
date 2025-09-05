@@ -5,39 +5,39 @@ import { UserInterface } from '../interfaces/user.interface';
 import { AuthService } from './auth.service';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class UserService {
-    private defaultGameSettings: GameSettingsInterface;
+  private defaultGameSettings: GameSettingsInterface;
 
-    get defaultGameSettingsState() {
-        return this.defaultGameSettings;
-    }
+  get defaultGameSettingsState() {
+    return this.defaultGameSettings;
+  }
 
-    set defaultGameSettingsState(value: GameSettingsInterface) {
-        this.defaultGameSettings = value;
-    }
+  set defaultGameSettingsState(value: GameSettingsInterface) {
+    this.defaultGameSettings = value;
+  }
 
-    constructor(
+  constructor(
         private readonly angularFirestore: Firestore,
         private readonly authService: AuthService,
-    ) {}
+  ) {}
 
-    public updateUserDefaultGameSettings(gameSettings: GameSettingsInterface) {
-        const userId = this.authService.user.uid;
+  public updateUserDefaultGameSettings(gameSettings: GameSettingsInterface) {
+    const userId = this.authService.user.uid;
 
-        const userDocument = doc(this.angularFirestore, `/users/${userId}`) as DocumentReference<UserInterface>;
+    const userDocument = doc(this.angularFirestore, `/users/${userId}`) as DocumentReference<UserInterface>;
 
-        this.defaultGameSettings = gameSettings;
+    this.defaultGameSettings = gameSettings;
 
-        return updateDoc(userDocument, { defaultGameSettings: gameSettings });
-    }
+    return updateDoc(userDocument, { defaultGameSettings: gameSettings });
+  }
 
-    public deleteUserAccount() {
-        const userId = this.authService.user.uid;
+  public deleteUserAccount() {
+    const userId = this.authService.user.uid;
 
-        const userDocument = doc(this.angularFirestore, `/users/${userId}`) as DocumentReference<UserInterface>;
+    const userDocument = doc(this.angularFirestore, `/users/${userId}`) as DocumentReference<UserInterface>;
 
-        return deleteDoc(userDocument);
-    }
+    return deleteDoc(userDocument);
+  }
 }

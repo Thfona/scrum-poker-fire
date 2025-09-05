@@ -9,82 +9,82 @@ import { UserInterface } from '../interfaces/user.interface';
 import { UserAuthDataInterface } from '../interfaces/user-auth-data.interface';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class AuthService {
-    public user: UserAuthDataInterface;
-    public userDocument: Observable<UserInterface>;
-    public isSigningIn: boolean;
-    public isWaitingPopUp: boolean;
-    public routeAfterSignIn = '/home';
+  public user: UserAuthDataInterface;
+  public userDocument: Observable<UserInterface>;
+  public isSigningIn: boolean;
+  public isWaitingPopUp: boolean;
+  public routeAfterSignIn = '/home';
 
-    constructor(
+  constructor(
         private readonly auth: Auth,
         private readonly firestore: Firestore,
         private readonly router: Router,
-    ) {
-        this.userDocument = authState(auth).pipe(
-            switchMap((user) => {
-                if (user) {
-                    this.user = user;
+  ) {
+    this.userDocument = authState(auth).pipe(
+      switchMap((user) => {
+        if (user) {
+          this.user = user;
 
-                    const userDocument = doc(firestore, `users/${user.uid}`) as DocumentReference<UserInterface>;
+          const userDocument = doc(firestore, `users/${user.uid}`) as DocumentReference<UserInterface>;
 
-                    return docData(userDocument);
-                } else {
-                    this.user = null;
+          return docData(userDocument);
+        } else {
+          this.user = null;
 
-                    return of(null);
-                }
-            }),
-        );
-    }
-
-    public async signIn() {
-        this.isSigningIn = true;
-        this.isWaitingPopUp = true;
-
-        const authProvider = new GoogleAuthProvider();
-        let credential: UserCredential;
-
-        try {
-            credential = await signInWithPopup(this.auth, authProvider);
-        } catch (error) {
-            this.isSigningIn = false;
-            this.isWaitingPopUp = false;
-
-            console.error(error);
-
-            return;
+          return of(null);
         }
+      }),
+    );
+  }
 
-        this.isWaitingPopUp = false;
+  public async signIn() {
+    this.isSigningIn = true;
+    this.isWaitingPopUp = true;
 
-        await this.updateUserData(credential.user);
+    const authProvider = new GoogleAuthProvider();
+    let credential: UserCredential;
 
-        this.isSigningIn = false;
+    try {
+      credential = await signInWithPopup(this.auth, authProvider);
+    } catch (error) {
+      this.isSigningIn = false;
+      this.isWaitingPopUp = false;
 
-        return this.router.navigate([this.routeAfterSignIn]);
+      console.error(error);
+
+      return;
     }
 
-    public async signOut() {
-        this.routeAfterSignIn = '/home';
+    this.isWaitingPopUp = false;
 
-        await signOut(this.auth);
+    await this.updateUserData(credential.user);
 
-        return this.router.navigate(['/auth']);
-    }
+    this.isSigningIn = false;
 
-    private updateUserData({ uid, email, displayName, photoURL }: UserInterface) {
-        const userDocument = doc(this.firestore, `users/${uid}`) as DocumentReference<UserInterface>;
+    return this.router.navigate([this.routeAfterSignIn]);
+  }
 
-        const data = {
-            uid,
-            email,
-            displayName,
-            photoURL,
-        };
+  public async signOut() {
+    this.routeAfterSignIn = '/home';
 
-        return setDoc(userDocument, data, { merge: true });
-    }
+    await signOut(this.auth);
+
+    return this.router.navigate(['/auth']);
+  }
+
+  private updateUserData({ uid, email, displayName, photoURL }: UserInterface) {
+    const userDocument = doc(this.firestore, `users/${uid}`) as DocumentReference<UserInterface>;
+
+    const data = {
+      uid,
+      email,
+      displayName,
+      photoURL,
+    };
+
+    return setDoc(userDocument, data, { merge: true });
+  }
 }

@@ -11,26 +11,26 @@ const createdAt = new Date().toLocaleString('en-UK');
 const indexPath = path.join(__dirname, '../dist/scrum-poker-fire/browser/index.html');
 
 fs.readFile(indexPath, 'utf8', (readError, data) => {
-    if (readError) {
-        return console.error(readError);
-    }
+  if (readError) {
+    return console.error(readError);
+  }
 
-    const metadata = `
+  const metadata = `
         <meta name="version" content="${version}">
         <meta name="revision" content="${revision}">
         <meta name="created-at" content="${createdAt}">
     `;
 
-    const result = data.replace(
-        '</head>',
-        `${metadata}\n</head>`,
-    );
+  const result = data.replace(
+    '</head>',
+    `${metadata}\n</head>`,
+  );
 
-    fs.writeFile(indexPath, result, 'utf8', (writeError) => {
-        if (writeError) {
-            return console.error(writeError);
-        };
+  fs.writeFile(indexPath, result, 'utf8', (writeError) => {
+    if (writeError) {
+      return console.error(writeError);
+    };
 
-        console.log('Metadata injected successfully!');
-    });
+    console.log('Metadata injected successfully!');
+  });
 });

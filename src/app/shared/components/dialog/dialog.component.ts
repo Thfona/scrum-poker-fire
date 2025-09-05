@@ -5,9 +5,9 @@ import { DialogDataInterface } from '../../interfaces/dialog-data.interface';
 import { DialogContentComponent } from './dialog-content/dialog-content.component';
 
 @Component({
-    selector: 'app-dialog-component',
-    template: '',
-    standalone: false,
+  selector: 'app-dialog-component',
+  template: '',
+  standalone: false,
 })
 export class DialogComponent implements OnDestroy {
     @Input() data: DialogDataInterface;
@@ -17,21 +17,21 @@ export class DialogComponent implements OnDestroy {
     constructor(private readonly matDialog: MatDialog) {}
 
     ngOnDestroy() {
-        if (this.dialogSubscription) {
-            this.dialogSubscription.unsubscribe();
-        }
+      if (this.dialogSubscription) {
+        this.dialogSubscription.unsubscribe();
+      }
     }
 
     public openDialog() {
-        const dialogReference = this.matDialog.open(DialogContentComponent, {
-            data: this.data,
-            autoFocus: false,
-        });
+      const dialogReference = this.matDialog.open(DialogContentComponent, {
+        data: this.data,
+        autoFocus: false,
+      });
 
-        this.dialogSubscription = dialogReference.afterClosed().subscribe((result: boolean) => {
-            if (result) {
-                this.confirmEvent.emit();
-            }
-        });
+      this.dialogSubscription = dialogReference.afterClosed().subscribe((result: boolean) => {
+        if (result) {
+          this.confirmEvent.emit();
+        }
+      });
     }
 }

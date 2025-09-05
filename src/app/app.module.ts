@@ -14,26 +14,26 @@ import { environment } from 'src/environments/environment';
 import { AppComponent } from './app.component';
 
 const modules = [
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    BrowserModule,
-    NgProgressbar,
-    NgProgressRouter,
-    SharedModule,
+  AppRoutingModule,
+  BrowserAnimationsModule,
+  BrowserModule,
+  NgProgressbar,
+  NgProgressRouter,
+  SharedModule,
 ];
 
 const providers = [
-    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
-    provideHttpClient(),
-    windowProviders,
+  provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+  provideAuth(() => getAuth()),
+  provideFirestore(() => getFirestore()),
+  provideHttpClient(),
+  windowProviders,
 ];
 
 @NgModule({
-    declarations: [AppComponent],
-    imports: [...modules],
-    providers: [...providers],
-    bootstrap: [AppComponent],
+  declarations: [AppComponent],
+  imports: [...modules],
+  providers: [...providers],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

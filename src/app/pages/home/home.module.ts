@@ -8,7 +8,7 @@ const modules = [HomeRoutingModule, SharedModule];
 const pages = [HomePage];
 
 @NgModule({
-    declarations: [...pages],
-    imports: [...modules],
+  declarations: [...pages],
+  imports: [...modules],
 })
 export class HomeModule {}

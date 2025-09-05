@@ -8,9 +8,9 @@ import { GameDialogContentComponent } from './game-dialog-content/game-dialog-co
 import { DOMAIN } from '../../constants/domain.constant';
 
 @Component({
-    selector: 'app-game-dialog-component',
-    template: '',
-    standalone: false,
+  selector: 'app-game-dialog-component',
+  template: '',
+  standalone: false,
 })
 export class GameDialogComponent implements OnDestroy {
     @Input() data: GameDialogDataInterface;
@@ -23,29 +23,29 @@ export class GameDialogComponent implements OnDestroy {
     ) {}
 
     ngOnDestroy() {
-        if (this.dialogSubscription) {
-            this.dialogSubscription.unsubscribe();
-        }
+      if (this.dialogSubscription) {
+        this.dialogSubscription.unsubscribe();
+      }
     }
 
     public openDialog() {
-        const dialogReference = this.matDialog.open(GameDialogContentComponent, {
-            data: this.data,
-            autoFocus: false,
-        });
+      const dialogReference = this.matDialog.open(GameDialogContentComponent, {
+        data: this.data,
+        autoFocus: false,
+      });
 
-        this.dialogService.currentDialogReference = dialogReference;
+      this.dialogService.currentDialogReference = dialogReference;
 
-        this.dialogSubscription = dialogReference.afterClosed().subscribe((result: GameDialogResultInterface) => {
-            this.dialogService.currentDialogReference = undefined;
+      this.dialogSubscription = dialogReference.afterClosed().subscribe((result: GameDialogResultInterface) => {
+        this.dialogService.currentDialogReference = undefined;
 
-            if (result?.save) {
-                if (!result.formValue.storyTimerMinutes) {
-                    result.formValue.storyTimerMinutes = DOMAIN.defaultGameSettings.storyTimerMinutes;
-                }
+        if (result?.save) {
+          if (!result.formValue.storyTimerMinutes) {
+            result.formValue.storyTimerMinutes = DOMAIN.defaultGameSettings.storyTimerMinutes;
+          }
 
-                this.confirmEvent.emit(result);
-            }
-        });
+          this.confirmEvent.emit(result);
+        }
+      });
     }
 }

@@ -5,16 +5,16 @@ import { SNACKBAR_ACTION } from 'src/app/shared/constants/snackbar-action.consta
 import { SNACKBAR_CONFIGURATION } from 'src/app/shared/constants/snackbar-configuration.constant';
 
 @Component({
-    selector: 'app-invite-dialog-content-component',
-    templateUrl: './invite-dialog-content.component.html',
-    styleUrls: ['./invite-dialog-content.component.scss'],
-    standalone: false,
+  selector: 'app-invite-dialog-content-component',
+  templateUrl: './invite-dialog-content.component.html',
+  styleUrls: ['./invite-dialog-content.component.scss'],
+  standalone: false,
 })
 export class InviteDialogContentComponent {
     @ViewChild('linkInput') linkInput: ElementRef;
 
     public get gameUrl() {
-        return window.location.href;
+      return window.location.href;
     }
 
     constructor(
@@ -23,18 +23,18 @@ export class InviteDialogContentComponent {
     ) {}
 
     public handleLinkInputClick() {
-        const input: HTMLInputElement = this.linkInput.nativeElement;
+      const input: HTMLInputElement = this.linkInput.nativeElement;
 
-        input.select();
+      input.select();
     }
 
     public copyLinkToClipboard() {
-        navigator.clipboard.writeText(this.gameUrl);
+      navigator.clipboard.writeText(this.gameUrl);
 
-        this.snackBarService.open(
-            this.translocoService.translate('LINK_COPIED_MESSAGE'),
-            this.translocoService.translate(SNACKBAR_ACTION),
-            SNACKBAR_CONFIGURATION,
-        );
+      this.snackBarService.open(
+        this.translocoService.translate('LINK_COPIED_MESSAGE'),
+        this.translocoService.translate(SNACKBAR_ACTION),
+        SNACKBAR_CONFIGURATION,
+      );
     }
 }

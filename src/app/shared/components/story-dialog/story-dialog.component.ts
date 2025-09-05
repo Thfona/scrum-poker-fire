@@ -7,9 +7,9 @@ import { DialogService } from '../../services/dialog.service';
 import { StoryDialogContentComponent } from './story-dialog-content/story-dialog-content.component';
 
 @Component({
-    selector: 'app-story-dialog-component',
-    template: '',
-    standalone: false,
+  selector: 'app-story-dialog-component',
+  template: '',
+  standalone: false,
 })
 export class StoryDialogComponent implements OnDestroy {
     @Input() data: StoryDialogDataInterface;
@@ -22,26 +22,26 @@ export class StoryDialogComponent implements OnDestroy {
     ) {}
 
     ngOnDestroy() {
-        if (this.dialogSubscription) {
-            this.dialogSubscription.unsubscribe();
-        }
+      if (this.dialogSubscription) {
+        this.dialogSubscription.unsubscribe();
+      }
     }
 
     public openDialog() {
-        const dialogReference = this.matDialog.open(StoryDialogContentComponent, {
-            data: this.data,
-            autoFocus: false,
-            minWidth: '430px',
-        });
+      const dialogReference = this.matDialog.open(StoryDialogContentComponent, {
+        data: this.data,
+        autoFocus: false,
+        minWidth: '430px',
+      });
 
-        this.dialogService.currentDialogReference = dialogReference;
+      this.dialogService.currentDialogReference = dialogReference;
 
-        this.dialogSubscription = dialogReference.afterClosed().subscribe((result: StoryDialogResultInterface) => {
-            this.dialogService.currentDialogReference = undefined;
+      this.dialogSubscription = dialogReference.afterClosed().subscribe((result: StoryDialogResultInterface) => {
+        this.dialogService.currentDialogReference = undefined;
 
-            if (result?.save || result?.goTo) {
-                this.confirmEvent.emit(result);
-            }
-        });
+        if (result?.save || result?.goTo) {
+          this.confirmEvent.emit(result);
+        }
+      });
     }
 }

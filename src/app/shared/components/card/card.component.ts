@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-    selector: 'app-card-component',
-    templateUrl: './card.component.html',
-    styleUrls: ['./card.component.scss'],
-    standalone: false,
+  selector: 'app-card-component',
+  templateUrl: './card.component.html',
+  styleUrls: ['./card.component.scss'],
+  standalone: false,
 })
 export class CardComponent {
     @Input() isLoading: boolean;
@@ -17,6 +17,6 @@ export class CardComponent {
     @Output() headerButtonEvent = new EventEmitter();
 
     public handleHeaderButtonClick() {
-        this.headerButtonEvent.emit();
+      this.headerButtonEvent.emit();
     }
 }
