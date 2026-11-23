@@ -1,21 +1,19 @@
 <ng-progress ngProgressRouter [spinner]="false"></ng-progress>
 
-<ng-container *ngIf="isLoading">
-    <app-loading-component></app-loading-component>
-</ng-container>
+@if (isLoading) {
+  <app-loading-component></app-loading-component>
+}
 
-<ng-container *ngIf="!isLoading && hasError">
-    <app-error-component></app-error-component>
-</ng-container>
+@if (!isLoading && hasError) {
+  <app-error-component></app-error-component>
+}
 
-<ng-container *ngIf="!isLoading && !hasError">
-    <app-toolbar-component [user]="user"></app-toolbar-component>
-
-    <ng-container *ngIf="isLoadingContent">
-        <app-content-loading-component></app-content-loading-component>
-    </ng-container>
-
-    <ng-container *ngIf="!isLoadingContent">
-        <router-outlet></router-outlet>
-    </ng-container>
-</ng-container>
+@if (!isLoading && !hasError) {
+  <app-toolbar-component [user]="user"></app-toolbar-component>
+  @if (isLoadingContent) {
+    <app-content-loading-component></app-content-loading-component>
+  }
+  @if (!isLoadingContent) {
+    <router-outlet></router-outlet>
+  }
+}

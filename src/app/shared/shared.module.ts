@@ -19,7 +19,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { DigitOnlyModule } from '@uiowa/digit-only';
+import { DigitOnlyDirective } from '@uiowa/digit-only';
 import { TranslocoRootModule } from '../transloco-root.module';
 import { CardComponent } from './components/card/card.component';
 import { ContentLoadingComponent } from './components/content-loading/content-loading.component';
@@ -67,7 +67,7 @@ const fragments = [RetrospectivesFragment, SavedGamesFragment];
 
 const modules = [
   CommonModule,
-  DigitOnlyModule,
+  DigitOnlyDirective,
   FormsModule,
   MatButtonModule,
   MatCardModule,

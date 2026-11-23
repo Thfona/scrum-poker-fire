@@ -3,29 +3,30 @@
     <mat-card-header class="card-header">
       <mat-card-title class="header-text">{{ transloco(cardTitleKey) }}</mat-card-title>
 
-      <div class="header-button-container" *ngIf="shouldDisplayHeaderButton">
-        <button mat-raised-button color="accent" class="header-button" (click)="handleHeaderButtonClick()">
-          <div class="button-content">
-            <mat-icon>{{ headerButtonIconKey }}</mat-icon>
-
-            <span class="button-text">{{ transloco(headerButtonTextKey) }}</span>
-          </div>
-        </button>
-      </div>
+      @if (shouldDisplayHeaderButton) {
+        <div class="header-button-container">
+          <button mat-raised-button color="accent" class="header-button" (click)="handleHeaderButtonClick()">
+            <div class="button-content">
+              <mat-icon>{{ headerButtonIconKey }}</mat-icon>
+              <span class="button-text">{{ transloco(headerButtonTextKey) }}</span>
+            </div>
+          </button>
+        </div>
+      }
     </mat-card-header>
 
-    <ng-container *ngIf="isLoading">
+    @if (isLoading) {
       <div class="card-content-placeholder">
         <app-loading-component [center]="false" [size]="'small'"></app-loading-component>
       </div>
-    </ng-container>
+    }
 
-    <ng-container *ngIf="!isLoading && hasError">
+    @if (!isLoading && hasError) {
       <app-error-component [center]="false" [message]="errorMessageKey"></app-error-component>
-    </ng-container>
+    }
 
-    <ng-container *ngIf="!isLoading && !hasError">
+    @if (!isLoading && !hasError) {
       <ng-content></ng-content>
-    </ng-container>
+    }
   </mat-card>
 </ng-container>

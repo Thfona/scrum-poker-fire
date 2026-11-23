@@ -9,11 +9,12 @@
         <input #storyName matInput formControlName="name" name="name">
       </mat-form-field>
 
-      <mat-form-field *ngIf="data.isEditOperation">
-        <mat-label>{{ transloco('SCORE') }}</mat-label>
-
-        <input #storyScore matInput formControlName="score" name="score" inputmode="numeric" pattern="[0-9]*" digitOnly>
-      </mat-form-field>
+      @if (data.isEditOperation) {
+        <mat-form-field>
+          <mat-label>{{ transloco('SCORE') }}</mat-label>
+          <input #storyScore matInput formControlName="score" name="score" inputmode="numeric" pattern="[0-9]*" digitOnly>
+        </mat-form-field>
+      }
     </form>
   </mat-dialog-content>
 
@@ -22,29 +23,31 @@
       mat-button
       [mat-dialog-close]="cancelResult"
       class="action-button"
-    >
+      >
       {{ transloco('CANCEL') }}
     </button>
 
-    <button
-      mat-button
-      *ngIf="data.isEditOperation"
-      [mat-dialog-close]="deleteResult"
-      color="warn"
-      class="action-button"
-    >
-      {{ transloco('DELETE') }}
-    </button>
+    @if (data.isEditOperation) {
+      <button
+        mat-button
+        [mat-dialog-close]="deleteResult"
+        color="warn"
+        class="action-button"
+        >
+        {{ transloco('DELETE') }}
+      </button>
+    }
 
-    <button
-      mat-button
-      *ngIf="data.isEditOperation && data.gameHasStarted"
-      [mat-dialog-close]="goToResult"
-      color="primary"
-      class="action-button"
-    >
-      {{ transloco('GO_TO') }}
-    </button>
+    @if (data.isEditOperation && data.gameHasStarted) {
+      <button
+        mat-button
+        [mat-dialog-close]="goToResult"
+        color="primary"
+        class="action-button"
+        >
+        {{ transloco('GO_TO') }}
+      </button>
+    }
 
     <button
       mat-button
@@ -52,7 +55,7 @@
       [disabled]="formGroup.invalid"
       color="accent"
       class="action-button"
-    >
+      >
       {{ transloco('SAVE') }}
     </button>
   </mat-dialog-actions>
